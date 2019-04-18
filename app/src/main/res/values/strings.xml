@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Filmes Populares</string>
+
+    <!-- Item film -->
+    <string name="item_movie_rate">Avaliação:</string>
+    <string name="item_movie_release_date">Lançamento:</string>
+    <string name="text_movie_detail_title">Título</string>
+    <string name="movie_detail_film_original_name">Nome Original:</string>
+    <string name="movie_detail_film_language">Língua:</string>
+    <string name="movie_detail_film_release">Lançamento:</string>
+    <string name="movie_detail_film_rate">Avaliação:</string>
+
+
+    <!-- Error Message -->
+    <string name="error_movielist">Erro ao obter a lista de filmes.</string>
+    <string name="error_movie_detail">Erro ao obter os dados dos filmes.</string>
+
+
+
 </resources>
