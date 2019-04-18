@@ -1,4 +1,4 @@
-package br.com.ricardo.filmespopulares;
+package br.com.ricardo.filmespopulares.ui;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.ricardo.filmespopulares.R;
 
 public class MainActivity extends AppCompatActivity {
 

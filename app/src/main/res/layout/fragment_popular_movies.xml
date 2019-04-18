@@ -1,15 +1,27 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PopularMoviesFragment">
+    android:orientation="vertical"
+    tools:context=".ui.PopularMoviesFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UM"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
+    <EditText
+        android:id="@+id/edit_popular_ml_search"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"
+        android:ems="30"
+        android:hint="Pesquisar"
+        android:paddingStart="5sp"
+        android:textColorHint="@android:color/black"
+        android:background="@drawable/search_rounded"
+        android:inputType="textPersonName" />
 
-</RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_popular_ml"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
