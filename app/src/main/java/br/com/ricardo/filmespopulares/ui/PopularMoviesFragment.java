@@ -16,14 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.ricardo.filmespopulares.R;
-import br.com.ricardo.filmespopulares.api.FilmService;
-import br.com.ricardo.filmespopulares.pojo.PopularResponseFilm;
-import br.com.ricardo.filmespopulares.pojo.PopularResultFilms;
+import br.com.ricardo.filmespopulares.data.network.api.ApiService;
+import br.com.ricardo.filmespopulares.data.network.model.Film;
+import br.com.ricardo.filmespopulares.data.network.response.FilmMapper;
+import br.com.ricardo.filmespopulares.data.network.response.PopularResponseFilm;
+import br.com.ricardo.filmespopulares.data.network.response.PopularResultFilms;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.ContentValues.TAG;
 
@@ -34,8 +34,7 @@ public class PopularMoviesFragment extends Fragment{
     private RecyclerView recyclerPopularMovie;
 
     private PopularMovieListAdapter adapter;
-
-    private List<PopularResponseFilm> movieList;
+    private List<Film> filmList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,27 +45,19 @@ public class PopularMoviesFragment extends Fragment{
         editPopularMovieSearch = (EditText) popularView.findViewById(R.id.edit_popular_ml_search);
         recyclerPopularMovie = (RecyclerView) popularView.findViewById(R.id.recycler_popular_ml);
 
+        adapter = new PopularMovieListAdapter();
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerPopularMovie.setLayoutManager(gridLayoutManager);
+        recyclerPopularMovie.setAdapter(adapter);
 
-        movieList = new ArrayList<>();
-
-        connectService();
+        getMovies();
 
         return popularView;
     }
 
 
-    public void connectService(){
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(FilmService.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        FilmService service = retrofit.create(FilmService.class);
-
-        service.getPopularFilms("b70848b875278d63417beecbdddc4841")
+    public void getMovies(){
+        ApiService.getInstance().getPopularFilms("b70848b875278d63417beecbdddc4841")
                 .enqueue(new Callback<PopularResultFilms>() {
                     @Override
                     public void onResponse(Call<PopularResultFilms> call, Response<PopularResultFilms> response) {
@@ -76,42 +67,34 @@ public class PopularMoviesFragment extends Fragment{
                             showError();
 
                         } else {
-                            PopularResultFilms resultFilms = response.body();
+                            filmList = FilmMapper
+                                    .setFilmDomain(response.body().getResults());
 
-                            if(resultFilms != null){
-                                for(PopularResponseFilm rf : resultFilms.getResults()){
-
-                                    movieList.add(rf);
-
-                                }
-                            }
-
-                            adapter = new PopularMovieListAdapter(movieList);
-                            recyclerPopularMovie.setAdapter(adapter);
-
-                            adapter.setOnItemClickListener(new PopularMovieListAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(int position) {
-
-                                    Intent intent = new Intent(getActivity(), MovieDetail.class);
-
-                                    PopularResponseFilm film = movieList.get(position);
-
-                                    intent.putExtra(MovieDetail.EXTRA_FILM, film);
-                                    startActivity(intent);
-
-
-                                }
-                            });
+                            adapter.setFilm(filmList);
                         }
 
+                        adapter.setOnItemClickListener(new PopularMovieListAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+
+                                Intent intent = new Intent(getActivity(), MovieDetail.class);
+
+                                Film film = filmList.get(position);
+
+                                intent.putExtra(MovieDetail.EXTRA_FILM, film);
+                                startActivity(intent);
+
+
+                            }
+                        });
                     }
 
                     @Override
                     public void onFailure(Call<PopularResultFilms> call, Throwable t) {
-
+                        showError();
+                        Log.i("FUDEEEEUU!!!", t.getMessage());
                     }
-                });
+            });
 
     }
 

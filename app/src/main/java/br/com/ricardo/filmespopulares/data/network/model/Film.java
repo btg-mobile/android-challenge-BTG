@@ -1,28 +1,19 @@
-package br.com.ricardo.filmespopulares.pojo;
-
-import com.google.gson.annotations.SerializedName;
+package br.com.ricardo.filmespopulares.data.network.model;
 
 import java.io.Serializable;
 
-public class PopularResponseFilm implements Serializable {
+public class Film implements Serializable {
 
-    @SerializedName("vote_average")
     private String rate;
     private String title;
-    @SerializedName("poster_path")
     private String posterPath;
-    @SerializedName("original_language")
     private String language;
-    @SerializedName("original_title")
     private String originalTitle;
-    @SerializedName("backdrop_path")
     private String backdropPath;
     private String overview;
-    @SerializedName("release_date")
     private String releaseDate;
 
-
-    public PopularResponseFilm(String rate, String title, String posterPath, String language, String originalTitle, String backdropPath, String overview, String releaseDate) {
+    public Film(String rate, String title, String posterPath, String language, String originalTitle, String backdropPath, String overview, String releaseDate) {
         this.rate = rate;
         this.title = title;
         this.posterPath = posterPath;

@@ -1,4 +1,4 @@
-package br.com.ricardo.filmespopulares.pojo;
+package br.com.ricardo.filmespopulares.data.network.response;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package br.com.ricardo.filmespopulares.api;
+package br.com.ricardo.filmespopulares.data.network.api;
 
-import br.com.ricardo.filmespopulares.pojo.PopularResultFilms;
+import br.com.ricardo.filmespopulares.data.network.response.PopularResultFilms;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -11,8 +11,5 @@ public interface FilmService {
 
     @GET("movie/popular")
     Call<PopularResultFilms> getPopularFilms(@Query("api_key") String apiKey);
-
-//    @GET("genre/movie/list")
-//    Call<PopularResultFilms> getPopularFilms(@Query("api_key") String apiKey);
 
 }

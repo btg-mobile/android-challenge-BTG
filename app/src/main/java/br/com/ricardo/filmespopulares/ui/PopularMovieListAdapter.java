@@ -10,23 +10,24 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.ricardo.filmespopulares.R;
-import br.com.ricardo.filmespopulares.pojo.PopularResponseFilm;
+import br.com.ricardo.filmespopulares.data.network.model.Film;
 
 public class PopularMovieListAdapter extends RecyclerView.Adapter<PopularMovieListAdapter.PopularMovieListViewHolder> {
 
     public static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-    private List<PopularResponseFilm> movieLists;
+    private List<Film> movieLists;
 
     //Atributo da interface.
     private static OnItemClickListener clickListener;
 
     //Contrutor do adapter
-    public PopularMovieListAdapter(List<PopularResponseFilm> movieLists) {
-        this.movieLists = movieLists;
+    public PopularMovieListAdapter() {
+        movieLists = new ArrayList<>();
     }
 
     @NonNull
@@ -86,6 +87,11 @@ public class PopularMovieListAdapter extends RecyclerView.Adapter<PopularMovieLi
                 }
             });
         }
+    }
+
+    public void setFilm(List<Film> film){
+        this.movieLists = film;
+        notifyDataSetChanged();
     }
 
     //Interface criada para ser chamada na MainActivity(MovieList) passando um filme no parâmetro.
