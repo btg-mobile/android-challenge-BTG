@@ -15,5 +15,26 @@
     <string name="error_movielist">Erro ao obter a lista de filmes.</string>
     <string name="error_movie_detail">Erro ao obter os dados dos filmes.</string>
 
+    <!-- Genres -->
+    <string name="genre_action">action</string>
+    <string name="genre_adventure">adventure</string>
+    <string name="genre_animation">animation</string>
+    <string name="genre_comedy">comedy</string>
+    <string name="genre_crime">crime</string>
+    <string name="genre_documentary">documentary</string>
+    <string name="genre_drama">drama</string>
+    <string name="genre_family">family</string>
+    <string name="genre_fantasy">fantasy</string>
+    <string name="genre_history">history</string>
+    <string name="genre_horror">horror</string>
+    <string name="genre_music">music</string>
+    <string name="genre_mystery">mystery</string>
+    <string name="genre_romance">romance</string>
+    <string name="genre_science_fiction">science fiction</string>
+    <string name="genre_tv_movie">tv movie</string>
+    <string name="genre_thriller">thriller</string>
+    <string name="genre_war">war</string>
+    <string name="genre_western">western</string>
+
 
 </resources>

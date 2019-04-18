@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,6 +32,10 @@ import static android.content.ContentValues.TAG;
 
 public class PopularMoviesFragment extends Fragment{
 
+    public static String TAG_FAILURE = "Response - Failure";
+
+    private FrameLayout framePopularMovie;
+    private ProgressBar progressBarPopularMovie;
     private EditText editPopularMovieSearch;
     private RecyclerView recyclerPopularMovie;
 
@@ -42,8 +48,13 @@ public class PopularMoviesFragment extends Fragment{
 
         View popularView = inflater.inflate(R.layout.fragment_popular_movies, container, false);
 
+        framePopularMovie = (FrameLayout) popularView.findViewById(R.id.frame_popular_movielist);
+        progressBarPopularMovie = (ProgressBar) popularView.findViewById(R.id.progressBar_popular_movielist);
         editPopularMovieSearch = (EditText) popularView.findViewById(R.id.edit_popular_ml_search);
         recyclerPopularMovie = (RecyclerView) popularView.findViewById(R.id.recycler_popular_ml);
+
+        framePopularMovie.setVisibility(View.VISIBLE);
+        progressBarPopularMovie.setVisibility(View.VISIBLE);
 
         adapter = new PopularMovieListAdapter();
         RecyclerView.LayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -63,10 +74,14 @@ public class PopularMoviesFragment extends Fragment{
                     public void onResponse(Call<PopularResultFilms> call, Response<PopularResultFilms> response) {
 
                         if(!response.isSuccessful()) {
-                            Log.i(TAG, "Erro: " + response.code());
+                            Log.i(TAG_FAILURE, "Erro: " + response.code());
                             showError();
 
                         } else {
+
+                            framePopularMovie.setVisibility(View.GONE);
+                            progressBarPopularMovie.setVisibility(View.GONE);
+
                             filmList = FilmMapper
                                     .setFilmDomain(response.body().getResults());
 
@@ -83,16 +98,14 @@ public class PopularMoviesFragment extends Fragment{
 
                                 intent.putExtra(MovieDetail.EXTRA_FILM, film);
                                 startActivity(intent);
-
-
                             }
                         });
                     }
 
                     @Override
                     public void onFailure(Call<PopularResultFilms> call, Throwable t) {
+                        Log.i(TAG_FAILURE, t.getMessage());
                         showError();
-                        Log.i("FUDEEEEUU!!!", t.getMessage());
                     }
             });
 

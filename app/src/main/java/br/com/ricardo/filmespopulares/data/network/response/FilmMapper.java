@@ -13,7 +13,7 @@ public class FilmMapper {
 
         for(PopularResponseFilm fr : popularResponseFilms){
             final Film film = new Film(fr.getRate(), fr.getTitle(), fr.getPosterPath(), fr.getLanguage(),
-                    fr.getOriginalTitle(), fr.getBackdropPath(), fr.getOverview(), fr.getReleaseDate());
+                    fr.getOriginalTitle(), fr.getGenres(), fr.getBackdropPath(), fr.getOverview(), fr.getReleaseDate());
             filmList.add(film);
         }
 

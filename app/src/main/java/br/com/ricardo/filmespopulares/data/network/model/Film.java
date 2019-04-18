@@ -1,6 +1,7 @@
 package br.com.ricardo.filmespopulares.data.network.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Film implements Serializable {
 
@@ -9,16 +10,18 @@ public class Film implements Serializable {
     private String posterPath;
     private String language;
     private String originalTitle;
+    private ArrayList<Integer> genre;
     private String backdropPath;
     private String overview;
     private String releaseDate;
 
-    public Film(String rate, String title, String posterPath, String language, String originalTitle, String backdropPath, String overview, String releaseDate) {
+    public Film(String rate, String title, String posterPath, String language, String originalTitle, ArrayList<Integer> genre, String backdropPath, String overview, String releaseDate) {
         this.rate = rate;
         this.title = title;
         this.posterPath = posterPath;
         this.language = language;
         this.originalTitle = originalTitle;
+        this.genre = genre;
         this.backdropPath = backdropPath;
         this.overview = overview;
         this.releaseDate = releaseDate;
@@ -62,6 +65,14 @@ public class Film implements Serializable {
 
     public void setOriginalTitle(String originalTitle) {
         this.originalTitle = originalTitle;
+    }
+
+    public ArrayList<Integer> getGenre() {
+        return genre;
+    }
+
+    public void setGenre(ArrayList<Integer> genre) {
+        this.genre = genre;
     }
 
     public String getBackdropPath() {

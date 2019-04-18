@@ -1,7 +1,10 @@
 package br.com.ricardo.filmespopulares.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import br.com.ricardo.filmespopulares.R;
 import br.com.ricardo.filmespopulares.data.network.model.Film;
@@ -23,29 +28,32 @@ public class MovieDetail extends AppCompatActivity {
     private final String backDrop = "w780";
     private final String thumb = "w154";
 
+    private  Toolbar toolbarMovieDetail;
     private ProgressBar progressBarMovieDetail;
     private LinearLayout linearContainerMovieDetail;
-    private TextView textMovieDetailTitle;
     private ImageView imageMovieDetail;
     private ImageView imageMovieThumb;
     private TextView textMovideDetailOriginalName;
-    private TextView textMovideDetailLanguage;
+    private TextView textMovideDetailGenre;
     private TextView textMovideDetailRate;
     private TextView textMovideDetailOverview;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
+        toolbarMovieDetail = (Toolbar) findViewById(R.id.toolbar_movie_detail);
+        setSupportActionBar(toolbarMovieDetail);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         progressBarMovieDetail = (ProgressBar) findViewById(R.id.progressBar_movie_detail);
         linearContainerMovieDetail = (LinearLayout) findViewById(R.id.linear_container_movie_detail);
-        textMovieDetailTitle = (TextView) findViewById(R.id.text_movie_detail_title);
         imageMovieDetail = (ImageView) findViewById(R.id.image_movie_detail);
         imageMovieThumb = (ImageView) findViewById(R.id.image_movie_detail_thumb);
         textMovideDetailOriginalName = (TextView) findViewById(R.id.text_movie_detail_original_name);
-        textMovideDetailLanguage = (TextView) findViewById(R.id.text_movie_detail_language);
+        textMovideDetailGenre = (TextView) findViewById(R.id.text_movie_detail_genre);
         textMovideDetailRate = (TextView) findViewById(R.id.text_movie_detail_rate);
         textMovideDetailOverview = (TextView) findViewById(R.id.text_movie_detail_overview);
 
@@ -60,7 +68,7 @@ public class MovieDetail extends AppCompatActivity {
             linearContainerMovieDetail.setVisibility(View.VISIBLE);
             progressBarMovieDetail.setVisibility(View.GONE);
 
-            textMovieDetailTitle.setText(film.getTitle());
+            getSupportActionBar().setTitle(film.getTitle());
 
             Picasso.with(this)
                     .load(IMAGE_BASE_URL + backDrop + film.getBackdropPath())
@@ -70,13 +78,136 @@ public class MovieDetail extends AppCompatActivity {
                     .load(IMAGE_BASE_URL + thumb + film.getPosterPath())
                     .into(this.imageMovieThumb);
 
+            ArrayList<Integer> arrayGenre = film.getGenre();
+
             textMovideDetailOriginalName.setText(film.getOriginalTitle());
-            textMovideDetailLanguage.setText(film.getLanguage());
+            textMovideDetailGenre.setText(getGenreText(arrayGenre));
             textMovideDetailRate.setText(film.getRate());
             textMovideDetailOverview.setText(film.getOverview());
 
         }else {
             Toast.makeText(this, getString(R.string.error_movie_detail), Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
+    }
+
+    public String getGenreText(ArrayList<Integer> numbers){
+
+        StringBuilder unabbreviated = new StringBuilder();
+
+        for(int i = 0; i < numbers.size(); i++){
+
+            switch (numbers.get(i)){
+
+                case 28:
+                    unabbreviated.append(getString(R.string.genre_action));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 12:
+                    unabbreviated.append(getString(R.string.genre_adventure));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 16:
+                    unabbreviated.append(getString(R.string.genre_animation));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 35:
+                    unabbreviated.append(getString(R.string.genre_comedy));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 80:
+                    unabbreviated.append(getString(R.string.genre_crime));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 99:
+                    unabbreviated.append(getString(R.string.genre_documentary));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 18:
+                    unabbreviated.append(getString(R.string.genre_drama));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 10751:
+                    unabbreviated.append(getString(R.string.genre_family));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 14:
+                    unabbreviated.append(getString(R.string.genre_fantasy));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 36:
+                    unabbreviated.append(getString(R.string.genre_history));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 27:
+                    unabbreviated.append(getString(R.string.genre_horror));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 10402:
+                    unabbreviated.append(getString(R.string.genre_music));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 9648:
+                    unabbreviated.append(getString(R.string.genre_mystery));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 10749:
+                    unabbreviated.append(getString(R.string.genre_romance));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 878:
+                    unabbreviated.append(getString(R.string.genre_science_fiction));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 10770:
+                    unabbreviated.append(getString(R.string.genre_tv_movie));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 53:
+                    unabbreviated.append(getString(R.string.genre_thriller));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 10752:
+                    unabbreviated.append(getString(R.string.genre_war));
+                    unabbreviated.append(", ");
+                    break;
+
+                case 37:
+                    unabbreviated.append(getString(R.string.genre_western));
+                    unabbreviated.append(", ");
+                    break;
+            }
+        }
+
+        String modified = unabbreviated.substring(0, unabbreviated.length() -2);
+
+        return modified;
     }
 }

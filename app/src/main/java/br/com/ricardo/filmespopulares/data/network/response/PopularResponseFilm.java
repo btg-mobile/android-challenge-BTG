@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-
-import br.com.ricardo.filmespopulares.data.network.model.Genre;
 
 public class PopularResponseFilm implements Serializable {
 

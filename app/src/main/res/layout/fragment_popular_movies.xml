@@ -9,16 +9,32 @@
         android:id="@+id/edit_popular_ml_search"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginBottom="5dp"
+        android:background="@drawable/search_rounded"
         android:ems="30"
         android:hint="Pesquisar"
+        android:inputType="textPersonName"
         android:paddingStart="5sp"
-        android:textColorHint="@android:color/black"
-        android:background="@drawable/search_rounded"
-        android:inputType="textPersonName" />
+        android:textColorHint="@color/colorSearchHint"
+        android:textColor="@android:color/black"/>
+
+    <FrameLayout
+        android:id="@+id/frame_popular_movielist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressBar_popular_movielist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+    </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_popular_ml"
