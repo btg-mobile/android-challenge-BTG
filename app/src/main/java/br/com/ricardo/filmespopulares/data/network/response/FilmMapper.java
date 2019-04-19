@@ -12,8 +12,8 @@ public class FilmMapper {
         List<Film> filmList = new ArrayList<>();
 
         for(PopularResponseFilm fr : popularResponseFilms){
-            final Film film = new Film(fr.getRate(), fr.getTitle(), fr.getPosterPath(), fr.getLanguage(),
-                    fr.getOriginalTitle(), fr.getGenres(), fr.getBackdropPath(), fr.getOverview(), fr.getReleaseDate());
+            final Film film = new Film(fr.getId(), fr.getRate(), fr.getTitle(), fr.getPosterPath(), fr.getOriginalTitle(),
+                    fr.getGenres(), fr.getBackdropPath(), fr.getOverview(), fr.getReleaseDate());
             filmList.add(film);
         }
 

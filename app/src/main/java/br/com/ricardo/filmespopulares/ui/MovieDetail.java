@@ -1,11 +1,12 @@
 package br.com.ricardo.filmespopulares.ui;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -18,10 +19,11 @@ import java.util.ArrayList;
 
 import br.com.ricardo.filmespopulares.R;
 import br.com.ricardo.filmespopulares.data.network.model.Film;
-import br.com.ricardo.filmespopulares.data.network.response.PopularResponseFilm;
+import br.com.ricardo.filmespopulares.utils.KeepData;
 
 public class MovieDetail extends AppCompatActivity {
 
+    private static final String PREFS_NAME = "FavoriteFlag";
     public static final String EXTRA_FILM = "EXTRA_FILM";
     public static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
 
@@ -36,12 +38,18 @@ public class MovieDetail extends AppCompatActivity {
     private TextView textMovideDetailOriginalName;
     private TextView textMovideDetailGenre;
     private TextView textMovideDetailRate;
+    private CheckBox checkMovieDetailFavorite;
     private TextView textMovideDetailOverview;
+
+    private Film film;
+    private KeepData prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+
+        prefs = new KeepData(getSharedPreferences(PREFS_NAME, MODE_PRIVATE));
 
         toolbarMovieDetail = (Toolbar) findViewById(R.id.toolbar_movie_detail);
         setSupportActionBar(toolbarMovieDetail);
@@ -55,13 +63,14 @@ public class MovieDetail extends AppCompatActivity {
         textMovideDetailOriginalName = (TextView) findViewById(R.id.text_movie_detail_original_name);
         textMovideDetailGenre = (TextView) findViewById(R.id.text_movie_detail_genre);
         textMovideDetailRate = (TextView) findViewById(R.id.text_movie_detail_rate);
+        checkMovieDetailFavorite = (CheckBox) findViewById(R.id.check_movie_detail_favorite);
         textMovideDetailOverview = (TextView) findViewById(R.id.text_movie_detail_overview);
 
         linearContainerMovieDetail.setVisibility(View.GONE);
         progressBarMovieDetail.setVisibility(View.VISIBLE);
 
 
-        Film film = (Film) getIntent().getSerializableExtra(EXTRA_FILM);
+        film = (Film) getIntent().getSerializableExtra(EXTRA_FILM);
 
         if(film != null){
 
@@ -84,6 +93,21 @@ public class MovieDetail extends AppCompatActivity {
             textMovideDetailGenre.setText(getGenreText(arrayGenre));
             textMovideDetailRate.setText(film.getRate());
             textMovideDetailOverview.setText(film.getOverview());
+            checkMovieDetailFavorite.setChecked(prefs.recoverFlagFavorite(String.valueOf(film.getIdMovie()), false));
+
+            film.setCheckFavorite(prefs.recoverFlagFavorite(String.valueOf(film.getIdMovie()), false));
+
+            checkMovieDetailFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                    if(checkMovieDetailFavorite.isChecked()){
+                        prefs.saveFlagFavoriteMovie(String.valueOf(film.getIdMovie()), true);
+                    } else {
+                        prefs.saveFlagFavoriteMovie(String.valueOf(film.getIdMovie()), false);
+                    }
+                }
+            });
 
         }else {
             Toast.makeText(this, getString(R.string.error_movie_detail), Toast.LENGTH_SHORT).show();

@@ -7,13 +7,12 @@ import java.util.ArrayList;
 
 public class PopularResponseFilm implements Serializable {
 
+    private int id;
     @SerializedName("vote_average")
     private String rate;
     private String title;
     @SerializedName("poster_path")
     private String posterPath;
-    @SerializedName("original_language")
-    private String language;
     @SerializedName("original_title")
     private String originalTitle;
     @SerializedName("genre_ids")
@@ -25,16 +24,24 @@ public class PopularResponseFilm implements Serializable {
     private String releaseDate;
 
 
-    public PopularResponseFilm(String rate, String title, String posterPath, String language, String originalTitle, ArrayList<Integer> genres, String backdropPath, String overview, String releaseDate) {
+    public PopularResponseFilm(int id, String rate, String title, String posterPath, String originalTitle, ArrayList<Integer> genres, String backdropPath, String overview, String releaseDate) {
+        this.id = id;
         this.rate = rate;
         this.title = title;
         this.posterPath = posterPath;
-        this.language = language;
         this.originalTitle = originalTitle;
         this.genres = genres;
         this.backdropPath = backdropPath;
         this.overview = overview;
         this.releaseDate = releaseDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getRate() {
@@ -59,14 +66,6 @@ public class PopularResponseFilm implements Serializable {
 
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     public String getOriginalTitle() {

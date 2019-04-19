@@ -5,26 +5,36 @@ import java.util.ArrayList;
 
 public class Film implements Serializable {
 
+    private int idMovie;
     private String rate;
     private String title;
     private String posterPath;
-    private String language;
     private String originalTitle;
     private ArrayList<Integer> genre;
     private String backdropPath;
     private String overview;
     private String releaseDate;
+    private boolean checkFavorite;
 
-    public Film(String rate, String title, String posterPath, String language, String originalTitle, ArrayList<Integer> genre, String backdropPath, String overview, String releaseDate) {
+    public Film(int idMovie, String rate, String title, String posterPath, String originalTitle, ArrayList<Integer> genre, String backdropPath, String overview, String releaseDate) {
+        this.idMovie = idMovie;
         this.rate = rate;
         this.title = title;
         this.posterPath = posterPath;
-        this.language = language;
         this.originalTitle = originalTitle;
         this.genre = genre;
         this.backdropPath = backdropPath;
         this.overview = overview;
         this.releaseDate = releaseDate;
+        this.checkFavorite = false;
+    }
+
+    public int getIdMovie() {
+        return idMovie;
+    }
+
+    public void setIdMovie(int idMovie) {
+        this.idMovie = idMovie;
     }
 
     public String getRate() {
@@ -49,14 +59,6 @@ public class Film implements Serializable {
 
     public void setPosterPath(String posterPath) {
         this.posterPath = posterPath;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     public String getOriginalTitle() {
@@ -97,5 +99,13 @@ public class Film implements Serializable {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public boolean isCheckFavorite() {
+        return checkFavorite;
+    }
+
+    public void setCheckFavorite(boolean checkFavorite) {
+        this.checkFavorite = checkFavorite;
     }
 }

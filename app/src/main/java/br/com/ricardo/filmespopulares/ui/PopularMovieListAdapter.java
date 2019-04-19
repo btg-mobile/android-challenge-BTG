@@ -57,12 +57,6 @@ public class PopularMovieListAdapter extends RecyclerView.Adapter<PopularMovieLi
         return movieLists.size();
     }
 
-    public void clear() {
-        movieLists.clear();
-        notifyDataSetChanged();
-    }
-
-
 
     public class PopularMovieListViewHolder extends RecyclerView.ViewHolder{
 
