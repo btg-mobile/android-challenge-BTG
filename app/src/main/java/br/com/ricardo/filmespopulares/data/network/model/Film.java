@@ -10,23 +10,21 @@ public class Film implements Serializable {
     private String title;
     private String posterPath;
     private String originalTitle;
-    private ArrayList<Integer> genre;
+    private ArrayList<Integer> genres;
     private String backdropPath;
     private String overview;
     private String releaseDate;
-    private boolean checkFavorite;
 
-    public Film(int idMovie, String rate, String title, String posterPath, String originalTitle, ArrayList<Integer> genre, String backdropPath, String overview, String releaseDate) {
+    public Film(int idMovie, String rate, String title, String posterPath, String originalTitle, ArrayList<Integer> genres, String backdropPath, String overview, String releaseDate) {
         this.idMovie = idMovie;
         this.rate = rate;
         this.title = title;
         this.posterPath = posterPath;
         this.originalTitle = originalTitle;
-        this.genre = genre;
+        this.genres = genres;
         this.backdropPath = backdropPath;
         this.overview = overview;
         this.releaseDate = releaseDate;
-        this.checkFavorite = false;
     }
 
     public int getIdMovie() {
@@ -69,12 +67,12 @@ public class Film implements Serializable {
         this.originalTitle = originalTitle;
     }
 
-    public ArrayList<Integer> getGenre() {
-        return genre;
+    public ArrayList<Integer> getGenres() {
+        return genres;
     }
 
-    public void setGenre(ArrayList<Integer> genre) {
-        this.genre = genre;
+    public void setGenres(ArrayList<Integer> genres) {
+        this.genres = genres;
     }
 
     public String getBackdropPath() {
@@ -99,13 +97,5 @@ public class Film implements Serializable {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
-    }
-
-    public boolean isCheckFavorite() {
-        return checkFavorite;
-    }
-
-    public void setCheckFavorite(boolean checkFavorite) {
-        this.checkFavorite = checkFavorite;
     }
 }

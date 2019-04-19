@@ -87,7 +87,7 @@ public class MovieDetail extends AppCompatActivity {
                     .load(IMAGE_BASE_URL + thumb + film.getPosterPath())
                     .into(this.imageMovieThumb);
 
-            ArrayList<Integer> arrayGenre = film.getGenre();
+            ArrayList<Integer> arrayGenre = film.getGenres();
 
             textMovideDetailOriginalName.setText(film.getOriginalTitle());
             textMovideDetailGenre.setText(getGenreText(arrayGenre));
@@ -95,7 +95,7 @@ public class MovieDetail extends AppCompatActivity {
             textMovideDetailOverview.setText(film.getOverview());
             checkMovieDetailFavorite.setChecked(prefs.recoverFlagFavorite(String.valueOf(film.getIdMovie()), false));
 
-            film.setCheckFavorite(prefs.recoverFlagFavorite(String.valueOf(film.getIdMovie()), false));
+//            film.setCheckFavorite(prefs.recoverFlagFavorite(String.valueOf(film.getIdMovie()), false));
 
             checkMovieDetailFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

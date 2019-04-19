@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PopularResponseFilm implements Serializable {
+public class ResponseFilm implements Serializable {
 
     private int id;
     @SerializedName("vote_average")
@@ -24,7 +24,7 @@ public class PopularResponseFilm implements Serializable {
     private String releaseDate;
 
 
-    public PopularResponseFilm(int id, String rate, String title, String posterPath, String originalTitle, ArrayList<Integer> genres, String backdropPath, String overview, String releaseDate) {
+    public ResponseFilm(int id, String rate, String title, String posterPath, String originalTitle, ArrayList<Integer> genres, String backdropPath, String overview, String releaseDate) {
         this.id = id;
         this.rate = rate;
         this.title = title;

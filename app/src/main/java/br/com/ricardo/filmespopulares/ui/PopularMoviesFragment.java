@@ -2,7 +2,6 @@ package br.com.ricardo.filmespopulares.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,23 +14,19 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.ricardo.filmespopulares.R;
 import br.com.ricardo.filmespopulares.data.network.api.ApiService;
 import br.com.ricardo.filmespopulares.data.network.model.Film;
 import br.com.ricardo.filmespopulares.data.network.response.FilmMapper;
-import br.com.ricardo.filmespopulares.data.network.response.PopularResponseFilm;
-import br.com.ricardo.filmespopulares.data.network.response.PopularResultFilms;
+import br.com.ricardo.filmespopulares.data.network.response.ResultFilms;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.ContentValues.TAG;
 
-
-public class PopularMoviesFragment extends Fragment{
+public class PopularMoviesFragment extends Fragment {
 
     public static String TAG_FAILURE = "Response - Failure";
 
@@ -41,6 +36,7 @@ public class PopularMoviesFragment extends Fragment{
     private RecyclerView recyclerPopularMovie;
 
     private PopularMovieListAdapter adapter;
+    private Film film;
     private List<Film> filmList;
 
     @Override
@@ -70,9 +66,9 @@ public class PopularMoviesFragment extends Fragment{
 
     public void getMovies(){
         ApiService.getInstance().getPopularFilms("b70848b875278d63417beecbdddc4841")
-                .enqueue(new Callback<PopularResultFilms>() {
+                .enqueue(new Callback<ResultFilms>() {
                     @Override
-                    public void onResponse(Call<PopularResultFilms> call, Response<PopularResultFilms> response) {
+                    public void onResponse(Call<ResultFilms> call, Response<ResultFilms> response) {
 
                         if(!response.isSuccessful()) {
                             Log.i(TAG_FAILURE, "Erro: " + response.code());
@@ -83,8 +79,7 @@ public class PopularMoviesFragment extends Fragment{
                             framePopularMovie.setVisibility(View.GONE);
                             progressBarPopularMovie.setVisibility(View.GONE);
 
-                            filmList = FilmMapper
-                                    .setFilmDomain(response.body().getResults());
+                            filmList = FilmMapper.setFilmDomain(response.body().getResults());
 
                             adapter.setFilm(filmList);
                         }
@@ -95,7 +90,7 @@ public class PopularMoviesFragment extends Fragment{
 
                                 Intent intent = new Intent(getActivity(), MovieDetail.class);
 
-                                Film film = filmList.get(position);
+                                film = filmList.get(position);
 
                                 intent.putExtra(MovieDetail.EXTRA_FILM, film);
                                 startActivity(intent);
@@ -104,7 +99,7 @@ public class PopularMoviesFragment extends Fragment{
                     }
 
                     @Override
-                    public void onFailure(Call<PopularResultFilms> call, Throwable t) {
+                    public void onFailure(Call<ResultFilms> call, Throwable t) {
                         Log.i(TAG_FAILURE, t.getMessage());
                         showError();
                     }
@@ -115,6 +110,4 @@ public class PopularMoviesFragment extends Fragment{
     private void showError() {
         Toast.makeText(getActivity(), "Erro de Conexão", Toast.LENGTH_SHORT).show();
     }
-
-
 }

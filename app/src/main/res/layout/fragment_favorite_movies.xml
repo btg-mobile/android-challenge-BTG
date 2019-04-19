@@ -1,15 +1,43 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.FavoriteMoviesFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DOIS"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
+    <EditText
+        android:id="@+id/edit_favorite_ml_search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/search_rounded"
+        android:ems="30"
+        android:hint="Pesquisar"
+        android:inputType="textPersonName"
+        android:paddingStart="5sp"
+        android:textColorHint="@color/colorSearchHint"
+        android:textColor="@android:color/black"/>
 
-</RelativeLayout>
+    <FrameLayout
+        android:id="@+id/frame_favorite_movielist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressBar_favorite_movielist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_favorite_ml"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

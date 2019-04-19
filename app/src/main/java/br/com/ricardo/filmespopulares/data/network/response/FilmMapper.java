@@ -7,13 +7,14 @@ import br.com.ricardo.filmespopulares.data.network.model.Film;
 
 public class FilmMapper {
 
-    public static List<Film> setFilmDomain(List<PopularResponseFilm> popularResponseFilms){
+    public static List<Film> setFilmDomain(List<ResponseFilm> responseFilms){
 
         List<Film> filmList = new ArrayList<>();
 
-        for(PopularResponseFilm fr : popularResponseFilms){
-            final Film film = new Film(fr.getId(), fr.getRate(), fr.getTitle(), fr.getPosterPath(), fr.getOriginalTitle(),
-                    fr.getGenres(), fr.getBackdropPath(), fr.getOverview(), fr.getReleaseDate());
+        for(ResponseFilm rf : responseFilms){
+            final Film film = new Film(rf.getId(), rf.getRate(), rf.getTitle(), rf.getPosterPath(), rf.getOriginalTitle(),
+                    rf.getGenres(), rf.getBackdropPath(), rf.getOverview(), rf.getReleaseDate());
+
             filmList.add(film);
         }
 
