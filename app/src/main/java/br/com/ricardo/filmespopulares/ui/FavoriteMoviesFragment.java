@@ -76,14 +76,87 @@ public class FavoriteMoviesFragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
+                searchMovie(editFavoriteMovieSearch.getText().toString().trim());
                 HideKeyboard.hide(getActivity(), editFavoriteMovieSearch);
-                editFavoriteMovieSearch.setText("");
+
+                frameFavoriteMovie.setVisibility(View.VISIBLE);
+                progressBarFavoriteMovie.setVisibility(View.VISIBLE);
 
                 return false;
             }
         });
 
         return popularView;
+    }
+
+    public void searchMovie(final String movie){
+
+        if(movie.equals("")){
+            getFavoriteMovies();
+            showError("Campo vazio. Digite o nome do filme.");
+        } else {
+
+            ApiService.getInstance().getPopularFilms("b70848b875278d63417beecbdddc4841")
+                    .enqueue(new Callback<ResultFilms>() {
+                        @Override
+                        public void onResponse(Call<ResultFilms> call, Response<ResultFilms> response) {
+
+                            if(!response.isSuccessful()) {
+                                Log.i(TAG_FAILURE, "Erro: " + response.code());
+                                showError("Falha na conexão.");
+
+                            } else {
+
+                                frameFavoriteMovie.setVisibility(View.GONE);
+                                progressBarFavoriteMovie.setVisibility(View.GONE);
+
+                                ResultFilms resultFilms = response.body();
+                                filmList = new ArrayList<>();
+
+                                for(ResponseFilm rf : resultFilms.getResults()){
+
+                                    if(rf.getTitle().equals(movie) || rf.getReleaseDate().equals(movie)){
+
+                                        if(prefs.recoverFlagFavorite(String.valueOf(rf.getId()))){
+
+                                            final Film film = new Film(rf.getId(), rf.getRate(), rf.getTitle(), rf.getPosterPath(),
+                                                    rf.getOriginalTitle(), rf.getGenres(), rf.getBackdropPath(),
+                                                    rf.getOverview(), rf.getReleaseDate());
+
+                                            filmList.add(film);
+                                        }
+                                    }
+                                }
+
+                                if(filmList.size() == 0){
+                                    getFavoriteMovies();
+                                }
+
+                                adapter.setFavoriteFilm(filmList);
+                                editFavoriteMovieSearch.setText("");
+                            }
+
+                            adapter.setOnItemClickListener(new FavoriteMovieListAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+
+                                    Intent intent = new Intent(getActivity(), MovieDetail.class);
+
+                                    film = filmList.get(position);
+
+                                    intent.putExtra(MovieDetail.EXTRA_FILM, film);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResultFilms> call, Throwable t) {
+                            Log.i(TAG_FAILURE, t.getMessage());
+                            showError("Falha na conexão.");
+                        }
+                    });
+        }
     }
 
 
@@ -96,7 +169,7 @@ public class FavoriteMoviesFragment extends Fragment {
 
                         if(!response.isSuccessful()) {
                             Log.i(TAG_FAILURE, "Erro: " + response.code());
-                            showError();
+                            showError("Falha na conexão.");
 
                         } else {
 
@@ -140,12 +213,12 @@ public class FavoriteMoviesFragment extends Fragment {
                     @Override
                     public void onFailure(Call<ResultFilms> call, Throwable t) {
                         Log.i(TAG_FAILURE, t.getMessage());
-                        showError();
+                        showError("Falha na conexão.");
                     }
                 });
     }
 
-    private void showError() {
-        Toast.makeText(getActivity(), "Erro de Conexão", Toast.LENGTH_SHORT).show();
+    private void showError(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

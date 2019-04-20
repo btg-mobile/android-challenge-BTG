@@ -84,6 +84,7 @@ public class PopularMoviesFragment extends Fragment {
     public void searchMovie(final String movie){
 
         if(movie.equals("")){
+            getMovies();
             showError("Campo vazio. Digite o nome do filme.");
         } else {
 
@@ -114,6 +115,10 @@ public class PopularMoviesFragment extends Fragment {
 
                                         filmList.add(film);
                                     }
+                                }
+
+                                if(filmList.size() == 0){
+                                    getMovies();
                                 }
 
                                 adapter.setFilm(filmList);
