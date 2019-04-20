@@ -17,11 +17,9 @@ public class KeepData {
         editor.apply();
     }
 
-    public boolean recoverFlagFavorite(String idMovie, boolean value){
+    public boolean recoverFlagFavorite(String idMovie){
 
-        boolean flag = prefs.getBoolean(idMovie, false);
-
-        return flag;
+        return prefs.getBoolean(idMovie, false);
     }
 
 }

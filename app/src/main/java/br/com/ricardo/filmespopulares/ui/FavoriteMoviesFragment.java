@@ -32,7 +32,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FavoriteMoviesFragment extends Fragment {
 
-    private static final String PREFS_NAME = "FavoriteFlag";
+    private static final String PREFS_NAME = "Preferences";
     public static String TAG_FAILURE = "Response - Failure";
 
     private FrameLayout frameFavoriteMovie;
@@ -96,7 +96,7 @@ public class FavoriteMoviesFragment extends Fragment {
 
                             for(ResponseFilm rf : resultFilms.getResults()){
 
-                                if(prefs.recoverFlagFavorite(String.valueOf(rf.getId()), false)){
+                                if(prefs.recoverFlagFavorite(String.valueOf(rf.getId()))){
 
                                     final Film film = new Film(rf.getId(), rf.getRate(), rf.getTitle(), rf.getPosterPath(),
                                             rf.getOriginalTitle(), rf.getGenres(), rf.getBackdropPath(),

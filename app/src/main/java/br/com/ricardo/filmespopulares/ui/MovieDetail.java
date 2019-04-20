@@ -23,7 +23,7 @@ import br.com.ricardo.filmespopulares.utils.KeepData;
 
 public class MovieDetail extends AppCompatActivity {
 
-    private static final String PREFS_NAME = "FavoriteFlag";
+    private static final String PREFS_NAME = "Preferences";
     public static final String EXTRA_FILM = "EXTRA_FILM";
     public static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
 
@@ -93,7 +93,7 @@ public class MovieDetail extends AppCompatActivity {
             textMovideDetailGenre.setText(getGenreText(arrayGenre));
             textMovideDetailRate.setText(film.getRate());
             textMovideDetailOverview.setText(film.getOverview());
-            checkMovieDetailFavorite.setChecked(prefs.recoverFlagFavorite(String.valueOf(film.getIdMovie()), false));
+            checkMovieDetailFavorite.setChecked(prefs.recoverFlagFavorite(String.valueOf(film.getMovieId())));
 
 //            film.setCheckFavorite(prefs.recoverFlagFavorite(String.valueOf(film.getIdMovie()), false));
 
@@ -102,9 +102,9 @@ public class MovieDetail extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                     if(checkMovieDetailFavorite.isChecked()){
-                        prefs.saveFlagFavoriteMovie(String.valueOf(film.getIdMovie()), true);
+                        prefs.saveFlagFavoriteMovie(String.valueOf(film.getMovieId()), true);
                     } else {
-                        prefs.saveFlagFavoriteMovie(String.valueOf(film.getIdMovie()), false);
+                        prefs.saveFlagFavoriteMovie(String.valueOf(film.getMovieId()), false);
                     }
                 }
             });

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Film implements Serializable {
 
-    private int idMovie;
+    private int movieId;
     private String rate;
     private String title;
     private String posterPath;
@@ -15,8 +15,8 @@ public class Film implements Serializable {
     private String overview;
     private String releaseDate;
 
-    public Film(int idMovie, String rate, String title, String posterPath, String originalTitle, ArrayList<Integer> genres, String backdropPath, String overview, String releaseDate) {
-        this.idMovie = idMovie;
+    public Film(int movieId, String rate, String title, String posterPath, String originalTitle, ArrayList<Integer> genres, String backdropPath, String overview, String releaseDate) {
+        this.movieId = movieId;
         this.rate = rate;
         this.title = title;
         this.posterPath = posterPath;
@@ -27,12 +27,12 @@ public class Film implements Serializable {
         this.releaseDate = releaseDate;
     }
 
-    public int getIdMovie() {
-        return idMovie;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setIdMovie(int idMovie) {
-        this.idMovie = idMovie;
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
     public String getRate() {
