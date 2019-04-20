@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "150695705000",
+    "firebase_url": "https://the-moviedb-e222a.firebaseio.com",
+    "project_id": "the-moviedb-e222a",
+    "storage_bucket": "the-moviedb-e222a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150695705000:android:3c82871d48fb59de",
+        "android_client_info": {
+          "package_name": "com.example.leopaim.themoviedb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150695705000-mbgs2co7q6la3c2i3aaaplbr3el4s1mj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.leopaim.themoviedb",
+            "certificate_hash": "206d389dcb7ed28a5fcf5b1a8aa78f5c19d01489"
+          }
+        },
+        {
+          "client_id": "150695705000-tus8ke8dv4p8amhcbqa42jasaagjcgk1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCi5bLcRisNZpyNhtvXAixPoi4fNXMHik8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150695705000-tus8ke8dv4p8amhcbqa42jasaagjcgk1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_margin="@dimen/layout_margin"
+            android:scrollbars="none">
+
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_margin="@dimen/layout_margin">
+
+        <ImageView
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                app:srcCompat="@drawable/not_found"
+                android:id="@+id/posterImageView"
+        />
+
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center">
+            <TextView
+                    android:text="@string/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/titleTextView"
+                    android:textSize="@dimen/t5"
+                    android:textColor="@android:color/background_dark"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/yearTextView"
+                    android:layout_marginLeft="4dp"
+                    android:textSize="@dimen/t5"
+                    android:textColor="@android:color/darker_gray"/>
+        </LinearLayout>
+
+
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:src="@drawable/unfavorite"
+                android:id="@+id/favoriteImageView"
+                tools:ignore="VectorDrawableCompat"/>
+        <TextView
+                android:text="Overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/t5"
+                android:textColor="@android:color/background_dark"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/overviewTextView"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="4dp"
+
+        />
+
+
+        <TextView
+                android:text="Score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="@android:color/background_dark"
+                android:layout_marginTop="16dp"
+        />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scoreTextView"
+        />
+
+
+        <TextView
+                android:text="Genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/t5"
+                android:textColor="@android:color/background_dark"
+                android:layout_marginTop="16dp"
+        />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:id="@+id/genreTextView"
+        />
+    </LinearLayout>
+</ScrollView>

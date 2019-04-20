@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">The Movie DB.</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="db_name">the_moviedb</string>
+
+    <string name="no_overview">Sem Sinopse</string>
+    <string name="no_vote_average">Sem Nota</string>
+    <string name="no_genre">Sem Gênero</string>
+    <string name="no_title">Sem Título</string>
+
+    <string name="score">Nota</string>
+    <string name="genre">Sem gênero</string>
+    <string name="overview">Sinopse</string>
+    <string name="title">Título</string>
+
+    <string name="tab_favorite">Favorito</string>
+    <string name="tab_pop">Popular</string>
+
+    <string name="no_favorite_message">Ops...você ainda não favoritou nenhum filme!</string>
+
+
+
+
+
+
+
+
+</resources>
