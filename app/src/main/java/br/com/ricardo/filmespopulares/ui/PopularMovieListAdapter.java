@@ -83,6 +83,11 @@ public class PopularMovieListAdapter extends RecyclerView.Adapter<PopularMovieLi
         }
     }
 
+    public void clear(){
+        this.movieLists.clear();
+        notifyDataSetChanged();
+    }
+
     public void setFilm(List<Film> film){
         this.movieLists = film;
         notifyDataSetChanged();

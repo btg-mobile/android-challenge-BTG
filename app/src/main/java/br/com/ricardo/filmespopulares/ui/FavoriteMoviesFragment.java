@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import br.com.ricardo.filmespopulares.data.network.api.ApiService;
 import br.com.ricardo.filmespopulares.data.network.model.Film;
 import br.com.ricardo.filmespopulares.data.network.response.ResponseFilm;
 import br.com.ricardo.filmespopulares.data.network.response.ResultFilms;
+import br.com.ricardo.filmespopulares.utils.HideKeyboard;
 import br.com.ricardo.filmespopulares.utils.KeepData;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,6 +71,17 @@ public class FavoriteMoviesFragment extends Fragment {
         recyclerFavoriteMovie.setAdapter(adapter);
 
         getFavoriteMovies();
+
+        editFavoriteMovieSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                HideKeyboard.hide(getActivity(), editFavoriteMovieSearch);
+                editFavoriteMovieSearch.setText("");
+
+                return false;
+            }
+        });
 
         return popularView;
     }
