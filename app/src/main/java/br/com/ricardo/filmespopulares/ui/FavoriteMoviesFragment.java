@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import br.com.ricardo.filmespopulares.data.network.api.ApiService;
 import br.com.ricardo.filmespopulares.data.network.model.Film;
 import br.com.ricardo.filmespopulares.data.network.response.ResponseFilm;
 import br.com.ricardo.filmespopulares.data.network.response.ResultFilms;
+import br.com.ricardo.filmespopulares.utils.Connection;
 import br.com.ricardo.filmespopulares.utils.ErrorMessage;
 import br.com.ricardo.filmespopulares.utils.HideKeyboard;
 import br.com.ricardo.filmespopulares.utils.KeepData;
@@ -41,11 +43,13 @@ public class FavoriteMoviesFragment extends Fragment {
 
     private FrameLayout frameFavoriteMovie;
     private ProgressBar progressBarFavoriteMovie;
+    private TextView textFavoriteListEmptyNoNetwork;
     private SwipeRefreshLayout swipeFavoriteMovie;
     private EditText editFavoriteMovieSearch;
     private RecyclerView recyclerFavoriteMovie;
 
     private KeepData prefs;
+    private Connection connection;
     private ErrorMessage errorMessage;
     private FavoriteMovieListAdapter adapter;
     private Film film;
@@ -60,9 +64,11 @@ public class FavoriteMoviesFragment extends Fragment {
 
         prefs = new KeepData(getActivity().getSharedPreferences(PREFS_NAME, MODE_PRIVATE));
         errorMessage = new ErrorMessage();
+        connection = new Connection();
 
         frameFavoriteMovie = (FrameLayout) popularView.findViewById(R.id.frame_favorite_movielist);
         progressBarFavoriteMovie = (ProgressBar) popularView.findViewById(R.id.progressBar_favorite_movielist);
+        textFavoriteListEmptyNoNetwork = (TextView) popularView.findViewById(R.id.text_favorite_notice_no_network);
         swipeFavoriteMovie = (SwipeRefreshLayout) popularView.findViewById(R.id.swipe_container_favorite_movie_list);
         editFavoriteMovieSearch = (EditText) popularView.findViewById(R.id.edit_favorite_ml_search);
         recyclerFavoriteMovie = (RecyclerView) popularView.findViewById(R.id.recycler_favorite_ml);
@@ -184,60 +190,75 @@ public class FavoriteMoviesFragment extends Fragment {
 
     public void getFavoriteMovies(){
 
-        ApiService.getInstance().getPopularFilms("b70848b875278d63417beecbdddc4841")
-                .enqueue(new Callback<ResultFilms>() {
-                    @Override
-                    public void onResponse(Call<ResultFilms> call, Response<ResultFilms> response) {
+        if(!connection.verifyConnection(getActivity())){
 
-                        if(!response.isSuccessful()) {
-                            Log.i(TAG_FAILURE, "Erro: " + response.code());
-                            errorMessage.showError(getActivity(), getString(R.string.connection_failure));
+            frameFavoriteMovie.setVisibility(View.VISIBLE);
+            progressBarFavoriteMovie.setVisibility(View.GONE);
+            textFavoriteListEmptyNoNetwork.setVisibility(View.VISIBLE);
 
-                        } else {
+            errorMessage.showError(getActivity(), getString(R.string.connection_network));
+        } else {
+
+            ApiService.getInstance().getPopularFilms("b70848b875278d63417beecbdddc4841")
+                    .enqueue(new Callback<ResultFilms>() {
+                        @Override
+                        public void onResponse(Call<ResultFilms> call, Response<ResultFilms> response) {
+
+                            if(!response.isSuccessful()) {
+                                Log.i(TAG_FAILURE, "Erro: " + response.code());
+                                errorMessage.showError(getActivity(), getString(R.string.connection_failure));
+
+                            } else {
+
+                                frameFavoriteMovie.setVisibility(View.GONE);
+                                progressBarFavoriteMovie.setVisibility(View.GONE);
+
+                                ResultFilms resultFilms = response.body();
+
+                                filmList = new ArrayList<>();
+
+                                for(ResponseFilm rf : resultFilms.getResults()){
+
+                                    if(prefs.recoverFlagFavorite(String.valueOf(rf.getId()))){
+
+                                        final Film film = new Film(rf.getId(), rf.getRate(), rf.getTitle(), rf.getPosterPath(),
+                                                rf.getOriginalTitle(), rf.getGenres(), rf.getBackdropPath(),
+                                                rf.getOverview(), rf.getReleaseDate());
+
+                                        filmList.add(film);
+                                    }
+                                }
+
+                                adapter.setFavoriteFilm(filmList);
+
+                            }
+
+                            adapter.setOnItemClickListener(new FavoriteMovieListAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+
+                                    Intent intent = new Intent(getActivity(), MovieDetail.class);
+
+                                    film = filmList.get(position);
+
+                                    intent.putExtra(MovieDetail.EXTRA_FILM, film);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResultFilms> call, Throwable t) {
+                            Log.i(TAG_FAILURE, t.getMessage());
 
                             frameFavoriteMovie.setVisibility(View.GONE);
                             progressBarFavoriteMovie.setVisibility(View.GONE);
 
-                            ResultFilms resultFilms = response.body();
-
-                            filmList = new ArrayList<>();
-
-                            for(ResponseFilm rf : resultFilms.getResults()){
-
-                                if(prefs.recoverFlagFavorite(String.valueOf(rf.getId()))){
-
-                                    final Film film = new Film(rf.getId(), rf.getRate(), rf.getTitle(), rf.getPosterPath(),
-                                            rf.getOriginalTitle(), rf.getGenres(), rf.getBackdropPath(),
-                                            rf.getOverview(), rf.getReleaseDate());
-
-                                    filmList.add(film);
-                                }
-                            }
-
-                            adapter.setFavoriteFilm(filmList);
-
+                            errorMessage.showError(getActivity(), getString(R.string.connection_network));
                         }
+                    });
 
-                        adapter.setOnItemClickListener(new FavoriteMovieListAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(int position) {
-
-                                Intent intent = new Intent(getActivity(), MovieDetail.class);
-
-                                film = filmList.get(position);
-
-                                intent.putExtra(MovieDetail.EXTRA_FILM, film);
-                                startActivity(intent);
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResultFilms> call, Throwable t) {
-                        Log.i(TAG_FAILURE, t.getMessage());
-                        errorMessage.showError(getActivity(), getString(R.string.connection_failure));
-                    }
-                });
+        }
     }
 
     @Override

@@ -17,12 +17,14 @@
     <string name="movie_detail_film_rate">Avaliação:</string>
     <string name="search_bar_empty">Campo vazio. Digite o nome do filme.</string>
     <string name="connection_failure">Falha na conexão.</string>
+    <string name="connection_network">Seu dispositivo parece estar offline. Verifique suas redes.</string>
     <string name="movie_list_empty">Não existe nenhum filme com este nome.</string>
 
 
     <!-- Error Message -->
     <string name="error_movielist">Erro ao obter a lista de filmes.</string>
     <string name="error_movie_detail">Erro ao obter os dados filme.</string>
+    <string name="error_recycler_empty_network">Lista não carregada. Verifique suas conexões de rede.</string>
 
 
     <!-- Genres -->
@@ -45,6 +47,5 @@
     <string name="genre_thriller">thriller</string>
     <string name="genre_war">war</string>
     <string name="genre_western">western</string>
-
 
 </resources>

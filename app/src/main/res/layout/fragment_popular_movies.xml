@@ -19,6 +19,16 @@
             android:layout_gravity="center"
             android:visibility="gone"/>
 
+        <TextView
+            android:id="@+id/text_popular_notice_no_network"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:visibility="gone"
+            android:text="@string/error_recycler_empty_network"/>
+
     </FrameLayout>
 
     <EditText
@@ -45,10 +55,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_popular_ml"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_popular_ml"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
