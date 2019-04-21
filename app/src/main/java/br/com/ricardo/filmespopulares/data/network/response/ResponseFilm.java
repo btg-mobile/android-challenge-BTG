@@ -24,7 +24,8 @@ public class ResponseFilm implements Serializable {
     private String releaseDate;
 
 
-    public ResponseFilm(int id, String rate, String title, String posterPath, String originalTitle, ArrayList<Integer> genres, String backdropPath, String overview, String releaseDate) {
+    public ResponseFilm(int id, String rate, String title, String posterPath, String originalTitle,
+                        ArrayList<Integer> genres, String backdropPath, String overview, String releaseDate) {
         this.id = id;
         this.rate = rate;
         this.title = title;

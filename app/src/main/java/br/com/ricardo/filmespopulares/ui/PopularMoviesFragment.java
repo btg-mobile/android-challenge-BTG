@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +25,7 @@ import br.com.ricardo.filmespopulares.data.network.model.Film;
 import br.com.ricardo.filmespopulares.data.network.response.FilmMapper;
 import br.com.ricardo.filmespopulares.data.network.response.ResponseFilm;
 import br.com.ricardo.filmespopulares.data.network.response.ResultFilms;
+import br.com.ricardo.filmespopulares.utils.ErrorMessage;
 import br.com.ricardo.filmespopulares.utils.HideKeyboard;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +42,7 @@ public class PopularMoviesFragment extends Fragment {
     private EditText editPopularMovieSearch;
     private RecyclerView recyclerPopularMovie;
 
+    private ErrorMessage errorMessage;
     private PopularMovieListAdapter adapter;
     private Film film;
     private List<Film> filmList;
@@ -51,6 +52,8 @@ public class PopularMoviesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View popularView = inflater.inflate(R.layout.fragment_popular_movies, container, false);
+
+        errorMessage = new ErrorMessage();
 
         framePopularMovie = (FrameLayout) popularView.findViewById(R.id.frame_popular_movielist);
         progressBarPopularMovie = (ProgressBar) popularView.findViewById(R.id.progressBar_popular_movielist);
@@ -98,11 +101,13 @@ public class PopularMoviesFragment extends Fragment {
         return popularView;
     }
 
+
     public void searchMovie(final String movie){
 
         if(TextUtils.isEmpty(movie)){
             getMovies();
-            showError("Campo vazio. Digite o nome do filme.");
+            errorMessage.showError(getActivity(), getString(R.string.search_bar_empty));
+
         } else {
 
             ApiService.getInstance().getPopularFilms("b70848b875278d63417beecbdddc4841")
@@ -112,7 +117,7 @@ public class PopularMoviesFragment extends Fragment {
 
                             if(!response.isSuccessful()) {
                                 Log.i(TAG_FAILURE, "Erro: " + response.code());
-                                showError("Falha na conexão.");
+                                errorMessage.showError(getActivity(), getString(R.string.connection_failure));
 
                             } else {
 
@@ -124,7 +129,9 @@ public class PopularMoviesFragment extends Fragment {
 
                                 for(ResponseFilm rf : resultFilms.getResults()){
 
-                                    if(rf.getTitle().contains(movie)){
+                                    String aux = rf.getTitle();
+
+                                    if(aux.toLowerCase().contains(movie.toLowerCase())){
 
                                         final Film film = new Film(rf.getId(), rf.getRate(), rf.getTitle(), rf.getPosterPath(),
                                                 rf.getOriginalTitle(), rf.getGenres(), rf.getBackdropPath(),
@@ -135,11 +142,11 @@ public class PopularMoviesFragment extends Fragment {
                                 }
 
                                 if(filmList.size() == 0){
-                                    showError("Não existe nenhum filme com este nome.");
+                                    errorMessage.showError(getActivity(), getString(R.string.movie_list_empty));
                                     getMovies();
                                 }
 
-                                adapter.setFilm(filmList);
+                                adapter.setPopularFilm(filmList);
                                 editPopularMovieSearch.setText("");
                             }
 
@@ -160,7 +167,7 @@ public class PopularMoviesFragment extends Fragment {
                         @Override
                         public void onFailure(Call<ResultFilms> call, Throwable t) {
                             Log.i(TAG_FAILURE, t.getMessage());
-                            showError("Falha na conexão.");
+                            errorMessage.showError(getActivity(), getString(R.string.connection_failure));
                         }
                     });
         }
@@ -175,7 +182,7 @@ public class PopularMoviesFragment extends Fragment {
 
                         if(!response.isSuccessful()) {
                             Log.i(TAG_FAILURE, "Erro: " + response.code());
-                            showError("Falha na conexão.");
+                            errorMessage.showError(getActivity(), getString(R.string.connection_failure));
 
                         } else {
 
@@ -184,7 +191,7 @@ public class PopularMoviesFragment extends Fragment {
 
                             filmList = FilmMapper.setFilmDomain(response.body().getResults());
 
-                            adapter.setFilm(filmList);
+                            adapter.setPopularFilm(filmList);
                         }
 
                         adapter.setOnItemClickListener(new PopularMovieListAdapter.OnItemClickListener() {
@@ -204,14 +211,10 @@ public class PopularMoviesFragment extends Fragment {
                     @Override
                     public void onFailure(Call<ResultFilms> call, Throwable t) {
                         Log.i(TAG_FAILURE, t.getMessage());
-                        showError("Falha na conexão.");
+                        errorMessage.showError(getActivity(), getString(R.string.connection_failure));
                     }
             });
 
-    }
-
-    private void showError(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

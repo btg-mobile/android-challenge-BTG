@@ -4,14 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -19,6 +15,7 @@ import java.util.ArrayList;
 
 import br.com.ricardo.filmespopulares.R;
 import br.com.ricardo.filmespopulares.data.network.model.Film;
+import br.com.ricardo.filmespopulares.utils.ErrorMessage;
 import br.com.ricardo.filmespopulares.utils.KeepData;
 
 public class MovieDetail extends AppCompatActivity {
@@ -30,9 +27,7 @@ public class MovieDetail extends AppCompatActivity {
     private final String backDrop = "w780";
     private final String thumb = "w154";
 
-    private  Toolbar toolbarMovieDetail;
-    private ProgressBar progressBarMovieDetail;
-    private LinearLayout linearContainerMovieDetail;
+    private Toolbar toolbarMovieDetail;
     private ImageView imageMovieDetail;
     private ImageView imageMovieThumb;
     private TextView textMovideDetailOriginalName;
@@ -43,6 +38,7 @@ public class MovieDetail extends AppCompatActivity {
 
     private Film film;
     private KeepData prefs;
+    private ErrorMessage errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +46,13 @@ public class MovieDetail extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
 
         prefs = new KeepData(getSharedPreferences(PREFS_NAME, MODE_PRIVATE));
+        errorMessage = new ErrorMessage();
 
         toolbarMovieDetail = (Toolbar) findViewById(R.id.toolbar_movie_detail);
         setSupportActionBar(toolbarMovieDetail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        progressBarMovieDetail = (ProgressBar) findViewById(R.id.progressBar_movie_detail);
-        linearContainerMovieDetail = (LinearLayout) findViewById(R.id.linear_container_movie_detail);
         imageMovieDetail = (ImageView) findViewById(R.id.image_movie_detail);
         imageMovieThumb = (ImageView) findViewById(R.id.image_movie_detail_thumb);
         textMovideDetailOriginalName = (TextView) findViewById(R.id.text_movie_detail_original_name);
@@ -66,16 +61,9 @@ public class MovieDetail extends AppCompatActivity {
         checkMovieDetailFavorite = (CheckBox) findViewById(R.id.check_movie_detail_favorite);
         textMovideDetailOverview = (TextView) findViewById(R.id.text_movie_detail_overview);
 
-        linearContainerMovieDetail.setVisibility(View.GONE);
-        progressBarMovieDetail.setVisibility(View.VISIBLE);
-
-
         film = (Film) getIntent().getSerializableExtra(EXTRA_FILM);
 
         if(film != null){
-
-            linearContainerMovieDetail.setVisibility(View.VISIBLE);
-            progressBarMovieDetail.setVisibility(View.GONE);
 
             getSupportActionBar().setTitle(film.getTitle());
 
@@ -108,7 +96,7 @@ public class MovieDetail extends AppCompatActivity {
             });
 
         }else {
-            Toast.makeText(this, getString(R.string.error_movie_detail), Toast.LENGTH_SHORT).show();
+            errorMessage.showError(this, getString(R.string.error_movie_detail));
         }
     }
 

@@ -3,14 +3,12 @@ package br.com.ricardo.filmespopulares.ui;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new PopularMoviesFragment(), "POPULARES");
-        adapter.addFragment(new FavoriteMoviesFragment(), "FAVORITOS");
+        adapter.addFragment(new PopularMoviesFragment(), getString(R.string.tab_layout_title_popular));
+        adapter.addFragment(new FavoriteMoviesFragment(), getString(R.string.tab_layout_title_favorite));
         viewPager.setAdapter(adapter);
     }
 

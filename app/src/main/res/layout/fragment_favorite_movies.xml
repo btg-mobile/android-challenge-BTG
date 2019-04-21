@@ -32,7 +32,7 @@
         android:background="@drawable/search_rounded"
         android:ems="30"
         android:hint="Pesquisar"
-        android:inputType="textCapSentences"
+        android:inputType="text"
         android:paddingStart="5sp"
         android:textColorHint="@color/colorSearchHint"
         android:textColor="@android:color/black"/>

@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +24,7 @@ import br.com.ricardo.filmespopulares.data.network.api.ApiService;
 import br.com.ricardo.filmespopulares.data.network.model.Film;
 import br.com.ricardo.filmespopulares.data.network.response.ResponseFilm;
 import br.com.ricardo.filmespopulares.data.network.response.ResultFilms;
+import br.com.ricardo.filmespopulares.utils.ErrorMessage;
 import br.com.ricardo.filmespopulares.utils.HideKeyboard;
 import br.com.ricardo.filmespopulares.utils.KeepData;
 import retrofit2.Call;
@@ -46,7 +46,7 @@ public class FavoriteMoviesFragment extends Fragment {
     private RecyclerView recyclerFavoriteMovie;
 
     private KeepData prefs;
-
+    private ErrorMessage errorMessage;
     private FavoriteMovieListAdapter adapter;
     private Film film;
     private List<Film> filmList;
@@ -59,6 +59,7 @@ public class FavoriteMoviesFragment extends Fragment {
         View popularView = inflater.inflate(R.layout.fragment_favorite_movies, container, false);
 
         prefs = new KeepData(getActivity().getSharedPreferences(PREFS_NAME, MODE_PRIVATE));
+        errorMessage = new ErrorMessage();
 
         frameFavoriteMovie = (FrameLayout) popularView.findViewById(R.id.frame_favorite_movielist);
         progressBarFavoriteMovie = (ProgressBar) popularView.findViewById(R.id.progressBar_favorite_movielist);
@@ -110,7 +111,8 @@ public class FavoriteMoviesFragment extends Fragment {
 
         if(TextUtils.isEmpty(movie)){
             getFavoriteMovies();
-            showError("Campo vazio. Digite o nome do filme.");
+            errorMessage.showError(getActivity(), getString(R.string.search_bar_empty));
+
         } else {
 
             ApiService.getInstance().getPopularFilms("b70848b875278d63417beecbdddc4841")
@@ -120,7 +122,7 @@ public class FavoriteMoviesFragment extends Fragment {
 
                             if(!response.isSuccessful()) {
                                 Log.i(TAG_FAILURE, "Erro: " + response.code());
-                                showError("Falha na conexão.");
+                                errorMessage.showError(getActivity(), getString(R.string.connection_failure));
 
                             } else {
 
@@ -132,7 +134,9 @@ public class FavoriteMoviesFragment extends Fragment {
 
                                 for(ResponseFilm rf : resultFilms.getResults()){
 
-                                    if(rf.getTitle().contains(movie) || rf.getReleaseDate().contains(movie)){
+                                    String aux = rf.getTitle();
+
+                                    if(aux.toLowerCase().contains(movie.toLowerCase()) || rf.getReleaseDate().contains(movie)){
 
                                         if(prefs.recoverFlagFavorite(String.valueOf(rf.getId()))){
 
@@ -146,7 +150,7 @@ public class FavoriteMoviesFragment extends Fragment {
                                 }
 
                                 if(filmList.size() == 0){
-                                    showError("Não existe nenhum filme com este nome.");
+                                    errorMessage.showError(getActivity(), getString(R.string.movie_list_empty));
                                     getFavoriteMovies();
                                 }
 
@@ -171,7 +175,7 @@ public class FavoriteMoviesFragment extends Fragment {
                         @Override
                         public void onFailure(Call<ResultFilms> call, Throwable t) {
                             Log.i(TAG_FAILURE, t.getMessage());
-                            showError("Falha na conexão.");
+                            errorMessage.showError(getActivity(), getString(R.string.connection_failure));
                         }
                     });
         }
@@ -187,7 +191,7 @@ public class FavoriteMoviesFragment extends Fragment {
 
                         if(!response.isSuccessful()) {
                             Log.i(TAG_FAILURE, "Erro: " + response.code());
-                            showError("Falha na conexão.");
+                            errorMessage.showError(getActivity(), getString(R.string.connection_failure));
 
                         } else {
 
@@ -231,13 +235,9 @@ public class FavoriteMoviesFragment extends Fragment {
                     @Override
                     public void onFailure(Call<ResultFilms> call, Throwable t) {
                         Log.i(TAG_FAILURE, t.getMessage());
-                        showError("Falha na conexão.");
+                        errorMessage.showError(getActivity(), getString(R.string.connection_failure));
                     }
                 });
-    }
-
-    private void showError(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Filmes Populares</string>
 
+
+    <!-- Tab Layout -->
+    <string name="tab_layout_title_popular">POPULARES</string>
+    <string name="tab_layout_title_favorite">FAVORITOS</string>
+
+
     <!-- Item film -->
     <string name="item_movie_rate">Avaliação:</string>
     <string name="item_movie_release_date">Lançamento:</string>
@@ -9,11 +15,15 @@
     <string name="movie_detail_film_genre">Gênero:</string>
     <string name="movie_detail_film_favorite">Favoritar:</string>
     <string name="movie_detail_film_rate">Avaliação:</string>
+    <string name="search_bar_empty">Campo vazio. Digite o nome do filme.</string>
+    <string name="connection_failure">Falha na conexão.</string>
+    <string name="movie_list_empty">Não existe nenhum filme com este nome.</string>
 
 
     <!-- Error Message -->
     <string name="error_movielist">Erro ao obter a lista de filmes.</string>
-    <string name="error_movie_detail">Erro ao obter os dados dos filmes.</string>
+    <string name="error_movie_detail">Erro ao obter os dados filme.</string>
+
 
     <!-- Genres -->
     <string name="genre_action">action</string>

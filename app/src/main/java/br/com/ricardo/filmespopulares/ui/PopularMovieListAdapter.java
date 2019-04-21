@@ -34,7 +34,7 @@ public class PopularMovieListAdapter extends RecyclerView.Adapter<PopularMovieLi
     @Override
     public PopularMovieListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_film, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_popular, viewGroup, false);
 
         PopularMovieListViewHolder holder = new PopularMovieListViewHolder(view);
 
@@ -83,12 +83,7 @@ public class PopularMovieListAdapter extends RecyclerView.Adapter<PopularMovieLi
         }
     }
 
-    public void clear(){
-        this.movieLists.clear();
-        notifyDataSetChanged();
-    }
-
-    public void setFilm(List<Film> film){
+    public void setPopularFilm(List<Film> film){
         this.movieLists = film;
         notifyDataSetChanged();
     }
