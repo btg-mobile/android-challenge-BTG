@@ -3,8 +3,10 @@ package br.com.ricardo.filmespopulares.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -36,6 +38,7 @@ public class PopularMoviesFragment extends Fragment {
 
     private FrameLayout framePopularMovie;
     private ProgressBar progressBarPopularMovie;
+    private SwipeRefreshLayout swipePopularMovie;
     private EditText editPopularMovieSearch;
     private RecyclerView recyclerPopularMovie;
 
@@ -51,6 +54,7 @@ public class PopularMoviesFragment extends Fragment {
 
         framePopularMovie = (FrameLayout) popularView.findViewById(R.id.frame_popular_movielist);
         progressBarPopularMovie = (ProgressBar) popularView.findViewById(R.id.progressBar_popular_movielist);
+        swipePopularMovie = (SwipeRefreshLayout) popularView.findViewById(R.id.swipe_container_popular_movie_list);
         editPopularMovieSearch = (EditText) popularView.findViewById(R.id.edit_popular_ml_search);
         recyclerPopularMovie = (RecyclerView) popularView.findViewById(R.id.recycler_popular_ml);
 
@@ -78,12 +82,25 @@ public class PopularMoviesFragment extends Fragment {
             }
         });
 
+        swipePopularMovie.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                getMovies();
+                swipePopularMovie.setRefreshing(false);
+
+                framePopularMovie.setVisibility(View.VISIBLE);
+                progressBarPopularMovie.setVisibility(View.VISIBLE);
+
+            }
+        });
+
         return popularView;
     }
 
     public void searchMovie(final String movie){
 
-        if(movie.equals("")){
+        if(TextUtils.isEmpty(movie)){
             getMovies();
             showError("Campo vazio. Digite o nome do filme.");
         } else {
@@ -107,7 +124,7 @@ public class PopularMoviesFragment extends Fragment {
 
                                 for(ResponseFilm rf : resultFilms.getResults()){
 
-                                    if(rf.getTitle().equals(movie)){
+                                    if(rf.getTitle().contains(movie)){
 
                                         final Film film = new Film(rf.getId(), rf.getRate(), rf.getTitle(), rf.getPosterPath(),
                                                 rf.getOriginalTitle(), rf.getGenres(), rf.getBackdropPath(),
@@ -118,6 +135,7 @@ public class PopularMoviesFragment extends Fragment {
                                 }
 
                                 if(filmList.size() == 0){
+                                    showError("Não existe nenhum filme com este nome.");
                                     getMovies();
                                 }
 
@@ -194,5 +212,15 @@ public class PopularMoviesFragment extends Fragment {
 
     private void showError(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        framePopularMovie.setVisibility(View.VISIBLE);
+        progressBarPopularMovie.setVisibility(View.VISIBLE);
+
+        getMovies();
     }
 }

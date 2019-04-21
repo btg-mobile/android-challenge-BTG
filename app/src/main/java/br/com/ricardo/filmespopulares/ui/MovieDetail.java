@@ -95,8 +95,6 @@ public class MovieDetail extends AppCompatActivity {
             textMovideDetailOverview.setText(film.getOverview());
             checkMovieDetailFavorite.setChecked(prefs.recoverFlagFavorite(String.valueOf(film.getMovieId())));
 
-//            film.setCheckFavorite(prefs.recoverFlagFavorite(String.valueOf(film.getIdMovie()), false));
-
             checkMovieDetailFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -124,6 +122,7 @@ public class MovieDetail extends AppCompatActivity {
         }
         return true;
     }
+
 
     public String getGenreText(ArrayList<Integer> numbers){
 

@@ -2,24 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.PopularMoviesFragment">
-
-    <EditText
-        android:id="@+id/edit_popular_ml_search"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/search_rounded"
-        android:ems="30"
-        android:hint="Pesquisar"
-        android:inputType="textPersonName"
-        android:paddingStart="5sp"
-        android:textColorHint="@color/colorSearchHint"
-        android:textColor="@android:color/black"/>
 
     <FrameLayout
         android:id="@+id/frame_popular_movielist"
@@ -36,8 +21,35 @@
 
     </FrameLayout>
 
+    <EditText
+        android:id="@+id/edit_popular_ml_search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/search_rounded"
+        android:ems="30"
+        android:hint="Pesquisar"
+        android:inputType="textCapSentences"
+        android:paddingStart="5sp"
+        android:textColorHint="@color/colorSearchHint"
+        android:textColor="@android:color/black"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_container_popular_movie_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_popular_ml"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>
