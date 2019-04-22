@@ -22,13 +22,24 @@ Desafio proposto pelo Banco de Investimentos BTG Pactual para a vaga de desenvol
 ## Requisitos:
 
 1. Criar uma tela principal com duas abas: Populares e Favoritos.
-2. Na aba de Populares, carregar os dados vindos da API do TheMOvieDB em uma lista. Os itens a serem mostrados são: poster do filme, nome e data de lançamento.
-3. Na aba de Favoritos, também carregar uma lista dos filmes que forem sendo favoritados. Os itens a serem mostrados são: poster do filme, nome e data de lançamento.
+2. Na tela de Populares, carregar os dados vindos da API do TheMOvieDB em uma lista. Os itens a serem mostrados são: poster do filme, nome e data de lançamento.
+3. Na tela de Favoritos, também carregar uma lista dos filmes que forem sendo favoritados. Os itens a serem mostrados são: poster do filme, nome e data de lançamento.
 4. Cada item do filme, possui uma tela de detalhe. Onde devem ser mostrados as informações: poster do filme, título, avaliação, gênero (por extenso), sinopse e um botão para favoritar o filme.
 4. Ao favoritar um filme, o mesmo deve aparecer na lista de filmes favoritos. Ao desfavoritar, o mesmo deve desaparecer.
 5. Na barra de pesquisa dos populares, deve ser permitido realizar buscas por nome. Já na de favoritos, as buscas podem ser realizadas por nome e por data.
-6. Fazer os tratamentos de erros e dos fluxos de exceção necessários.
-7. O fluxo das telas está no topo <a name="flow"> e arquivo app-main-flow.mp4.
+6. Fazer o desafio usando Material Design.
+7. Fazer os tratamentos de erros e dos fluxos de exceção necessários.
+8. O fluxo das telas está no topo <a name="flow"> e arquivo app-main-flow.mp4.
+
+## Opcionais:
+
+* Desenvolver o App seguindo a Clean Architecture;
+* Desenvolver testes unitários e/ou funcionais;
+* Botão de favoritar/desfavoritar nos itens das listas;
+* Pull-to-refresh nas listas;
+* Paginação na tela principal;
+* Opções de filtro e ordenação nas listas;
+* Pipeline automatizado.
 <a name="organization" />
 
 ## Organização
@@ -48,7 +59,7 @@ As classes estão divididas entre packages próprios para melhor visualização 
 
 ## Considerações
 
-A estrutura principal das classes foi mantida. Para comportar o status de favorito, foi criado um arquivo de SharedPreferences, que guarda esta informação a requisita em momentos apropriados para o correto carregamento das listas.
+Foi criado uma estrutura básica para organizar as classes, com packages específicos. Para comportar o status de favorito, foi criado um arquivo de SharedPreferences, que guarda esta informação a requisita em momentos apropriados para o correto carregamento das listas.
 <a name="setup" />
 
 ## Instalação
