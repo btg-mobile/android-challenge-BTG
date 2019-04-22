@@ -29,7 +29,7 @@ Desafio proposto pelo Banco de Investimentos BTG Pactual para a vaga de desenvol
 5. Na barra de pesquisa dos populares, deve ser permitido realizar buscas por nome. Já na de favoritos, as buscas podem ser realizadas por nome e por data.
 6. Fazer o desafio usando Material Design.
 7. Fazer os tratamentos de erros e dos fluxos de exceção necessários.
-8. O fluxo das telas está no topo e arquivo [Gif](https://github.com/rickaleu/android-challenge-BTG/blob/master/image/app.gif)app.gif.
+8. O fluxo das telas está no topo e arquivo [gif](https://github.com/rickaleu/android-challenge-BTG/blob/master/image/app.gif)
 
 ### Opcionais:
 
