@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Pop Movies</string>
+
+    <string name="api_language">en-US</string>
+
+    <string name="tab_search_hint">Search</string>
+    <string name="tab_name_home">Popular</string>
+    <string name="tab_name_favorite">Favorite</string>
+
+    <string name="movie_list_year">Year:\u0020</string>
+
+    <string name="movie_details_summary">Summary</string>
+    <string name="movie_details_trailers">Trailers</string>
+    <string name="movie_details_overview_not_available">Summary not available</string>
+
+    <string name="movies_server_error_message">Could not to connect to the server</string>
+
+    <string name="shared_element_movie_title" translatable="false">movie-title</string>
+    <string name="shared_element_movie_rate" translatable="false">movie-rate</string>
+</resources>

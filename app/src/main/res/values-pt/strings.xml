@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Pop Movies</string>
+
+    <string name="api_language">pt-BR</string>
+
+    <string name="tab_search_hint">Procurar</string>
+    <string name="tab_name_home">Popular</string>
+    <string name="tab_name_favorite">Favoritos</string>
+
+    <string name="movie_list_year">Ano:\u0020</string>
+
+    <string name="movie_details_summary">Sinopse</string>
+    <string name="movie_details_trailers">Trailers</string>
+    <string name="movie_details_overview_not_available">Sinopse não dispoível</string>
+
+    <string name="movies_server_error_message">Foi não possível conectar com o servidor.</string>
+</resources>
