@@ -16,6 +16,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+
+        buildConfigField("String", "serviceAddress", "https://api.themoviedb.org/3/")
+        buildConfigField("String", "theMovieDBKey", "d6d701d27497bb2ca5db162550269184")
     }
     buildTypes {
         release {
@@ -26,11 +31,13 @@ android {
 }
 
 def supportVersion = '28.0.0'
+def roomVersion = '1.1.1'
 def constraintLayoutVersion = '1.1.3'
 def retrofitVersion = '2.5.0'
 def gsonVersion = '2.8.5'
 def picassoVersion = '2.71828'
 def daggerVersion = '2.17'
+def multiDexVersion = '1.0.3'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -48,6 +55,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
+    implementation "com.android.support:multidex:$multiDexVersion"
+
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.dagger:dagger-android:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
@@ -55,6 +64,9 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     implementation "com.squareup.picasso:picasso:$picassoVersion"
+
+    implementation "android.arch.persistence.room:runtime:$roomVersion"
+    kapt "android.arch.persistence.room:compiler:$roomVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
