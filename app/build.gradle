@@ -19,8 +19,8 @@ android {
 
         multiDexEnabled true
 
-        buildConfigField("String", "serviceAddress", "https://api.themoviedb.org/3/")
-        buildConfigField("String", "theMovieDBKey", "d6d701d27497bb2ca5db162550269184")
+        buildConfigField("String", "serviceAddress", '"https://api.themoviedb.org/3/"')
+        buildConfigField("String", "theMovieDBKey", '"d6d701d27497bb2ca5db162550269184"')
     }
     buildTypes {
         release {
