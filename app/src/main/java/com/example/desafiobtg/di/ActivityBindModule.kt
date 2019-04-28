@@ -3,6 +3,7 @@ package com.example.desafiobtg.di
 import com.example.desafiobtg.di.qualifiers.ActivityScoped
 import com.example.desafiobtg.usecases.MainActivity
 import com.example.desafiobtg.usecases.MainModule
+import com.example.desafiobtg.usecases.movielist.MovieListModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -10,7 +11,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBindModule {
 
     @ActivityScoped
-    @ContributesAndroidInjector(modules = [MainModule::class])
+    @ContributesAndroidInjector(modules = [MainModule::class, MovieListModule::class])
     internal abstract fun mainActivity(): MainActivity
 
 }

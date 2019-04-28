@@ -31,13 +31,13 @@ class AppController: DaggerApplication() {
 
     companion object {
 
-        fun runOnMain(r: Runnable) {
+        fun runOnMain(r: () -> Unit) {
             val mainHandler = Handler(Looper.getMainLooper())
-            mainHandler.post(r)
+            mainHandler.post { r() }
         }
 
-        fun runOnBG(r: Runnable) {
-            AsyncTask.execute(r)
+        fun runOnBG(r: () -> Unit) {
+            AsyncTask.execute { r() }
         }
     }
 }

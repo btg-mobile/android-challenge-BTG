@@ -2,6 +2,7 @@ package com.example.desafiobtg.di
 
 import android.text.TextUtils
 import com.example.desafiobtg.BuildConfig
+import com.example.desafiobtg.api.MovieApi
 import com.example.desafiobtg.db.room.DataUtils
 import com.google.gson.Gson
 import dagger.Module
@@ -12,6 +13,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import okhttp3.CipherSuite
+import okhttp3.TlsVersion
+import okhttp3.ConnectionSpec
+
+
 
 @Module
 class NetworkModule {
@@ -68,6 +74,12 @@ class NetworkModule {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(httpClient)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideMovieApi(retrofit: Retrofit): MovieApi {
+        return retrofit.create<MovieApi>(MovieApi::class.java)
     }
 
     @Provides

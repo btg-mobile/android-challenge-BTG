@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
     android:layout_height="match_parent">
 	
-	<android.support.v4.view.ViewPager
-		android:id="@+id/vp_main"
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/rv_movies"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent" />
-	
+		android:layout_height="match_parent"
+		tools:listitem="@layout/item_movie"/>
+
 </android.support.constraint.ConstraintLayout>
