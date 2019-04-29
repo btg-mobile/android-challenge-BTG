@@ -13,17 +13,18 @@ import javax.inject.Inject
 import android.support.v7.widget.DividerItemDecoration
 import javax.inject.Named
 
-class MovieListFragment @Inject constructor(): DaggerFragment(), MovieListContract.View {
+class FavoriteListFragment @Inject constructor(): DaggerFragment(),
+    MovieListContract.View {
 
-    @field:[Inject Named("MovieListPresenter")]
+    @field:[Inject Named("FavoriteListPresenter")]
     lateinit var mPresenter: MovieListContract.Presenter
 
     private var mAdapter: MovieListAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.frag_movie_list, container, false)
+        val view = inflater.inflate(R.layout.frag_favorite_list, container, false)
         mPresenter.takeView(this)
-        mPresenter.setListType(MovieListType.POPULAR)
+        mPresenter.setListType(MovieListType.FAVORITE)
         return view
     }
 

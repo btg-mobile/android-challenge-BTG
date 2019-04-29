@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.desafiobtg.R
+import com.example.desafiobtg.usecases.movielist.FavoriteListFragment
 import com.example.desafiobtg.usecases.movielist.MovieListFragment
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.frag_main.*
@@ -17,6 +18,9 @@ class MainFragment @Inject constructor(): DaggerFragment(), MainContract.View {
 
     @Inject
     lateinit var mMovieListFragment: MovieListFragment
+
+    @Inject
+    lateinit var mFavoriteListFragment: FavoriteListFragment
 
     private var mPagerAdapter : MainPagerAdapter? = null
 
@@ -39,6 +43,7 @@ class MainFragment @Inject constructor(): DaggerFragment(), MainContract.View {
     private fun setupViewPager() {
         mPagerAdapter = MainPagerAdapter(childFragmentManager).apply {
             addPage(mMovieListFragment)
+            addPage(mFavoriteListFragment)
         }
 
         vp_main?.adapter = mPagerAdapter

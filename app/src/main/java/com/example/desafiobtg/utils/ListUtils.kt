@@ -2,7 +2,6 @@ package com.example.desafiobtg.utils
 
 object ListUtils {
     fun getUncommonItems(listA : List<String>, listB: List<String>): ArrayList<String> {
-
         val list = ArrayList(listA)
         list.removeAll(listB)
 

@@ -17,6 +17,7 @@ interface MovieListContract {
         fun onViewCreated(fragment: Fragment)
         fun setMovieFavorite(position: Int, favorite: Boolean)
         fun bindFavoriteIcon(movieHolder: MovieHolder?, position: Int)
+        fun setListType(listType: MovieListType)
     }
 
     interface MovieHolder {

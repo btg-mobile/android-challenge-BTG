@@ -21,6 +21,8 @@ class Repository @Inject constructor(private val remoteDataSource: RemoteDataSou
     fun getMovieList(page: Int, success: (response: PopularMoviesResponse) -> Unit, failure: (error: String?) -> Unit) {
         if (appDataManager.shouldClearLocalMovieData) {
             localDataSource.clearMovieTable()
+            getRemotePopularMovieList(page, success, failure)
+            return
         }
 
         AppController.runOnBG {
@@ -32,7 +34,7 @@ class Repository @Inject constructor(private val remoteDataSource: RemoteDataSou
         }
     }
 
-    private fun getRemotePopularMovieList(page: Int, success: (response: PopularMoviesResponse) -> Unit, failure: (error: String?) -> Unit) {
+    fun getRemotePopularMovieList(page: Int, success: (response: PopularMoviesResponse) -> Unit, failure: (error: String?) -> Unit) {
         remoteDataSource.getMovieList(page, { response ->
             localDataSource.insertMovies(response.movieList)
             success(response)
