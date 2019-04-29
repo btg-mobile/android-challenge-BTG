@@ -11,6 +11,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.frag_movie_list.*
 import javax.inject.Inject
 import android.support.v7.widget.DividerItemDecoration
+import com.example.desafiobtg.usecases.moviedetails.MovieDetailsActivity
 import javax.inject.Named
 
 class FavoriteListFragment @Inject constructor(): DaggerFragment(),
@@ -51,6 +52,13 @@ class FavoriteListFragment @Inject constructor(): DaggerFragment(),
 
         val dividerItemDecoration = DividerItemDecoration(rv_movies?.context ,layoutManager.orientation)
         rv_movies.addItemDecoration(dividerItemDecoration)
+    }
+
+    override fun showMovieDetailsActivity(id: String?) {
+        id?.let {
+            val activity = MovieDetailsActivity.newIntent(context, it)
+            startActivity(activity)
+        }
     }
 
     override fun notifyDatasetChanged() {

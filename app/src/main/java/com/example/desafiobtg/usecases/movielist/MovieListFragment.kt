@@ -11,6 +11,8 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.frag_movie_list.*
 import javax.inject.Inject
 import android.support.v7.widget.DividerItemDecoration
+import com.example.desafiobtg.usecases.moviedetails.MovieDetailsActivity
+import com.example.desafiobtg.usecases.moviedetails.MovieDetailsFragment
 import javax.inject.Named
 
 class MovieListFragment @Inject constructor(): DaggerFragment(), MovieListContract.View {
@@ -54,5 +56,12 @@ class MovieListFragment @Inject constructor(): DaggerFragment(), MovieListContra
 
     override fun notifyDatasetChanged() {
         mAdapter?.notifyDataSetChanged()
+    }
+
+    override fun showMovieDetailsActivity(id: String?) {
+        id?.let {
+            val activity = MovieDetailsActivity.newIntent(context, it)
+            startActivity(activity)
+        }
     }
 }

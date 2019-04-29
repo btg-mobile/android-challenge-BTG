@@ -43,6 +43,30 @@ class Repository @Inject constructor(private val remoteDataSource: RemoteDataSou
         })
     }
 
+    fun getGenreForIds(genreIds: List<Int>, success: (genreList: List<String>) -> Unit) {
+        AppController.runOnBG {
+            val genreList = localDataSource.getGenreByIds(genreIds)
+            if (genreIds.size == genreList.size) {
+                success(genreList)
+            } else {
+                getRemoteGenreList {
+                    val genres = localDataSource.getGenreByIds(genreIds)
+                    success(genres)
+                }
+
+            }
+        }
+    }
+
+    private fun getRemoteGenreList(success: () -> Unit) {
+        remoteDataSource.getGenreList(success = { genres ->
+            localDataSource.addGenres(genres)
+            success()
+        }, failure = {
+
+        })
+    }
+
     fun addFavoriteMovie(movieId: String) {
         return localDataSource.addFavoriteMovie(movieId)
     }
@@ -56,6 +80,10 @@ class Repository @Inject constructor(private val remoteDataSource: RemoteDataSou
     }
 
     fun getFavoriteIds() : LiveData<List<String>> {
-        return localDataSource.getFavoriteIds()
+        return localDataSource.getFavoriteIdsLiveData()
+    }
+
+    fun getMovieById(movieId: String?, success: (Movie?) -> Unit) {
+        return localDataSource.getMovieById(movieId, success)
     }
 }

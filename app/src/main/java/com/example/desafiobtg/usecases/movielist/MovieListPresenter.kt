@@ -5,8 +5,14 @@ import android.arch.lifecycle.Observer
 import android.support.v4.app.Fragment
 import com.example.desafiobtg.data.Repository
 import com.example.desafiobtg.db.entities.Movie
+import com.example.desafiobtg.utils.DateUtils
 import com.example.desafiobtg.utils.ListUtils
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class MovieListPresenter @Inject constructor(private val mRepository: Repository): MovieListContract.Presenter {
 
@@ -29,9 +35,11 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
     }
 
     override fun bindMovieHolder(movieHolder: MovieListContract.MovieHolder?, position: Int) {
+        // TODO: Adicionar a uma variável
         movieHolder?.setMoviePoster("https://image.tmdb.org/t/p/w185${mMovieList[position].posterUrl}")
         mMovieList[position].title?.let { title -> movieHolder?.setMovieTitle(title) }
-        mMovieList[position].releaseDate?.let { year -> movieHolder?.setMovieYear(year) }
+        val year = DateUtils.getYearForDate(mMovieList[position].releaseDate)
+        year?.let { movieHolder?.setMovieYear(it) }
         movieHolder?.setMovieFavorited(mFavoriteMovieIds.contains(mMovieList[position].id))
     }
 
@@ -98,6 +106,10 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
 
     override fun bindFavoriteIcon(movieHolder: MovieListContract.MovieHolder?, position: Int) {
         movieHolder?.setMovieFavorited(mFavoriteMovieIds.contains(mMovieList[position].id))
+    }
+
+    override fun onItemClicked(position: Int) {
+        mMovieListView?.showMovieDetailsActivity(mMovieList.getOrNull(position)?.id)
     }
 
     override fun getMovieCount() = mMovieList.size

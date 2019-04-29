@@ -11,6 +11,7 @@ import java.io.Serializable
 data class Movie(@PrimaryKey
                  @ColumnInfo(name = ID) @SerializedName(ID) @Expose var id: String,
                  @ColumnInfo(name = POSTER_URL) @SerializedName(POSTER_URL) @Expose var posterUrl: String?,
+                 @ColumnInfo(name = BACKDROP_URL) @SerializedName(BACKDROP_URL) @Expose var backdropUrl: String?,
                  @ColumnInfo(name = TITLE) @SerializedName(TITLE) @Expose var title: String?,
                  @ColumnInfo(name = RELEASE_DATE) @SerializedName(RELEASE_DATE) @Expose var releaseDate: String?,
                  @ColumnInfo(name = OVERVIEW) @SerializedName(OVERVIEW) @Expose var overview: String?,
@@ -22,6 +23,7 @@ data class Movie(@PrimaryKey
     companion object {
         const val ID = "id"
         const val POSTER_URL = "poster_path"
+        const val BACKDROP_URL = "backdrop_path"
         const val TITLE = "title"
         const val RELEASE_DATE = "release_date"
         const val OVERVIEW = "overview"

@@ -13,6 +13,9 @@ interface FavoriteMovieDao : BaseDao<FavoriteMovie> {
     fun getFavoriteMovies(): LiveData<List<Movie>?>
 
     @Query("SELECT favoriteId FROM favoritemovie")
-    fun getFavoriteIds(): LiveData<List<String>>
+    fun getFavoriteIdsLiveData(): LiveData<List<String>>
+
+    @Query("SELECT favoriteId FROM favoritemovie")
+    fun getFavoriteIds(): List<String>
 
 }

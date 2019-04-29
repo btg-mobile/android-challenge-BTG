@@ -3,9 +3,9 @@ package com.example.desafiobtg.data.local
 import android.arch.lifecycle.LiveData
 import com.example.desafiobtg.AppController
 import com.example.desafiobtg.db.entities.FavoriteMovie
+import com.example.desafiobtg.db.entities.Genre
 import com.example.desafiobtg.db.entities.Movie
 import com.example.desafiobtg.db.room.Database
-import com.example.desafiobtg.di.AppComponent
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(): LocalDataSource {
@@ -18,12 +18,25 @@ class LocalDataSourceImpl @Inject constructor(): LocalDataSource {
     }
 
     override fun clearMovieTable() {
-        AppController.runOnBG { db.movieModel().clear() }
+        AppController.runOnBG {
+            val movieIdList = getFavoriteIds()
+            db.movieModel().deleteAllExcept(movieIdList)
+        }
     }
 
-    override fun getLocalMovieList(page: Int): List<Movie>? {
-        return db.movieModel().getMoviesForPage(page)
+    override fun getMovieById(movieId: String?, success: (result: Movie?) -> Unit) {
+        AppController.runOnBG {
+            val movie = db.movieModel().getMovieById(movieId)
+            AppController.runOnMain { success(movie) }
+        }
     }
+
+    override fun addGenres(genres: List<Genre>) {
+        AppController.runOnBG { db.genreModel().insertAll(genres) }
+    }
+
+    override fun getLocalMovieList(page: Int) = db.movieModel().getMoviesForPage(page)
+    override fun getGenreByIds(genreIds: List<Int>) = db.genreModel().getGenreForIds(genreIds)
 
     override fun addFavoriteMovie(movieId: String) {
         AppController.runOnBG { db.favoriteMovieModel().insert(FavoriteMovie(movieId)) }
@@ -33,11 +46,9 @@ class LocalDataSourceImpl @Inject constructor(): LocalDataSource {
         AppController.runOnBG { db.favoriteMovieModel().delete(FavoriteMovie(movieId)) }
     }
 
-    override fun getFavoriteMovies(): LiveData<List<Movie>?> {
-        return db.favoriteMovieModel().getFavoriteMovies()
-    }
+    override fun getFavoriteMovies(): LiveData<List<Movie>?> = db.favoriteMovieModel().getFavoriteMovies()
 
-    override fun getFavoriteIds(): LiveData<List<String>> {
-        return db.favoriteMovieModel().getFavoriteIds()
-    }
+    override fun getFavoriteIdsLiveData(): LiveData<List<String>> = db.favoriteMovieModel().getFavoriteIdsLiveData()
+
+    override fun getFavoriteIds(): List<String> = db.favoriteMovieModel().getFavoriteIds()
 }

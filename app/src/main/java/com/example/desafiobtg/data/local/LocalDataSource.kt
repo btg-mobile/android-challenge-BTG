@@ -2,6 +2,7 @@ package com.example.desafiobtg.data.local
 
 import android.arch.lifecycle.LiveData
 import com.example.desafiobtg.db.entities.FavoriteMovie
+import com.example.desafiobtg.db.entities.Genre
 import com.example.desafiobtg.db.entities.Movie
 
 interface LocalDataSource {
@@ -12,5 +13,9 @@ interface LocalDataSource {
     fun addFavoriteMovie(movieId: String)
     fun removeFavoriteMovie(movieId: String)
     fun getFavoriteMovies(): LiveData<List<Movie>?>
-    fun getFavoriteIds(): LiveData<List<String>>
+    fun getFavoriteIdsLiveData(): LiveData<List<String>>
+    fun getFavoriteIds(): List<String>
+    fun getMovieById(movieId: String?, success: (result: Movie?) -> Unit)
+    fun addGenres(genres: List<Genre>)
+    fun getGenreByIds(genreIds: List<Int>): List<String>
 }

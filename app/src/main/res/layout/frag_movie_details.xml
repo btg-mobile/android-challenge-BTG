@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+	
+	<android.support.v7.widget.AppCompatImageView
+		android:id="@+id/iv_backdrop_bg"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:scaleType="fitXY"
+		app:layout_constraintDimensionRatio="16:9"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"/>
+	
+	<android.support.v7.widget.AppCompatImageView
+		android:id="@+id/iv_poster"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:scaleType="fitCenter"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/iv_backdrop_bg"
+		app:layout_constraintBottom_toBottomOf="@id/iv_backdrop_bg"
+		android:layout_marginStart="24dp"/>
+	
+	<LinearLayout
+		android:id="@+id/ll_movie_info"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		app:layout_constraintStart_toEndOf="@id/iv_poster"
+		app:layout_constraintEnd_toStartOf="@id/iv_favorite"
+		app:layout_constraintBottom_toBottomOf="@id/iv_poster"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:orientation="vertical" >
+		
+		<android.support.v7.widget.AppCompatTextView
+			android:id="@+id/tv_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:fontFamily="sans-serif"
+			android:textStyle="bold"
+			android:textSize="20sp"
+			android:textColor="@android:color/black"
+			tools:text="Capitã Marvel" />
+		
+		<android.support.v7.widget.AppCompatTextView
+			android:id="@+id/tv_year"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:textSize="14sp"
+			android:fontFamily="sans-serif"
+			android:textColor="@color/black50p"
+			tools:text="2019" />
+	
+	</LinearLayout>
+	
+	<android.support.v7.widget.AppCompatImageView
+		android:id="@+id/iv_favorite"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:padding="16dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="@id/ll_movie_info"
+		app:layout_constraintBottom_toBottomOf="@id/ll_movie_info"
+		android:layout_marginEnd="16dp"
+		android:src="@drawable/ic_favorite_selector" />
+	
+	<android.support.v7.widget.AppCompatTextView
+		android:id="@+id/tv_overview_title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/synopsis"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/ll_movie_info"
+		android:fontFamily="sans-serif-condensed"
+		android:textColor="@android:color/black"
+		android:textSize="18sp"
+		android:layout_marginTop="24dp"
+		android:layout_marginStart="24dp" />
+	
+	<android.support.v7.widget.AppCompatTextView
+		android:id="@+id/tv_overview"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		tools:text="A história segue Carol Danvers e como ela se torna um dos heróis mais poderosos do universo quando a Terra é pega no meio de uma guerra galáctica entre duas raças alienígenas. Situado na década de 1990, Capitã Marvel é uma nova aventura de um período inédito na história do universo cinematográfico da Marvel"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/tv_overview_title"
+		android:fontFamily="sans-serif"
+		android:textColor="@android:color/black"
+		android:layout_marginStart="24dp"
+		android:layout_marginEnd="24dp"
+		android:layout_marginTop="8dp" />
+	
+	<android.support.v7.widget.AppCompatTextView
+		android:id="@+id/tv_genres"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		tools:text="Ação\nAventura\nSuspense"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/tv_overview"
+		android:fontFamily="sans-serif"
+		android:textColor="@android:color/black"
+		android:textStyle="bold"
+		android:layout_marginStart="24dp"
+		android:layout_marginEnd="24dp"
+		android:layout_marginTop="16dp" />
+
+</android.support.constraint.ConstraintLayout>

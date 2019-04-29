@@ -5,7 +5,8 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:padding="16dp">
+	android:padding="16dp"
+	android:id="@+id/cl_parent">
 	
 	<android.support.v7.widget.AppCompatImageView
 		android:id="@+id/iv_poster"
@@ -32,6 +33,7 @@
 			android:layout_height="wrap_content"
 			android:fontFamily="sans-serif"
 			android:textStyle="bold"
+			android:textSize="18sp"
 			android:textColor="@android:color/black"
 			tools:text="Capitã Marvel" />
 		
@@ -40,6 +42,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="8dp"
+			android:textSize="14sp"
 			android:fontFamily="sans-serif"
 			android:textColor="@color/black50p"
 			tools:text="2019" />

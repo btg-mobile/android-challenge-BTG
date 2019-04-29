@@ -1,5 +1,6 @@
 package com.example.desafiobtg.usecases.movielist
 
+import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.AppCompatImageView
 import android.support.v7.widget.AppCompatTextView
 import android.support.v7.widget.RecyclerView
@@ -30,6 +31,9 @@ class MovieListAdapter constructor(private val mPresenter: MovieListContract.Pre
                 movieHolder.setMovieFavorited(isFavorite)
                 mPresenter.setMovieFavorite(position, isFavorite)
             }
+            movieHolder.parentCL?.setOnClickListener {
+                mPresenter.onItemClicked(position)
+            }
         }
     }
 
@@ -55,6 +59,7 @@ class MovieListAdapter constructor(private val mPresenter: MovieListContract.Pre
         private val titleTV: AppCompatTextView? = itemView.tv_title
         private val yearTV: AppCompatTextView? = itemView.tv_year
         val favoriteIV: AppCompatImageView? = itemView.iv_favorite
+        val parentCL: ConstraintLayout? = itemView.cl_parent
 
         override fun setMoviePoster(posterUrl: String) {
             posterIV?.let { imageView ->

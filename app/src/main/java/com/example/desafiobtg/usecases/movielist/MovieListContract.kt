@@ -9,6 +9,7 @@ interface MovieListContract {
     interface View: BaseView<Presenter> {
         fun notifyDatasetChanged()
         fun notifyFavoriteChanged(index: Int)
+        fun showMovieDetailsActivity(id: String?)
     }
 
     interface Presenter: BasePresenter<View> {
@@ -18,6 +19,7 @@ interface MovieListContract {
         fun setMovieFavorite(position: Int, favorite: Boolean)
         fun bindFavoriteIcon(movieHolder: MovieHolder?, position: Int)
         fun setListType(listType: MovieListType)
+        fun onItemClicked(position: Int)
     }
 
     interface MovieHolder {

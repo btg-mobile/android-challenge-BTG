@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Desafio BTG</string>
+	<string name="app_name">Desafio BTG</string>
+	<string name="synopsis">Sinopse</string>
 </resources>
