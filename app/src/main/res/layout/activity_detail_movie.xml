@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.DetailMovieActivity">-->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/radial_style_background"
+    tools:context=".view.activity.DetailMovieActivity">
+
+
+    <com.github.florent37.shapeofview.shapes.ArcView
+        android:id="@+id/arcView"
+        android:layout_width="0dp"
+        android:layout_height="291dp"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shape_arc_height="30dp"
+        app:shape_arc_position="bottom">
+
+        <ImageView
+            android:id="@+id/ivDetailPoster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </com.github.florent37.shapeofview.shapes.ArcView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="260dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.941"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+
+
+    <TextView
+        android:id="@+id/tvTitleDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="8dp"
+        android:text="Titulo"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arcView" />
+
+    <yanzhikai.textpath.SyncTextPathView
+        android:id="@+id/tvSinopse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
+        app:duration="5000"
+        app:layout_constraintEnd_toStartOf="@+id/tvTitleDetail"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleDetail"
+        app:paintStrokeColor="@color/white"
+        app:pathStrokeColor="@color/white"
+        app:pathStrokeWidth="2dp"
+        app:showPainter="false"
+        app:text="Sinopse"
+        app:textInCenter="false"
+        app:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvOverview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="dsadasdsadas d das dns jln jladn ldans çln kln lknklçnnçndsaçlkn lk ndl kn klndakl nd lknd kln kl n lkn ln dla n lkasndn açl ndçl and aslk ndl kan dlkasn "
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvSinopse"
+        app:layout_constraintTop_toBottomOf="@+id/tvSinopse" />
+
+    <yanzhikai.textpath.SyncTextPathView
+        android:id="@+id/tvNota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:duration="5000"
+        app:layout_constraintEnd_toEndOf="@+id/tvTitleDetail"
+        app:layout_constraintHorizontal_bias="0.218"
+        app:layout_constraintStart_toEndOf="@+id/tvSinopse"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleDetail"
+        app:paintStrokeColor="#131212"
+        app:pathStrokeColor="@color/white"
+        app:pathStrokeWidth="2dp"
+        app:showPainter="true"
+        app:text="Nota"
+        app:textInCenter="false"
+        app:textSize="18sp" />
+
+    <yanzhikai.textpath.SyncTextPathView
+        android:id="@+id/tvNotaResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:duration="5000"
+        app:layout_constraintBottom_toBottomOf="@+id/tvNota"
+        app:layout_constraintStart_toEndOf="@+id/tvNota"
+        app:layout_constraintTop_toTopOf="@+id/tvNota"
+        app:layout_constraintVertical_bias="0.0"
+        app:paintStrokeColor="#131212"
+        app:pathStrokeColor="@color/white"
+        app:pathStrokeWidth="2dp"
+        app:showPainter="true"
+        app:textInCenter="false"
+        app:textSize="18sp" />
+
+    <yanzhikai.textpath.SyncTextPathView
+        android:id="@+id/tvGeneros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:duration="5000"
+        app:layout_constraintBottom_toBottomOf="@+id/tvNotaResult"
+        app:layout_constraintEnd_toStartOf="@+id/tvGenerosResult"
+        app:layout_constraintTop_toTopOf="@+id/tvNotaResult"
+        app:layout_constraintVertical_bias="0.0"
+        app:paintStrokeColor="#131212"
+        app:pathStrokeColor="@color/white"
+        app:pathStrokeWidth="2dp"
+        app:showPainter="true"
+        app:textInCenter="false"
+        app:textSize="18sp" />
+
+    <yanzhikai.textpath.SyncTextPathView
+        android:id="@+id/tvGenerosResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        app:duration="5000"
+        app:layout_constraintBottom_toBottomOf="@+id/tvGeneros"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvGeneros"
+        app:layout_constraintVertical_bias="0.0"
+        app:paintStrokeColor="#131212"
+        app:pathStrokeColor="@color/white"
+        app:pathStrokeWidth="2dp"
+        app:showPainter="true"
+        app:textInCenter="false"
+        app:textSize="18sp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout><!--</ScrollView>-->

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">BTG desafio</string>
+
+    <string name="default_favs">View Favourites Here</string>
+    <string name="label_added_favs">Added To Favourites</string>
+    <string name="label_removed_favs">Removed from Favourites</string>
+
+    <string name="sinopse_no_description">Sinopse não disponível</string>
+
+    <string name="search_view_filmes_hint">Procure Filmes…</string>
+</resources>
