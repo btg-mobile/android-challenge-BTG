@@ -18,6 +18,7 @@ interface MovieListContract {
         fun notifyItemRangeInserted(position: Int, count: Int)
         fun notifyItemChanged(position: Int)
         fun notifyItemRemoved(idx: Int)
+        fun onReloadSuccessful() {}
     }
 
     interface Presenter: BasePresenter<View> {
@@ -28,12 +29,13 @@ interface MovieListContract {
         fun bindFavoriteIcon(movieHolder: MovieHolder?, position: Int)
         fun setListType(listType: MovieListType)
         fun onItemClicked(position: Int)
-        fun loadPopularMovieList()
+        fun loadPopularMovieList(isSwipeRefresh: Boolean = false, result: (() -> Unit)? = null)
         fun onQueryTextChange(query: String)
 
         fun loadMore()
         fun isLoadingMoreItems(): Boolean
         fun shouldLoadMoreItems(): Boolean
+        fun reloadList()
     }
 
     interface MovieHolder {

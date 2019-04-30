@@ -5,12 +5,14 @@ import android.arch.lifecycle.Observer
 import android.support.v4.app.Fragment
 import com.example.desafiobtg.data.Repository
 import com.example.desafiobtg.db.entities.Movie
+import com.example.desafiobtg.manager.AppDataManager
 import com.example.desafiobtg.utils.Constants
 import com.example.desafiobtg.utils.DateUtils
 import com.example.desafiobtg.utils.ListUtils
 import javax.inject.Inject
 
-class MovieListPresenter @Inject constructor(private val mRepository: Repository): MovieListContract.Presenter {
+class MovieListPresenter @Inject constructor(private val mRepository: Repository,
+                                             private val mAppDataManager: AppDataManager): MovieListContract.Presenter {
 
     private var mMovieListView: MovieListContract.View? = null
 
@@ -37,11 +39,13 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
     }
 
     override fun bindMovieHolder(movieHolder: MovieListContract.MovieHolder?, position: Int) {
-        movieHolder?.setMoviePoster("${Constants.POSTER_LIST_IMAGE_URL_PREFIX}${mFilteredMovieList[position].posterUrl}")
-        mFilteredMovieList[position].title?.let { title -> movieHolder?.setMovieTitle(title) }
-        val year = DateUtils.getYearForDate(mFilteredMovieList[position].releaseDate)
-        year?.let { movieHolder?.setMovieYear(it) }
-        movieHolder?.setMovieFavorited(mFavoriteMovieIds.contains(mFilteredMovieList[position].id))
+        if (position in 0 until mFilteredMovieList.size) {
+            movieHolder?.setMoviePoster("${Constants.POSTER_LIST_IMAGE_URL_PREFIX}${mFilteredMovieList[position].posterUrl}")
+            mFilteredMovieList[position].title?.let { title -> movieHolder?.setMovieTitle(title) }
+            val year = DateUtils.getYearForDate(mFilteredMovieList[position].releaseDate)
+            year?.let { movieHolder?.setMovieYear(it) }
+            movieHolder?.setMovieFavorited(mFavoriteMovieIds.contains(mFilteredMovieList[position].id))
+        }
     }
 
     override fun setMovieFavorite(position: Int, favorite: Boolean) {
@@ -77,18 +81,25 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
         })
     }
 
-    override fun loadPopularMovieList() {
-        mMovieListView?.showLoading(true)
+    override fun loadPopularMovieList(isSwipeRefresh: Boolean, result: (() -> Unit)?) {
+        if (!isSwipeRefresh) mMovieListView?.showLoading(true)
         mRepository.getMovieList(1, { response ->
             response.let {
                 mMovieList = ArrayList(it.movieList)
                 mFilteredMovieList = ArrayList(getFilteredListForQuery(mQuery))
             }
             mMovieListView?.notifyDatasetChanged()
-            mMovieListView?.showLoading(false)
+            if (!isSwipeRefresh) {
+                mMovieListView?.showLoading(false)
+            }
+            result?.invoke()
         }, {
-            mMovieListView?.showLoading(false)
-            mMovieListView?.showNoInternet(true)
+            if (!isSwipeRefresh) {
+                mMovieListView?.showLoading(false)
+                mMovieListView?.showNoInternet(true)
+            }
+
+            result?.invoke()
         })
     }
 
@@ -132,6 +143,13 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
 
     override fun onItemClicked(position: Int) {
         mMovieListView?.showMovieDetailsActivity(mFilteredMovieList.getOrNull(position)?.id)
+    }
+
+    override fun reloadList() {
+        mAppDataManager.resetUpdateTime()
+        loadPopularMovieList (isSwipeRefresh = true) {
+            mMovieListView?.onReloadSuccessful()
+        }
     }
 
     override fun getListItemCount() = mFilteredMovieList.size + (if (mIsLoadingMoreItems) 1 else 0)

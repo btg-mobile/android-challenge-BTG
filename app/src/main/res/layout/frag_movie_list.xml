@@ -7,12 +7,19 @@
 	android:layout_height="match_parent"
 	style="@style/AppTheme.FragmentContainer">
 	
-	<android.support.v7.widget.RecyclerView
-		android:id="@+id/rv_movies"
+	<android.support.v4.widget.SwipeRefreshLayout
+		android:id="@+id/swipe_container"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		tools:listitem="@layout/item_movie"
-		android:visibility="visible"/>
+		android:layout_height="match_parent">
+		
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/rv_movies"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			tools:listitem="@layout/item_movie"
+			android:visibility="visible"/>
+		
+	</android.support.v4.widget.SwipeRefreshLayout>
 	
 	<FrameLayout
 		android:id="@+id/fl_loading"

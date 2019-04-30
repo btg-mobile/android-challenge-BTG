@@ -64,6 +64,16 @@ class MovieListFragment @Inject constructor(): DaggerFragment(), MovieListContra
                 }
             }
         })
+
+        swipe_container?.setOnRefreshListener {
+            mPresenter.reloadList()
+        }
+
+        swipe_container?.setColorSchemeResources(R.color.colorAccent)
+    }
+
+    override fun onReloadSuccessful() {
+        swipe_container?.isRefreshing = false
     }
 
     override fun notifyItemInserted(position: Int) {
