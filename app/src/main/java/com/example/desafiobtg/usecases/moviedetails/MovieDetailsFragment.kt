@@ -73,7 +73,7 @@ class MovieDetailsFragment @Inject constructor(): DaggerFragment(), MovieDetails
     }
 
     override fun setOverviewText(text: String?) {
-        text?.let {
+        text?.takeIf { it.isNotEmpty() }?.let {
             tv_overview?.text = text
         } ?: run {
             tv_overview_title?.visibility = View.GONE
@@ -82,10 +82,12 @@ class MovieDetailsFragment @Inject constructor(): DaggerFragment(), MovieDetails
     }
 
     override fun showGenreList(genreList: List<String>) {
-        var text = ""
-        genreList.forEach { genre ->
-            text = "$text$genre\n"
-        }
-        tv_genres?.text = text
+        tv_genres?.text = genreList.joinToString()
+    }
+
+    override fun setUserRating(rating: Float) {
+        // Como são 5 corações para nota de 0 a 10, dividimos por 2
+        rb_rating?.rating = (rating / 2f)
+        tv_rating_number?.text = rating.toString()
     }
 }

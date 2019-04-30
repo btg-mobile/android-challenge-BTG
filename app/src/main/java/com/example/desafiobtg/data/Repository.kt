@@ -47,11 +47,11 @@ class Repository @Inject constructor(private val remoteDataSource: RemoteDataSou
         AppController.runOnBG {
             val genreList = localDataSource.getGenreByIds(genreIds)
             if (genreIds.size == genreList.size) {
-                success(genreList)
+                AppController.runOnMain { success(genreList) }
             } else {
                 getRemoteGenreList {
                     val genres = localDataSource.getGenreByIds(genreIds)
-                    success(genres)
+                    AppController.runOnMain { success(genres) }
                 }
 
             }

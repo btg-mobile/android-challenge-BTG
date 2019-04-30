@@ -42,11 +42,12 @@ class MainFragment @Inject constructor(): DaggerFragment(), MainContract.View {
 
     private fun setupViewPager() {
         mPagerAdapter = MainPagerAdapter(childFragmentManager).apply {
-            addPage(mMovieListFragment)
-            addPage(mFavoriteListFragment)
+            addPage(mMovieListFragment, getString(R.string.popular_films))
+            addPage(mFavoriteListFragment, getString(R.string.favorite_films))
         }
 
         vp_main?.adapter = mPagerAdapter
+        tl_main?.setupWithViewPager(vp_main)
     }
 
 }

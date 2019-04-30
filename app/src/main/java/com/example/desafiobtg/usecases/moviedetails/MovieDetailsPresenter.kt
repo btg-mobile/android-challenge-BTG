@@ -41,6 +41,9 @@ class MovieDetailsPresenter @Inject constructor(private val mRepository: Reposit
                         mMovieDetailsView?.showGenreList(genreList)
                     })
                 }
+                movie?.rating?.let { rating ->
+                    mMovieDetailsView?.setUserRating(rating)
+                }
             })
         }
 

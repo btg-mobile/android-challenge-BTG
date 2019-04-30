@@ -14,6 +14,7 @@ interface MovieDetailsContract {
         fun setMovieBackdrop(url: String)
         fun setOverviewText(text: String?)
         fun showGenreList(genreList: List<String>)
+        fun setUserRating(rating: Float)
     }
 
     interface Presenter: BasePresenter<View> {
