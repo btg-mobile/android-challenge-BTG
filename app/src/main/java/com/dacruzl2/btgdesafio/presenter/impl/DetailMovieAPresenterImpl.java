@@ -1,7 +1,5 @@
 package com.dacruzl2.btgdesafio.presenter.impl;
 
-import android.content.Context;
-
 import com.dacruzl2.btgdesafio.model.impl.DetailMovieAModelImpl;
 import com.dacruzl2.btgdesafio.model.inter.IDetailMovieAModel;
 import com.dacruzl2.btgdesafio.presenter.inter.IDetailMovieAPresenter;

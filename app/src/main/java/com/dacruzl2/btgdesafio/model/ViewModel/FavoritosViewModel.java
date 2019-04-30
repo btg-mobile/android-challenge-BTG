@@ -17,6 +17,7 @@ public class FavoritosViewModel extends AndroidViewModel {
     private LiveData<Movie> movie;
     private LiveData<Movie> movieLiveData;
 
+
     public FavoritosViewModel(@NonNull Application application) {
         super(application);
         FavoritosDatabase db = FavoritosDatabase.getInstance(application);
@@ -40,6 +41,10 @@ public class FavoritosViewModel extends AndroidViewModel {
     {
         repository.loadMovieTitle(title);
     }*/
+
+    public void discoverFavorite(int loadFavoriteState){
+        repository.loadFavoriteState(loadFavoriteState);
+    }
 
     public void insert(Movie movie) {
         repository.insert(movie);

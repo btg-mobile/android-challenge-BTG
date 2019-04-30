@@ -87,7 +87,6 @@ public class FilmesFragment extends Fragment implements IFilmesView {
 
                 RootGenres rootGenres = new RootGenres(genresList);
 
-
                 Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
                 intent.putExtra("title", movie.getTitle());
                 intent.putExtra("overview", movie.getOverview());
@@ -96,10 +95,11 @@ public class FilmesFragment extends Fragment implements IFilmesView {
                 intent.putExtra("vote_average",movie.getVoteAverage());
                 intent.putExtra("releaseDate", movie.getReleaseDate());
                 intent.putExtra("movieID", movie.getId());
+                intent.putExtra("isFavorite", movie.isFavorite());
                 intent.putIntegerArrayListExtra("generoID", (ArrayList<Integer>) movie.getGenreIds());
                 intent.putParcelableArrayListExtra("genreList", (ArrayList<? extends Parcelable>) rootGenres.getGenres());
                 //intent.putExtra("genreID", genre.getId());
-                // intent.putParcelableArrayListExtra("listmovies", (ArrayList<? extends Parcelable>) movieList);
+                //intent.putParcelableArrayListExtra("listmovies", (ArrayList<? extends Parcelable>) movieList);
                 startActivity(intent);
             }
 

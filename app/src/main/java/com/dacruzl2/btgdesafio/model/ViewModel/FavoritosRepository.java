@@ -25,6 +25,8 @@ public class FavoritosRepository implements IMoviesPresenter {
 
     private LiveData<List<Movie>> allMovies;
 
+    private LiveData<Movie> movie;
+
     private FavoritosDao favoritosDao;
 
 
@@ -54,11 +56,11 @@ public class FavoritosRepository implements IMoviesPresenter {
     public void insert(Movie movie) {
         new insertAsyncTask(favoritosDao).execute(movie);
     }
+    public void update(Movie movie) {new UpdateAsyncTask(favoritosDao).execute(movie);}
 
-    public void update(Movie movie) {
-
-        new UpdateAsyncTask(favoritosDao).execute(movie);
-    }
+     public void loadFavoriteState (int isFavorite) {
+        new QueryAsyncTask(favoritosDao).execute(isFavorite);
+     }
 
     @Override
     public LiveData<Movie> getMovie(int movieId, final IMovieDetailsCallback IMovieDetailsCallback) {
@@ -90,7 +92,7 @@ public class FavoritosRepository implements IMoviesPresenter {
         return movieDetailLiveData;
     }
 
-    private static class QueryAsyncTask extends AsyncTask<String, Void, Void> {
+    private static class QueryAsyncTask extends AsyncTask<Integer, Void, Void> {
 
         private FavoritosDao mAsyncTaskDao;
 
@@ -100,9 +102,9 @@ public class FavoritosRepository implements IMoviesPresenter {
         }
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected Void doInBackground(Integer... params) {
 
-            mAsyncTaskDao.loadMovie(params[0]);
+            mAsyncTaskDao.getFavourite(params[0]);
             return null;
         }
     }

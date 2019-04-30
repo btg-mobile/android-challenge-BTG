@@ -2,8 +2,8 @@ package com.dacruzl2.btgdesafio.view.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
@@ -23,12 +24,20 @@ import com.dacruzl2.btgdesafio.model.pojos.RootGenres;
 import com.dacruzl2.btgdesafio.model.pojos.pojoteste.Movie;
 import com.dacruzl2.btgdesafio.presenter.impl.DetailMovieAPresenterImpl;
 import com.dacruzl2.btgdesafio.presenter.inter.IDetailMovieAPresenter;
+import com.dacruzl2.btgdesafio.view.fragment.FavoritosAdapter;
 import com.dacruzl2.btgdesafio.view.inter.IDetailMovieAView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,11 +80,20 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
     String detailPoster, title, overview, backdrop, releaseDate, genero;
     float vote_average;
     int movieID;
+
+    boolean favorite;
+
     private static final String ARQUIVO_PREFERENCIA = "ArquivoPreferencia";
     ArrayList<Integer> mGenreIds;
 
-    ArrayList<RootGenres> rootGenres;
+    List<RootGenres> rootGenres;
     private IDetailMovieAPresenter mIDetailMovieAPresenter;
+
+    Movie movie = new Movie();
+
+    private List<Movie> favList;
+    private FavoritosAdapter favAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +104,54 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
         favoritosViewModel = ViewModelProviders.of(this).get(FavoritosViewModel.class);
         favoritosDatabase = FavoritosDatabase.getInstance(this);
 
-        floatingActionButton.setImageDrawable(getDrawable(R.drawable.ic_favorite_off));
+       // favAdapter = new FavoritosAdapter(this, favList);
+        rootGenres = new ArrayList<>();
+        favList = new ArrayList<>();
+
+        favoritosViewModel.getaAllMovies().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                favList.clear();
+                favList.addAll(movies);
+/*
+                for (int i = 0; i < movies.size(); i++) {
+                    favList.add(i, movies.get(i));
+                    Log.d("LISTFOR1", "titulo: "+ movies.get(i).getTitle());
+                }*/
+               // favAdapter.notifyDataSetChanged();
+
+                for (Movie movie1 : favList) {
+                    // recebe a palavra
+                    movie = movie1;
+                    Log.d("LISTFOR2", "titulo: "+ movie.getTitle());
+                    if (title.equals(movie.getTitle())) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                floatingActionButton.setImageDrawable(getDrawable(R.drawable.ic_favorite_on));
+                            }
+                        });
+                        //Assim que achar o titulo no banco de dados com o titulo que o usuario
+                        //está abrindo na activity atual, ele parará o foreach e configurará o floatButton
+                        // para que o icone de coração fique preenchido, senão achar o mesmo titulo ele deixará o floatButton
+                        // com o icone de coração não preenchido;
+                        break;
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                floatingActionButton.setImageDrawable(getDrawable(R.drawable.ic_favorite_off));
+                            }
+                        });
+                    }
+
+                }
+            }
+        });
+
+
+
+
 
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.move_image2);
         anim.setRepeatMode(Animation.INFINITE);
@@ -110,6 +175,8 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
         mGenreIds = it.getIntegerArrayListExtra("generoID");
         genero = it.getStringExtra("genreName");
         rootGenres = it.getParcelableArrayListExtra("genreList");
+        Log.d("GENRELIST","EL: " + rootGenres.size());
+        favorite = it.getBooleanExtra("isFavorite", false);
 
         if (rootGenres.contains(mGenreIds)) {
             rootGenres.get(0).getGenres().size();
@@ -128,6 +195,9 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
                 .load("https://image.tmdb.org/t/p/original" + detailPoster)
                 .into(ivDetailPoster);
 
+
+
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,25 +207,14 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
         });
 
 
+
+
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        SharedPreferences preferences = getSharedPreferences(ARQUIVO_PREFERENCIA, 0);
-        if (preferences.contains("favorite_on") || preferences.contains("favorite_off")) {
-
-            int movieId = preferences.getInt("favorite_on",0 );
-
-            int movieIdOff = preferences.getInt("favorite_off", 0);
-
-            if(movieID == movieId){
-                floatingActionButton.setImageDrawable(getDrawable(R.drawable.ic_favorite_on));
-            }else if (movieID != movieIdOff) {
-                floatingActionButton.setImageDrawable(getDrawable(R.drawable.ic_favorite_off));
-            }
-        }
-
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
@@ -170,6 +229,7 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
 
         Movie favMovie = new Movie(movieID, title, overview, releaseDate,
                 detailPoster, backdrop, vote_average, true, mGenreIds);
+
         //Executor Background Thread
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -178,8 +238,6 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
                 //If it doesnt exist in the database add it
                 if (favoritosDatabase.getFavoritosDao().loadMovie(title) == null) {
                     favoritosDatabase.getFavoritosDao().saveMovieToFavorites(favMovie);
-                    editor.putInt("favorite_on", movieID);
-                    editor.apply();
 
                     runOnUiThread(new Runnable() {
                         @Override
@@ -195,14 +253,12 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
                         }
                     });
 
+                    editor.putString("favorite_on", title);
+                    editor.apply();
 
                 } else {
                     //Remove and display toast and change drawable
                     favoritosDatabase.getFavoritosDao().removeMovieFromFavorites(favMovie);
-
-                    editor.putInt("favorite_off", 0);
-                    editor.commit();
-
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
