@@ -1,17 +1,17 @@
 package com.example.desafiobtg.usecases.movielist
 
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.example.desafiobtg.R
-import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.frag_movie_list.*
-import javax.inject.Inject
-import android.support.v7.widget.DividerItemDecoration
 import com.example.desafiobtg.usecases.moviedetails.MovieDetailsActivity
+import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.frag_favorite_list.*
+import javax.inject.Inject
 import javax.inject.Named
 
 class FavoriteListFragment @Inject constructor(): DaggerFragment(),
@@ -63,5 +63,13 @@ class FavoriteListFragment @Inject constructor(): DaggerFragment(),
 
     override fun notifyDatasetChanged() {
         mAdapter?.notifyDataSetChanged()
+    }
+
+    override fun showLoading(shouldShow: Boolean) {
+        fl_loading?.visibility = if (shouldShow) View.VISIBLE else View.GONE
+    }
+
+    override fun showEmptyList(isEmpty: Boolean) {
+        import_empty_list?.visibility = if (isEmpty) View.VISIBLE else View.GONE
     }
 }

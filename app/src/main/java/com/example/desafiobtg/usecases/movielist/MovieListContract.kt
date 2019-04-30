@@ -10,6 +10,9 @@ interface MovieListContract {
         fun notifyDatasetChanged()
         fun notifyFavoriteChanged(index: Int)
         fun showMovieDetailsActivity(id: String?)
+        fun showLoading(shouldShow: Boolean)
+        fun showNoInternet(shouldShow: Boolean) {}
+        fun showEmptyList(isEmpty: Boolean) {}
     }
 
     interface Presenter: BasePresenter<View> {
@@ -20,6 +23,7 @@ interface MovieListContract {
         fun bindFavoriteIcon(movieHolder: MovieHolder?, position: Int)
         fun setListType(listType: MovieListType)
         fun onItemClicked(position: Int)
+        fun loadPopularMovieList()
     }
 
     interface MovieHolder {

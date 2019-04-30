@@ -3,6 +3,7 @@ package com.example.desafiobtg.usecases.moviedetails
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import com.example.desafiobtg.R
 import com.example.desafiobtg.usecases.moviedetails.MovieDetailsFragment.Companion.MOVIE_ID_KEY
 import com.example.desafiobtg.utils.ActivityUtils
@@ -32,5 +33,19 @@ class MovieDetailsActivity @Inject constructor(): DaggerAppCompatActivity() {
         }
 
         movieDetailsFragment.arguments = intent?.extras
+
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }

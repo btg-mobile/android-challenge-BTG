@@ -62,6 +62,7 @@ class MovieDetailsFragment @Inject constructor(): DaggerFragment(), MovieDetails
 
     override fun setMovieTitle(title: String) {
         tv_title?.text = title
+        activity?.title = title
     }
 
     override fun setMovieYear(year: String) {
@@ -83,6 +84,9 @@ class MovieDetailsFragment @Inject constructor(): DaggerFragment(), MovieDetails
 
     override fun showGenreList(genreList: List<String>) {
         tv_genres?.text = genreList.joinToString()
+        if (genreList.isNotEmpty()) {
+            group_genre?.visibility = View.VISIBLE
+        }
     }
 
     override fun setUserRating(rating: Float) {

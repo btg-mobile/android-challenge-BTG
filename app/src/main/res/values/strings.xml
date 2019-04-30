@@ -6,4 +6,8 @@
 	<string name="favorite_films">Favoritos</string>
 	<string name="user_ratings">Avaliação dos usuários</string>
 	<string name="genres">Gêneros</string>
+	<string name="try_again">Tentar novamente</string>
+	<string name="no_internet">Sem internet</string>
+	<string name="empty_list">Lista Vazia</string>
+	<string name="favorite_orientation"><![CDATA[Clique no &#x2764; para adicionar aos favoritos]]></string>
 </resources>

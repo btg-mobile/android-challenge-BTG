@@ -76,19 +76,22 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
         })
     }
 
-    private fun loadPopularMovieList() {
-
+    override fun loadPopularMovieList() {
+        mMovieListView?.showLoading(true)
         mRepository.getMovieList(1, { response ->
             response.let {
                 mMovieList = ArrayList(it.movieList)
             }
             mMovieListView?.notifyDatasetChanged()
+            mMovieListView?.showLoading(false)
         }, {
-            //TODO: Tratar falha
+            mMovieListView?.showLoading(false)
+            mMovieListView?.showNoInternet(true)
         })
     }
 
     private fun loadFavoriteMovieList(fragment: Fragment) {
+        mMovieListView?.showLoading(true)
         mFavoriteMoviesLiveData = mRepository.getFavoriteMovieList()
         mFavoriteMoviesLiveData?.observe(fragment, Observer { favList ->
             favList?.let {
@@ -96,6 +99,9 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
                 // TODO: Fazer um notifyItemInserted ou um notifyItemRemoved
                 // para fazer animação bonitinha do item sendo removido
                 mMovieListView?.notifyDatasetChanged()
+
+                mMovieListView?.showEmptyList(mMovieList.isEmpty())
+                mMovieListView?.showLoading(false)
             }
         })
     }

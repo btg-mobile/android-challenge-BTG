@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 
 @Entity
 data class Genre(@PrimaryKey
-                  @ColumnInfo(name = ID) @SerializedName(ID) @Expose var id: String,
+                  @ColumnInfo(name = ID) @SerializedName(ID) @Expose var id: Int,
                   @ColumnInfo(name = NAME) @SerializedName(NAME) @Expose var name: String?) {
 
     companion object {

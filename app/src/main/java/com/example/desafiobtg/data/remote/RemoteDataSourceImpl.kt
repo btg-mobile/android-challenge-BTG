@@ -1,5 +1,6 @@
 package com.example.desafiobtg.data.remote
 
+import com.example.desafiobtg.AppController
 import com.example.desafiobtg.api.MovieApi
 import com.example.desafiobtg.db.entities.Genre
 import com.example.desafiobtg.db.entities.Movie
@@ -46,7 +47,7 @@ class RemoteDataSourceImpl @Inject constructor(): RemoteDataSource {
         call.enqueue(object : Callback<GenresResponse> {
             override fun onResponse(call: Call<GenresResponse>, response: Response<GenresResponse>) {
                 response.body()?.let { genre ->
-                    success(genre.genres)
+                    AppController.runOnBG { success(genre.genres) }
                 } ?: failure("Null response body")
             }
 

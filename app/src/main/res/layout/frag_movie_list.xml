@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
+	android:id="@+id/cl_parent"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-    android:layout_height="match_parent"
-	style="@style/AppTheme.FragmentContainer" >
+	android:layout_height="match_parent"
+	style="@style/AppTheme.FragmentContainer">
 	
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/rv_movies"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		tools:listitem="@layout/item_movie"/>
+		tools:listitem="@layout/item_movie"
+		android:visibility="visible"/>
+	
+	<FrameLayout
+		android:id="@+id/fl_loading"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		style="@style/AppTheme.FragmentContainer"
+		android:visibility="gone">
+		
+		<ProgressBar
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"/>
+		
+	</FrameLayout>
+	
+	<include
+		android:id="@+id/import_no_internet"
+		layout="@layout/layout_no_internet"
+		android:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>

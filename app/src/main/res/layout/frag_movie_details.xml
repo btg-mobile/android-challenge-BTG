@@ -13,7 +13,7 @@
 	
 	<android.support.constraint.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content" >
+		android:layout_height="wrap_content">
 		
 		<android.support.v7.widget.AppCompatImageView
 			android:id="@+id/iv_backdrop_bg"
@@ -23,7 +23,7 @@
 			app:layout_constraintDimensionRatio="16:9"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toTopOf="parent"/>
+			app:layout_constraintTop_toTopOf="parent" />
 		
 		<android.support.v7.widget.AppCompatImageView
 			android:id="@+id/iv_poster"
@@ -46,7 +46,7 @@
 			app:layout_constraintBottom_toBottomOf="@id/iv_poster"
 			android:layout_marginStart="16dp"
 			android:layout_marginEnd="16dp"
-			android:orientation="vertical" >
+			android:orientation="vertical">
 			
 			<android.support.v7.widget.AppCompatTextView
 				android:id="@+id/tv_title"
@@ -106,7 +106,7 @@
 			android:numStars="5"
 			android:stepSize="0.05"
 			android:rating="2"
-			android:isIndicator="true"/>
+			android:isIndicator="true" />
 		
 		<android.support.v7.widget.AppCompatTextView
 			android:id="@+id/tv_rating_number"
@@ -151,6 +151,12 @@
 			android:layout_marginStart="24dp"
 			android:layout_marginEnd="24dp"
 			android:layout_marginTop="8dp" />
+		
+		<android.support.constraint.Group
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/group_genre"
+			android:visibility="invisible" />
 		
 		<android.support.v7.widget.AppCompatTextView
 			android:id="@+id/tv_overview_title"

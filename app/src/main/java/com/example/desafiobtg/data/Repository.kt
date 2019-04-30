@@ -27,7 +27,7 @@ class Repository @Inject constructor(private val remoteDataSource: RemoteDataSou
 
         AppController.runOnBG {
             localDataSource.getLocalMovieList(page)?.takeIf { it.isNotEmpty() }?.let {
-                success(PopularMoviesResponse(page, it))
+                AppController.runOnMain { success(PopularMoviesResponse(page, it)) }
             } ?: run {
                 getRemotePopularMovieList(page, success, failure)
             }
@@ -37,9 +37,9 @@ class Repository @Inject constructor(private val remoteDataSource: RemoteDataSou
     fun getRemotePopularMovieList(page: Int, success: (response: PopularMoviesResponse) -> Unit, failure: (error: String?) -> Unit) {
         remoteDataSource.getMovieList(page, { response ->
             localDataSource.insertMovies(response.movieList)
-            success(response)
+            AppController.runOnMain { success(response) }
         }, { error ->
-            failure(error)
+            AppController.runOnMain { failure(error) }
         })
     }
 
@@ -49,19 +49,23 @@ class Repository @Inject constructor(private val remoteDataSource: RemoteDataSou
             if (genreIds.size == genreList.size) {
                 AppController.runOnMain { success(genreList) }
             } else {
-                getRemoteGenreList {
-                    val genres = localDataSource.getGenreByIds(genreIds)
-                    AppController.runOnMain { success(genres) }
+                getRemoteGenreList (genreIds) { genreNames ->
+                    AppController.runOnMain { success(genreNames) }
                 }
-
             }
         }
     }
 
-    private fun getRemoteGenreList(success: () -> Unit) {
+    private fun getRemoteGenreList(genreIds: List<Int>, success: (genreList: List<String>) -> Unit) {
         remoteDataSource.getGenreList(success = { genres ->
             localDataSource.addGenres(genres)
-            success()
+            val returnList = ArrayList<String>()
+            genres.forEach { genre ->
+                if (genreIds.contains(genre.id)) {
+                    genre.name?.let { returnList.add(it) }
+                }
+            }
+            success(returnList)
         }, failure = {
 
         })

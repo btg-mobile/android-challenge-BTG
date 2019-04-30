@@ -11,8 +11,9 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.frag_movie_list.*
 import javax.inject.Inject
 import android.support.v7.widget.DividerItemDecoration
+import android.transition.TransitionManager
 import com.example.desafiobtg.usecases.moviedetails.MovieDetailsActivity
-import com.example.desafiobtg.usecases.moviedetails.MovieDetailsFragment
+import kotlinx.android.synthetic.main.layout_no_internet.*
 import javax.inject.Named
 
 class MovieListFragment @Inject constructor(): DaggerFragment(), MovieListContract.View {
@@ -37,7 +38,15 @@ class MovieListFragment @Inject constructor(): DaggerFragment(), MovieListContra
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        setupListener()
         mPresenter.onViewCreated(this)
+    }
+
+    private fun setupListener() {
+        btn_try_again?.setOnClickListener {
+            showNoInternet(false)
+            mPresenter.loadPopularMovieList()
+        }
     }
 
     override fun notifyFavoriteChanged(index: Int) {
@@ -63,5 +72,21 @@ class MovieListFragment @Inject constructor(): DaggerFragment(), MovieListContra
             val activity = MovieDetailsActivity.newIntent(context, it)
             startActivity(activity)
         }
+    }
+
+    override fun showLoading(shouldShow: Boolean) {
+        cl_parent?.let {
+            TransitionManager.beginDelayedTransition(it)
+        }
+
+        fl_loading?.visibility = if (shouldShow) View.VISIBLE else View.GONE
+    }
+
+    override fun showNoInternet(shouldShow: Boolean) {
+        cl_parent?.let {
+            TransitionManager.beginDelayedTransition(it)
+        }
+
+        import_no_internet?.visibility = if (shouldShow) View.VISIBLE else View.GONE
     }
 }
