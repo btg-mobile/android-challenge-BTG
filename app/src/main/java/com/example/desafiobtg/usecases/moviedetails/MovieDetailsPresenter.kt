@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.example.desafiobtg.data.Repository
 import com.example.desafiobtg.db.entities.Movie
+import com.example.desafiobtg.utils.Constants
 import com.example.desafiobtg.utils.DateUtils
 import javax.inject.Inject
 
@@ -30,8 +31,8 @@ class MovieDetailsPresenter @Inject constructor(private val mRepository: Reposit
             val movieId = args.getString(MovieDetailsFragment.MOVIE_ID_KEY)
             mRepository.getMovieById(movieId, success = { movie ->
                 this.movie = movie
-                mMovieDetailsView?.setMovieBackdrop("https://image.tmdb.org/t/p/w1280${movie?.backdropUrl}")
-                mMovieDetailsView?.setMoviePoster("https://image.tmdb.org/t/p/w300${movie?.posterUrl}")
+                mMovieDetailsView?.setMovieBackdrop("${Constants.BACKDROP_IMAGE_URL_PREFIX}${movie?.backdropUrl}")
+                mMovieDetailsView?.setMoviePoster("${Constants.POSTER_DETAILED_IMAGE_URL_PREFIX}${movie?.posterUrl}")
                 movie?.title?.let { title -> mMovieDetailsView?.setMovieTitle(title) }
                 val year = DateUtils.getYearForDate(movie?.releaseDate)
                 year?.let { mMovieDetailsView?.setMovieYear(it) }

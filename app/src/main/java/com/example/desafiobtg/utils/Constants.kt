@@ -9,4 +9,6 @@ object Constants {
     const val ITEMS_IN_PAGE = 20
 
     const val POSTER_LIST_IMAGE_URL_PREFIX = "https://image.tmdb.org/t/p/w185"
+    const val POSTER_DETAILED_IMAGE_URL_PREFIX = "https://image.tmdb.org/t/p/w300"
+    const val BACKDROP_IMAGE_URL_PREFIX = "https://image.tmdb.org/t/p/w1280"
 }
