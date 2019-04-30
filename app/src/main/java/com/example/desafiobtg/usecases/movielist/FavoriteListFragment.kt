@@ -72,4 +72,8 @@ class FavoriteListFragment @Inject constructor(): DaggerFragment(),
     override fun showEmptyList(isEmpty: Boolean) {
         import_empty_list?.visibility = if (isEmpty) View.VISIBLE else View.GONE
     }
+
+    override fun onQueryTextChange(query: String) {
+        mPresenter.onQueryTextChange(query)
+    }
 }

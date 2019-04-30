@@ -13,6 +13,7 @@ interface MovieListContract {
         fun showLoading(shouldShow: Boolean)
         fun showNoInternet(shouldShow: Boolean) {}
         fun showEmptyList(isEmpty: Boolean) {}
+        fun onQueryTextChange(query: String)
     }
 
     interface Presenter: BasePresenter<View> {
@@ -24,6 +25,7 @@ interface MovieListContract {
         fun setListType(listType: MovieListType)
         fun onItemClicked(position: Int)
         fun loadPopularMovieList()
+        fun onQueryTextChange(query: String)
     }
 
     interface MovieHolder {

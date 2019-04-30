@@ -89,4 +89,8 @@ class MovieListFragment @Inject constructor(): DaggerFragment(), MovieListContra
 
         import_no_internet?.visibility = if (shouldShow) View.VISIBLE else View.GONE
     }
+
+    override fun onQueryTextChange(query: String) {
+        mPresenter.onQueryTextChange(query)
+    }
 }

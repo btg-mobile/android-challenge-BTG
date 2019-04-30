@@ -7,19 +7,17 @@ import com.example.desafiobtg.data.Repository
 import com.example.desafiobtg.db.entities.Movie
 import com.example.desafiobtg.utils.DateUtils
 import com.example.desafiobtg.utils.ListUtils
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 class MovieListPresenter @Inject constructor(private val mRepository: Repository): MovieListContract.Presenter {
 
     private var mMovieListView: MovieListContract.View? = null
 
     private var mMovieList = arrayListOf<Movie>()
+    private var mFilteredMovieList = arrayListOf<Movie>()
     private var mFavoriteMovieIds = listOf<String>()
+
+    private var mQuery = ""
 
     private var listType = MovieListType.POPULAR
 
@@ -36,15 +34,15 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
 
     override fun bindMovieHolder(movieHolder: MovieListContract.MovieHolder?, position: Int) {
         // TODO: Adicionar a uma variável
-        movieHolder?.setMoviePoster("https://image.tmdb.org/t/p/w185${mMovieList[position].posterUrl}")
-        mMovieList[position].title?.let { title -> movieHolder?.setMovieTitle(title) }
-        val year = DateUtils.getYearForDate(mMovieList[position].releaseDate)
+        movieHolder?.setMoviePoster("https://image.tmdb.org/t/p/w185${mFilteredMovieList[position].posterUrl}")
+        mFilteredMovieList[position].title?.let { title -> movieHolder?.setMovieTitle(title) }
+        val year = DateUtils.getYearForDate(mFilteredMovieList[position].releaseDate)
         year?.let { movieHolder?.setMovieYear(it) }
-        movieHolder?.setMovieFavorited(mFavoriteMovieIds.contains(mMovieList[position].id))
+        movieHolder?.setMovieFavorited(mFavoriteMovieIds.contains(mFilteredMovieList[position].id))
     }
 
     override fun setMovieFavorite(position: Int, favorite: Boolean) {
-        val id = mMovieList[position].id
+        val id = mFilteredMovieList[position].id
         if (favorite) {
             mRepository.addFavoriteMovie(id)
         } else {
@@ -66,8 +64,8 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
             idList?.let { ids ->
                 val uncommonItems = ListUtils.getUncommonItems(mFavoriteMovieIds, ids)
                 uncommonItems.forEach { idToNotify ->
-                    val movieToUpdate = mMovieList.find { it.id == idToNotify }
-                    val indexToUpdate = mMovieList.indexOf(movieToUpdate)
+                    val movieToUpdate = mFilteredMovieList.find { it.id == idToNotify }
+                    val indexToUpdate = mFilteredMovieList.indexOf(movieToUpdate)
                     mMovieListView?.notifyFavoriteChanged(indexToUpdate)
                 }
 
@@ -81,6 +79,7 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
         mRepository.getMovieList(1, { response ->
             response.let {
                 mMovieList = ArrayList(it.movieList)
+                mFilteredMovieList = ArrayList(getFilteredListForQuery(mQuery))
             }
             mMovieListView?.notifyDatasetChanged()
             mMovieListView?.showLoading(false)
@@ -96,11 +95,12 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
         mFavoriteMoviesLiveData?.observe(fragment, Observer { favList ->
             favList?.let {
                 mMovieList = ArrayList(it)
+                mFilteredMovieList = ArrayList(getFilteredListForQuery(mQuery))
                 // TODO: Fazer um notifyItemInserted ou um notifyItemRemoved
                 // para fazer animação bonitinha do item sendo removido
                 mMovieListView?.notifyDatasetChanged()
 
-                mMovieListView?.showEmptyList(mMovieList.isEmpty())
+                mMovieListView?.showEmptyList(mFilteredMovieList.isEmpty())
                 mMovieListView?.showLoading(false)
             }
         })
@@ -111,13 +111,37 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
     }
 
     override fun bindFavoriteIcon(movieHolder: MovieListContract.MovieHolder?, position: Int) {
-        movieHolder?.setMovieFavorited(mFavoriteMovieIds.contains(mMovieList[position].id))
+        movieHolder?.setMovieFavorited(mFavoriteMovieIds.contains(mFilteredMovieList[position].id))
     }
 
     override fun onItemClicked(position: Int) {
-        mMovieListView?.showMovieDetailsActivity(mMovieList.getOrNull(position)?.id)
+        mMovieListView?.showMovieDetailsActivity(mFilteredMovieList.getOrNull(position)?.id)
     }
 
-    override fun getMovieCount() = mMovieList.size
+    override fun getMovieCount() = mFilteredMovieList.size
 
+    override fun onQueryTextChange(query: String) {
+        mQuery = query
+        mFilteredMovieList = ArrayList(getFilteredListForQuery(query))
+        mMovieListView?.notifyDatasetChanged()
+    }
+
+    private fun getFilteredListForQuery(query: String): List<Movie> {
+        if (query.isEmpty()) return ArrayList<Movie>(mMovieList)
+
+        val list = ArrayList<Movie>()
+        val lowerCaseQuery = query.toLowerCase()
+        mMovieList.forEach { movie ->
+            val validTitle = (movie.title?.toLowerCase() ?: "").contains(lowerCaseQuery)
+
+            val year = DateUtils.getYearForDate(movie.releaseDate)?.toIntOrNull()
+            val queryYear = query.toIntOrNull()
+            val validYear = year == queryYear
+            if (validTitle || validYear) {
+                list.add(movie)
+            }
+        }
+
+        return list
+    }
 }

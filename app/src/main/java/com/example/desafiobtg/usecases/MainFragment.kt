@@ -50,4 +50,9 @@ class MainFragment @Inject constructor(): DaggerFragment(), MainContract.View {
         tl_main?.setupWithViewPager(vp_main)
     }
 
+    fun onQueryTextChange(query: String) {
+        mMovieListFragment.onQueryTextChange(query)
+        mFavoriteListFragment.onQueryTextChange(query)
+    }
+
 }

@@ -10,4 +10,6 @@
 	<string name="no_internet">Sem internet</string>
 	<string name="empty_list">Lista Vazia</string>
 	<string name="favorite_orientation"><![CDATA[Clique no &#x2764; para adicionar aos favoritos]]></string>
+	<string name="action_search">Buscar</string>
+	<string name="search_view_query_hint">Pesquisar título ou ano…</string>
 </resources>
