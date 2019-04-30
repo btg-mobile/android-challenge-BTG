@@ -12,13 +12,26 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_movie.view.*
 
 class MovieListAdapter constructor(private val mPresenter: MovieListContract.Presenter) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    enum class ListItemType constructor(val value: Int) {
+        MOVIE(0), LOADING(1)
+    }
+
     override fun onCreateViewHolder(view: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val itemView = LayoutInflater.from(view.context).inflate(R.layout.item_movie, view, false)
-        return MovieViewHolder(itemView)
+        return when (viewType) {
+            ListItemType.MOVIE.value -> {
+                val itemView = LayoutInflater.from(view.context).inflate(R.layout.item_movie, view, false)
+                MovieViewHolder(itemView)
+            }
+            else -> {
+                val itemView = LayoutInflater.from(view.context).inflate(R.layout.item_load_more, view, false)
+                LoadingViewHolder(itemView)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        return mPresenter.getMovieCount()
+        return mPresenter.getListItemCount() + if (mPresenter.isLoadingMoreItems()) 1 else 0
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -34,6 +47,14 @@ class MovieListAdapter constructor(private val mPresenter: MovieListContract.Pre
             movieHolder.parentCL?.setOnClickListener {
                 mPresenter.onItemClicked(position)
             }
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (mPresenter.isLoadingMoreItems() && position == mPresenter.getListItemCount() - 1) {
+            ListItemType.LOADING.value
+        } else {
+            ListItemType.MOVIE.value
         }
     }
 
@@ -81,4 +102,6 @@ class MovieListAdapter constructor(private val mPresenter: MovieListContract.Pre
             favoriteIV?.isSelected = isFavorited
         }
     }
+
+    inner class LoadingViewHolder constructor(itemView: View): RecyclerView.ViewHolder(itemView)
 }

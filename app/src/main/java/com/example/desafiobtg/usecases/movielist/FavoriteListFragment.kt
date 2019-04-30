@@ -65,6 +65,18 @@ class FavoriteListFragment @Inject constructor(): DaggerFragment(),
         mAdapter?.notifyDataSetChanged()
     }
 
+    override fun notifyItemRemoved(idx: Int) {
+        mAdapter?.notifyItemRemoved(idx)
+    }
+
+    override fun notifyItemRangeInserted(position: Int, count: Int) {
+        mAdapter?.notifyItemRangeInserted(position, count)
+    }
+
+    override fun notifyItemChanged(position: Int) {
+        mAdapter?.notifyItemChanged(position)
+    }
+
     override fun showLoading(shouldShow: Boolean) {
         fl_loading?.visibility = if (shouldShow) View.VISIBLE else View.GONE
     }

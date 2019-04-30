@@ -14,11 +14,15 @@ interface MovieListContract {
         fun showNoInternet(shouldShow: Boolean) {}
         fun showEmptyList(isEmpty: Boolean) {}
         fun onQueryTextChange(query: String)
+        fun notifyItemInserted(position: Int) {}
+        fun notifyItemRangeInserted(position: Int, count: Int)
+        fun notifyItemChanged(position: Int)
+        fun notifyItemRemoved(idx: Int)
     }
 
     interface Presenter: BasePresenter<View> {
         fun bindMovieHolder(movieHolder: MovieHolder?, position: Int)
-        fun getMovieCount(): Int
+        fun getListItemCount(): Int
         fun onViewCreated(fragment: Fragment)
         fun setMovieFavorite(position: Int, favorite: Boolean)
         fun bindFavoriteIcon(movieHolder: MovieHolder?, position: Int)
@@ -26,6 +30,10 @@ interface MovieListContract {
         fun onItemClicked(position: Int)
         fun loadPopularMovieList()
         fun onQueryTextChange(query: String)
+
+        fun loadMore()
+        fun isLoadingMoreItems(): Boolean
+        fun shouldLoadMoreItems(): Boolean
     }
 
     interface MovieHolder {

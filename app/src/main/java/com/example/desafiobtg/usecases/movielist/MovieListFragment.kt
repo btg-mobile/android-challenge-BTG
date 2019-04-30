@@ -11,6 +11,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.frag_movie_list.*
 import javax.inject.Inject
 import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.RecyclerView
 import android.transition.TransitionManager
 import com.example.desafiobtg.usecases.moviedetails.MovieDetailsActivity
 import kotlinx.android.synthetic.main.layout_no_internet.*
@@ -22,6 +23,12 @@ class MovieListFragment @Inject constructor(): DaggerFragment(), MovieListContra
     lateinit var mPresenter: MovieListContract.Presenter
 
     private var mAdapter: MovieListAdapter? = null
+    private var layoutManager = object: LinearLayoutManager(context, LinearLayout.VERTICAL, false) {
+        override fun supportsPredictiveItemAnimations() = false
+    }
+
+    // Itens para load more
+    private val visibleThreshold = 5
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_movie_list, container, false)
@@ -38,15 +45,41 @@ class MovieListFragment @Inject constructor(): DaggerFragment(), MovieListContra
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        setupListener()
+        setupListeners()
         mPresenter.onViewCreated(this)
     }
 
-    private fun setupListener() {
+    private fun setupListeners() {
         btn_try_again?.setOnClickListener {
             showNoInternet(false)
             mPresenter.loadPopularMovieList()
         }
+
+        rv_movies?.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = layoutManager.itemCount
+                val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+                if (mPresenter.shouldLoadMoreItems() && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                    mPresenter.loadMore()
+                }
+            }
+        })
+    }
+
+    override fun notifyItemInserted(position: Int) {
+        mAdapter?.notifyItemInserted(position)
+    }
+
+    override fun notifyItemRemoved(idx: Int) {
+        mAdapter?.notifyItemRemoved(idx)
+    }
+
+    override fun notifyItemRangeInserted(position: Int, count: Int) {
+        mAdapter?.notifyItemRangeInserted(position, count)
+    }
+
+    override fun notifyItemChanged(position: Int) {
+        mAdapter?.notifyItemChanged(position)
     }
 
     override fun notifyFavoriteChanged(index: Int) {
@@ -54,12 +87,11 @@ class MovieListFragment @Inject constructor(): DaggerFragment(), MovieListContra
     }
 
     private fun setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
         rv_movies?.layoutManager = layoutManager
         mAdapter = MovieListAdapter(mPresenter)
         rv_movies?.adapter = mAdapter
 
-        val dividerItemDecoration = DividerItemDecoration(rv_movies?.context ,layoutManager.orientation)
+        val dividerItemDecoration = DividerItemDecoration(rv_movies?.context , layoutManager.orientation)
         rv_movies.addItemDecoration(dividerItemDecoration)
     }
 

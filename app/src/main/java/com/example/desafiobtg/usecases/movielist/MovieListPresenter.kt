@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer
 import android.support.v4.app.Fragment
 import com.example.desafiobtg.data.Repository
 import com.example.desafiobtg.db.entities.Movie
+import com.example.desafiobtg.utils.Constants
 import com.example.desafiobtg.utils.DateUtils
 import com.example.desafiobtg.utils.ListUtils
 import javax.inject.Inject
@@ -16,6 +17,9 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
     private var mMovieList = arrayListOf<Movie>()
     private var mFilteredMovieList = arrayListOf<Movie>()
     private var mFavoriteMovieIds = listOf<String>()
+
+    private var mIsLoadingMoreItems = false
+    private var mPageToLoad = 1
 
     private var mQuery = ""
 
@@ -33,8 +37,7 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
     }
 
     override fun bindMovieHolder(movieHolder: MovieListContract.MovieHolder?, position: Int) {
-        // TODO: Adicionar a uma variável
-        movieHolder?.setMoviePoster("https://image.tmdb.org/t/p/w185${mFilteredMovieList[position].posterUrl}")
+        movieHolder?.setMoviePoster("${Constants.POSTER_LIST_IMAGE_URL_PREFIX}${mFilteredMovieList[position].posterUrl}")
         mFilteredMovieList[position].title?.let { title -> movieHolder?.setMovieTitle(title) }
         val year = DateUtils.getYearForDate(mFilteredMovieList[position].releaseDate)
         year?.let { movieHolder?.setMovieYear(it) }
@@ -89,6 +92,21 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
         })
     }
 
+    private fun loadPopularMovieList(page: Int) {
+        mRepository.getMovieList(page, { response ->
+            val oldListSize = mMovieList.size
+            response.let {
+                mMovieList.addAll(it.movieList)
+                mFilteredMovieList = ArrayList(getFilteredListForQuery(mQuery))
+            }
+            mIsLoadingMoreItems = false
+            mMovieListView?.notifyItemChanged(oldListSize)
+            mMovieListView?.notifyItemRangeInserted(oldListSize + 1, Constants.ITEMS_IN_PAGE - 1)
+        }, {
+
+        })
+    }
+
     private fun loadFavoriteMovieList(fragment: Fragment) {
         mMovieListView?.showLoading(true)
         mFavoriteMoviesLiveData = mRepository.getFavoriteMovieList()
@@ -96,8 +114,6 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
             favList?.let {
                 mMovieList = ArrayList(it)
                 mFilteredMovieList = ArrayList(getFilteredListForQuery(mQuery))
-                // TODO: Fazer um notifyItemInserted ou um notifyItemRemoved
-                // para fazer animação bonitinha do item sendo removido
                 mMovieListView?.notifyDatasetChanged()
 
                 mMovieListView?.showEmptyList(mFilteredMovieList.isEmpty())
@@ -118,7 +134,7 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
         mMovieListView?.showMovieDetailsActivity(mFilteredMovieList.getOrNull(position)?.id)
     }
 
-    override fun getMovieCount() = mFilteredMovieList.size
+    override fun getListItemCount() = mFilteredMovieList.size + (if (mIsLoadingMoreItems) 1 else 0)
 
     override fun onQueryTextChange(query: String) {
         mQuery = query
@@ -131,11 +147,11 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
 
         val list = ArrayList<Movie>()
         val lowerCaseQuery = query.toLowerCase()
+        val queryYear = query.toIntOrNull()
         mMovieList.forEach { movie ->
             val validTitle = (movie.title?.toLowerCase() ?: "").contains(lowerCaseQuery)
 
             val year = DateUtils.getYearForDate(movie.releaseDate)?.toIntOrNull()
-            val queryYear = query.toIntOrNull()
             val validYear = year == queryYear
             if (validTitle || validYear) {
                 list.add(movie)
@@ -143,5 +159,20 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
         }
 
         return list
+    }
+
+    override fun loadMore() {
+        mPageToLoad++
+        mIsLoadingMoreItems = true
+        mMovieListView?.notifyItemInserted(mMovieList.size)
+        loadPopularMovieList(mPageToLoad)
+    }
+
+    override fun isLoadingMoreItems(): Boolean {
+        return mIsLoadingMoreItems
+    }
+
+    override fun shouldLoadMoreItems(): Boolean {
+        return !isLoadingMoreItems() && (mMovieList.size == mFilteredMovieList.size)
     }
 }
