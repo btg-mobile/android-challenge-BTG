@@ -11,10 +11,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.frag_main.*
 import javax.inject.Inject
 
-class MainFragment @Inject constructor(): DaggerFragment(), MainContract.View {
-
-    @Inject
-    lateinit var mPresenter: MainContract.Presenter
+class MainFragment @Inject constructor(): DaggerFragment() {
 
     @Inject
     lateinit var mMovieListFragment: MovieListFragment
@@ -25,16 +22,8 @@ class MainFragment @Inject constructor(): DaggerFragment(), MainContract.View {
     private var mPagerAdapter : MainPagerAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.frag_main, container, false)
-        mPresenter.takeView(this)
-        return view
+        return inflater.inflate(R.layout.frag_main, container, false)
     }
-
-    override fun onDestroy() {
-        mPresenter.dropView()
-        super.onDestroy()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewPager()

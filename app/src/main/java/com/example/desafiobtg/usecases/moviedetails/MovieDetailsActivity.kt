@@ -25,14 +25,14 @@ class MovieDetailsActivity @Inject constructor(): DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
+        injectedFragment.arguments = intent?.extras
+
         var movieDetailsFragment: MovieDetailsFragment? = supportFragmentManager.findFragmentById(R.id.fragment_container) as MovieDetailsFragment?
 
         if (movieDetailsFragment == null) {
             movieDetailsFragment = injectedFragment
             ActivityUtils.addFragmentToActivity(supportFragmentManager, movieDetailsFragment, R.id.fragment_container)
         }
-
-        movieDetailsFragment.arguments = intent?.extras
 
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

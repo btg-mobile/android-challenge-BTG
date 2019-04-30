@@ -6,6 +6,8 @@ import java.util.*
 object DateUtils {
 
     fun getYearForDate(releaseDate: String?): String? {
+        if (releaseDate == null) return null
+
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date = format.parse(releaseDate)
         val calendar = Calendar.getInstance().apply {

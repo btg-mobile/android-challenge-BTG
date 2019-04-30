@@ -149,6 +149,7 @@ class MovieListPresenter @Inject constructor(private val mRepository: Repository
         mAppDataManager.resetUpdateTime()
         loadPopularMovieList (isSwipeRefresh = true) {
             mMovieListView?.onReloadSuccessful()
+            mPageToLoad = 1
         }
     }
 
