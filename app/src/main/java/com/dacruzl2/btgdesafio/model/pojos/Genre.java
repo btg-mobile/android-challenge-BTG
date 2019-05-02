@@ -7,6 +7,8 @@ import android.os.Parcelable;
 import com.dacruzl2.btgdesafio.model.pojos.pojoteste.Movie;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 public class Genre implements Parcelable {
 
     @SerializedName("id")
@@ -67,24 +69,16 @@ public class Genre implements Parcelable {
     };
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass() && obj.getClass() != Movie.class) {
-            return false;
-        }
-        if (getClass() == obj.getClass()) {
-            final Genre other = (Genre) obj;
-            if (this.getId() != other.getId()) {
-                return false;
-            }
-        } else {
-            final Movie other = (Movie) obj;
-            if (this.getId() != other.getGenreIds().size()) {
-                return false;
-            }
-        }
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Genre genre = (Genre) o;
+        return mId == genre.mId &&
+                mName.equals(genre.mName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mId, mName);
     }
 }

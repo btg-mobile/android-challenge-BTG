@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.DetailMovieActivity">-->
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/radial_style_background"
     tools:context=".view.activity.DetailMovieActivity">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/radial_style_background">
 
 
     <com.github.florent37.shapeofview.shapes.ArcView
@@ -143,14 +139,16 @@
 
     <yanzhikai.textpath.SyncTextPathView
         android:id="@+id/tvGeneros"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_width="102dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="60dp"
         app:duration="5000"
-        app:layout_constraintBottom_toBottomOf="@+id/tvNotaResult"
+        app:layout_constraintBottom_toBottomOf="@+id/tvGenerosResult"
         app:layout_constraintEnd_toStartOf="@+id/tvGenerosResult"
-        app:layout_constraintTop_toTopOf="@+id/tvNotaResult"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.563"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvGenerosResult"
+        app:layout_constraintVertical_bias="1.0"
         app:paintStrokeColor="#131212"
         app:pathStrokeColor="@color/white"
         app:pathStrokeWidth="2dp"
@@ -160,14 +158,16 @@
 
     <yanzhikai.textpath.SyncTextPathView
         android:id="@+id/tvGenerosResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
+        android:layout_width="126dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
         app:duration="5000"
-        app:layout_constraintBottom_toBottomOf="@+id/tvGeneros"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvGeneros"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/tvOverview"
+        app:layout_constraintVertical_bias="1.0"
         app:paintStrokeColor="#131212"
         app:pathStrokeColor="@color/white"
         app:pathStrokeWidth="2dp"
@@ -176,4 +176,5 @@
         app:textSize="18sp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout><!--</ScrollView>-->
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

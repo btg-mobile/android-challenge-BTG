@@ -45,7 +45,7 @@ public class SearchFilmesAdapter extends RecyclerView.Adapter<SearchFilmesAdapte
         holder.tvMovieNameSearchFilmes.setText(movie.getTitle());
         holder.tvMovieYearSearchFilmes.setText(movie.getReleaseDate());
         Glide.with(holder.itemView.getContext())
-                .load(movie.getPosterPath())
+                .load("https://image.tmdb.org/t/p/w300" + movie.getPosterPath())
                 .into(holder.ivMoviePosterSearchFimes);
     }
 

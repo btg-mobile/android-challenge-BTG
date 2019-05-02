@@ -25,6 +25,9 @@ public class RootGenres implements Parcelable {
         this.mGenres = mGenres;
     }
 
+    public RootGenres() {
+    }
+
     @Override
     public int describeContents() {
         return 0;

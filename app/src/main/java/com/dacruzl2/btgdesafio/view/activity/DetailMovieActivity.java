@@ -1,8 +1,11 @@
 package com.dacruzl2.btgdesafio.view.activity;
 
+import android.accessibilityservice.GestureDescription;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -20,6 +23,7 @@ import com.dacruzl2.btgdesafio.R;
 import com.dacruzl2.btgdesafio.model.ViewModel.AppExecutors;
 import com.dacruzl2.btgdesafio.model.ViewModel.FavoritosDatabase;
 import com.dacruzl2.btgdesafio.model.ViewModel.FavoritosViewModel;
+import com.dacruzl2.btgdesafio.model.pojos.Genre;
 import com.dacruzl2.btgdesafio.model.pojos.RootGenres;
 import com.dacruzl2.btgdesafio.model.pojos.pojoteste.Movie;
 import com.dacruzl2.btgdesafio.presenter.impl.DetailMovieAPresenterImpl;
@@ -30,14 +34,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,15 +85,20 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
     boolean favorite;
 
     private static final String ARQUIVO_PREFERENCIA = "ArquivoPreferencia";
-    ArrayList<Integer> mGenreIds;
 
-    List<RootGenres> rootGenres;
     private IDetailMovieAPresenter mIDetailMovieAPresenter;
 
-    Movie movie = new Movie();
+
+    private List<Genre> genreList;
+    Genre genre = new Genre();
+    ArrayList<Integer> mGenreIds;
 
     private List<Movie> favList;
+    Movie movie = new Movie();
+
     private FavoritosAdapter favAdapter;
+
+    String palavra;
 
 
     @Override
@@ -104,9 +110,9 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
         favoritosViewModel = ViewModelProviders.of(this).get(FavoritosViewModel.class);
         favoritosDatabase = FavoritosDatabase.getInstance(this);
 
-       // favAdapter = new FavoritosAdapter(this, favList);
-        rootGenres = new ArrayList<>();
+        // favAdapter = new FavoritosAdapter(this, favList);
         favList = new ArrayList<>();
+        genreList = new ArrayList<>();
 
         favoritosViewModel.getaAllMovies().observe(this, new Observer<List<Movie>>() {
             @Override
@@ -118,12 +124,12 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
                     favList.add(i, movies.get(i));
                     Log.d("LISTFOR1", "titulo: "+ movies.get(i).getTitle());
                 }*/
-               // favAdapter.notifyDataSetChanged();
+                // favAdapter.notifyDataSetChanged();
 
                 for (Movie movie1 : favList) {
                     // recebe a palavra
                     movie = movie1;
-                    Log.d("LISTFOR2", "titulo: "+ movie.getTitle());
+                    Log.d("LISTFOR2", "titulo: " + movie.getTitle());
                     if (title.equals(movie.getTitle())) {
                         runOnUiThread(new Runnable() {
                             @Override
@@ -150,9 +156,6 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
         });
 
 
-
-
-
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.move_image2);
         anim.setRepeatMode(Animation.INFINITE);
         ivDetailPoster.setAnimation(anim);
@@ -174,14 +177,78 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
         movieID = it.getIntExtra("movieID", 0);
         mGenreIds = it.getIntegerArrayListExtra("generoID");
         genero = it.getStringExtra("genreName");
-        rootGenres = it.getParcelableArrayListExtra("genreList");
-        Log.d("GENRELIST","EL: " + rootGenres.size());
+        genreList = it.getParcelableArrayListExtra("genreList");
+        Log.d("GENRELIST", "EL: " + genreList.size());
         favorite = it.getBooleanExtra("isFavorite", false);
 
-        if (rootGenres.contains(mGenreIds)) {
-            rootGenres.get(0).getGenres().size();
-            tvGenerosResult.setText(rootGenres.get(0).getGenres().get(0).getName());
+
+        List<Integer> genreList1 = new ArrayList<>();
+        ArrayList[] a = new ArrayList[20];
+
+        ArrayMap<String, Integer> listmovie = new ArrayMap<>();
+        String[] name = new String[5];
+
+        int array;
+
+        for (int k = 0; k < genreList.size(); k++) {
+            Log.d("GENRELISTFOR", "RETURN: " + genreList.get(k).getName());
+            Log.d("GENRELISTFORID", "RETURN  " + genreList.get(k).getId());
+
+            // String palavra = genreList.get(k).getName();
+            //int id  = genreList.get(k).getId();
+
+            for (int i = 0; i < mGenreIds.size(); i++) {
+
+                //  Integer ids = mGenreIds.get(i);]
+                if (genreList.get(k).getId() == mGenreIds.get(i)) {
+
+                    a[i] = mGenreIds;
+
+                    name[i] = genreList.get(k).getName();
+
+
+                    tvGenerosResult.setText(genreList.get(k).getName());
+
+                    tvGeneros.setText(genreList.get(k).getName());
+
+                    Log.d("a[i]", "A[i]: " + a[i]);
+                    Log.d("STRING NAME", "NAMES: " + name[i]);
+                    Log.d("tvGeneroResult", "genreList.get(k).getName():" + genreList.get(k).getName());
+                    // Log.d("mGenreIds FOR", "RETURN : " + mGenreIds.size());
+
+                }
+            }
         }
+
+
+       /* for (Genre genre : genreList) {
+            if (genreList.contains(genre.getId())) {
+                genreList.add(genre);
+            }
+*/
+
+
+
+
+      /*  for (Genre genre1 : genreList) {
+            // recebe a palavra
+            genre = genre1;
+
+
+            Log.d("genre", "genreResult: "+ genre.getId());
+
+            if ( genreList.contains(mGenreIds)){
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvGenerosResult.setText(genreList.get().getName());
+                    }
+                });
+
+            }
+            break;
+        }*/
 
         //Settando para as views
         tvTitleDetail.setText(title);
@@ -196,8 +263,6 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
                 .into(ivDetailPoster);
 
 
-
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,8 +270,6 @@ public class DetailMovieActivity extends AppCompatActivity implements IDetailMov
                 addToFavouritesDatabaseOperations();
             }
         });
-
-
 
 
     }
