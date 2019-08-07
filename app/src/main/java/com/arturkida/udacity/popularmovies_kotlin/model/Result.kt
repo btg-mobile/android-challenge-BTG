@@ -3,16 +3,16 @@ package com.arturkida.udacity.popularmovies_kotlin.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Results(
+data class Result(
     val page: Int,
-    val results: List<Movies>,
+    val results: List<Movie>,
     val total_pages: Int,
     val total_results: Int
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
-        parcel.createTypedArrayList(Movies) as List<Movies>,
+        parcel.createTypedArrayList(Movie) as List<Movie>,
         parcel.readInt(),
         parcel.readInt()
     )
@@ -28,12 +28,12 @@ data class Results(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Results> {
-        override fun createFromParcel(parcel: Parcel): Results {
-            return Results(parcel)
+    companion object CREATOR : Parcelable.Creator<Result> {
+        override fun createFromParcel(parcel: Parcel): Result {
+            return Result(parcel)
         }
 
-        override fun newArray(size: Int): Array<Results?> {
+        override fun newArray(size: Int): Array<Result?> {
             return arrayOfNulls(size)
         }
     }

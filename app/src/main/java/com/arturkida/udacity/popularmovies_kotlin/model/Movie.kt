@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 @Suppress("UNCHECKED_CAST")
-data class Movies(
+data class Movie(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,
@@ -62,12 +62,12 @@ data class Movies(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Movies> {
-        override fun createFromParcel(parcel: Parcel): Movies {
-            return Movies(parcel)
+    companion object CREATOR : Parcelable.Creator<Movie> {
+        override fun createFromParcel(parcel: Parcel): Movie {
+            return Movie(parcel)
         }
 
-        override fun newArray(size: Int): Array<Movies?> {
+        override fun newArray(size: Int): Array<Movie?> {
             return arrayOfNulls(size)
         }
     }
