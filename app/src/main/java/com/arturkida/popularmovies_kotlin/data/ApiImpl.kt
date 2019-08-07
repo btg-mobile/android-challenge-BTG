@@ -24,13 +24,6 @@ class ApiImpl {
         }
     }
 
-//    fun init() {
-//        Retrofit.Builder()
-//            .baseUrl(BuildConfig.BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//    }
-
     fun getGenres(callback: ApiResponse<List<Genre>>) {
         val call = create().getGenres(BuildConfig.MOVIEDB_API_KEY)
         Log.i("API", "Calling genres API")
@@ -48,5 +41,4 @@ class ApiImpl {
             }
         })
     }
-
 }
