@@ -1,9 +1,9 @@
-package com.arturkida.udacity.popularmovies_kotlin.model
+package com.arturkida.popularmovies_kotlin.model
 
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Result(
+data class ResultMovies(
     val page: Int,
     val results: List<Movie>,
     val total_pages: Int,
@@ -28,12 +28,12 @@ data class Result(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Result> {
-        override fun createFromParcel(parcel: Parcel): Result {
-            return Result(parcel)
+    companion object CREATOR : Parcelable.Creator<ResultMovies> {
+        override fun createFromParcel(parcel: Parcel): ResultMovies {
+            return ResultMovies(parcel)
         }
 
-        override fun newArray(size: Int): Array<Result?> {
+        override fun newArray(size: Int): Array<ResultMovies?> {
             return arrayOfNulls(size)
         }
     }

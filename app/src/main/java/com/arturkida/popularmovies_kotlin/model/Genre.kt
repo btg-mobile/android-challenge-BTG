@@ -1,4 +1,4 @@
-package com.arturkida.udacity.popularmovies_kotlin.model
+package com.arturkida.popularmovies_kotlin.model
 
 import android.os.Parcel
 import android.os.Parcelable

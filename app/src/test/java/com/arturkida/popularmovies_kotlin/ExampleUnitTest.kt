@@ -1,4 +1,4 @@
-package com.arturkida.udacity.popularmovies_kotlin
+package com.arturkida.popularmovies_kotlin
 
 import org.junit.Test
 
