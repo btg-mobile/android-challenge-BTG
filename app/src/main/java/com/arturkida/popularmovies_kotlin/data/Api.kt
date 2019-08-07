@@ -10,5 +10,5 @@ import retrofit2.http.Query
 interface Api {
 
     @GET(BuildConfig.GENRES)
-    fun genres(@Query("api_key") api_key: String) : Call<ResultGenres>
+    fun getGenres(@Query("api_key") api_key: String) : Call<ResultGenres>
 }

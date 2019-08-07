@@ -1,6 +1,5 @@
 package com.arturkida.popularmovies_kotlin.data
 
-import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import com.arturkida.popularmovies_kotlin.BuildConfig
 import com.arturkida.popularmovies_kotlin.model.Genre
@@ -12,8 +11,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiImpl {
-
-    val genresLiveDataResponse: MutableLiveData<ResultGenres> = MutableLiveData()
 
     companion object Factory {
         fun create(): Api {
@@ -34,22 +31,22 @@ class ApiImpl {
 //            .build()
 //    }
 
-    fun getGenres() : MutableLiveData<ResultGenres> {
-        val call = create().genres(BuildConfig.MOVIEDB_API_KEY)
-        Log.i("API", "Chamando API de Gênero")
+    fun getGenres(callback: ApiResponse<List<Genre>>) {
+        val call = create().getGenres(BuildConfig.MOVIEDB_API_KEY)
+        Log.i("API", "Calling genres API")
+
         call.enqueue(object : Callback<ResultGenres?> {
             override fun onFailure(call: Call<ResultGenres?>?, t: Throwable?) {
-                Log.i("API", "Deu errado")
+                Log.e("API", t?.message)
+                callback.failure(t)
             }
             override fun onResponse(call: Call<ResultGenres?>?, response: Response<ResultGenres?>?) {
                 response?.body()?.let {
-//                    genresLiveDataResponse.value = it
-                    Log.i("API", "Deu certo")
+                    Log.i("API", "Genres successfully returned")
+                    callback.sucess(it.genres)
                 }
             }
         })
-
-        return genresLiveDataResponse
     }
 
 }
