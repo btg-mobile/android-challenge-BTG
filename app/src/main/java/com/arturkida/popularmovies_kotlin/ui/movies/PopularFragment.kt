@@ -48,6 +48,7 @@ class PopularFragment : BaseFragment() {
     }
 
     fun setupFragment() {
+        movies.requestFocus()
         setViewModel()
         setRecyclerView()
         setObservers()
