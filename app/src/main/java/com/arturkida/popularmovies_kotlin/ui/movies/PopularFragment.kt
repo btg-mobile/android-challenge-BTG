@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import com.arturkida.popularmovies_kotlin.R
 import com.arturkida.popularmovies_kotlin.adapter.MoviesListAdapter
@@ -32,7 +33,6 @@ class PopularFragment : BaseFragment() {
 
     private var genresList = mutableListOf<Genre>()
     private var moviesList = mutableListOf<Movie>()
-//    val posterWidth = 500
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,12 +48,34 @@ class PopularFragment : BaseFragment() {
     }
 
     fun setupFragment() {
-        movies.requestFocus()
         setViewModel()
         setRecyclerView()
         setObservers()
+        setListeners()
+
+
+
+
+        removeFocus()
 
         getPopularMovies()
+    }
+
+    private fun setListeners() {
+        et_search_movies.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                val filteredMovies = viewModel.searchMovies(et_search_movies.text.toString())
+
+                Log.i(Constants.LOG_INFO, "Updating movie list with search criteria")
+                adapter.updateMovies(filteredMovies)
+            }
+            false
+        }
+    }
+
+    private fun removeFocus() {
+        movies.requestFocus()
     }
 
     private fun setObservers() {
@@ -74,7 +96,6 @@ class PopularFragment : BaseFragment() {
     }
 
     private fun setRecyclerView() {
-//        val spanCount = calculateBestSpanCount(posterWidth)
         rv_movie_list.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
         context?.let {
             rv_movie_list.adapter = adapter
@@ -88,13 +109,5 @@ class PopularFragment : BaseFragment() {
     private fun setViewModel() {
         viewModel = ViewModelProviders.of(this)
             .get(MoviesViewModel::class.java)
-    }
-
-    private fun calculateBestSpanCount(posterWidth: Int): Int {
-        val display = activity?.windowManager?.defaultDisplay
-        val outMetrics = DisplayMetrics()
-        display?.getMetrics(outMetrics)
-        val screenWidth = outMetrics.widthPixels.toFloat()
-        return Math.round(screenWidth / posterWidth)
     }
 }
