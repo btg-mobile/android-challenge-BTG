@@ -12,6 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin"
             android:hint="@string/hint_movies_search"
+            android:inputType="text"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
