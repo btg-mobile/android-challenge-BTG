@@ -16,8 +16,7 @@ android {
 
         buildConfigField "String", "BASE_URL", '"https://api.themoviedb.org/3/"'
         buildConfigField "String", "GENRES", '"genre/movie/list"'
-        buildConfigField "String", "MOVIES", '"movie"'
-        buildConfigField "String", "POPULAR", '"popular"'
+        buildConfigField "String", "POPULAR_MOVIES", '"movie/popular"'
     }
     buildTypes {
         release {
