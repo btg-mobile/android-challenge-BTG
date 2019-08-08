@@ -7,7 +7,7 @@ import com.arturkida.popularmovies_kotlin.data.ApiResponse
 import com.arturkida.popularmovies_kotlin.model.Genre
 import com.arturkida.popularmovies_kotlin.model.Movie
 
-class MoviesViewModel() : ViewModel() {
+class MoviesViewModel : ViewModel() {
 
     val genres = MutableLiveData<List<Genre>>()
     val popularMovies = MutableLiveData<List<Movie>>()
