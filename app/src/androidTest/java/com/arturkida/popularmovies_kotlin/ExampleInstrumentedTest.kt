@@ -1,4 +1,4 @@
-package com.arturkida.udacity.popularmovies_kotlin
+package com.arturkida.popularmovies_kotlin
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.arturkida.udacity.popularmovies_kotlin", appContext.packageName)
+        assertEquals("com.arturkida.popularmovies_kotlin", appContext.packageName)
     }
 }
