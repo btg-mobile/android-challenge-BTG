@@ -18,7 +18,7 @@
             android:imeOptions="actionSearch"
             android:maxLines="1"
             android:ellipsize="end"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/movies"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -27,7 +27,7 @@
     <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_movie_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin"
             app:layout_constraintTop_toBottomOf="@id/et_search_movies"
             app:layout_constraintStart_toStartOf="parent"
