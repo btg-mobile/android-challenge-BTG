@@ -2,16 +2,22 @@ package com.arturkida.popularmovies_kotlin.ui.popular.ui.movies
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.util.Log
+import android.content.Context
 import com.arturkida.popularmovies_kotlin.data.ApiImpl
 import com.arturkida.popularmovies_kotlin.data.ApiResponse
 import com.arturkida.popularmovies_kotlin.model.Genre
 
-class MoviesViewModel : ViewModel() {
+class MoviesViewModel() : ViewModel() {
 
     val genres = MutableLiveData<List<Genre>>()
 
-    fun getGenres() {
+    fun getPopularMovies() {
+        if (!genres.value.isNullOrEmpty()) {
+            getGenres()
+        }
+    }
+
+    private fun getGenres() {
         ApiImpl().getGenres(object: ApiResponse<List<Genre>> {
             override fun sucess(result: List<Genre>) {
                 genres.postValue(result)
