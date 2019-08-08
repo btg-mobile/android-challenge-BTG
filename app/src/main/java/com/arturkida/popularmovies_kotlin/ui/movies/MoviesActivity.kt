@@ -1,18 +1,48 @@
 package com.arturkida.popularmovies_kotlin.ui.movies
 
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 import com.arturkida.popularmovies_kotlin.R
+import com.arturkida.popularmovies_kotlin.adapter.TabsAdapter
+import kotlinx.android.synthetic.main.movies_activity.*
 
 class MoviesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.movies_activity)
+
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, PopularFragment.newInstance())
-                .commitNow()
+
+
+            tab_layout.addTab(tab_layout.newTab().setText("Popular"))
+            tab_layout.addTab(tab_layout.newTab().setText("Favorites"))
+
+            val tabLayoutAdapter = TabsAdapter(supportFragmentManager, tab_layout.tabCount)
+
+            view_pager.adapter = tabLayoutAdapter
+
+            view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
+
+            tab_layout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                }
+
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    tab?.let {
+                        view_pager.currentItem = tab.position
+                    }
+                }
+            })
+
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.container, PopularFragment.newInstance())
+//                .commitNow()
         }
     }
 }
