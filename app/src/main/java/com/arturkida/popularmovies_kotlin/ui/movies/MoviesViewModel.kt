@@ -1,4 +1,4 @@
-package com.arturkida.popularmovies_kotlin.ui.popular
+package com.arturkida.popularmovies_kotlin.ui.movies
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel

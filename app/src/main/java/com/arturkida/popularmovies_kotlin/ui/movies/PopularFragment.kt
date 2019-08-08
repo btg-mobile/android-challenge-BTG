@@ -1,4 +1,4 @@
-package com.arturkida.popularmovies_kotlin.ui.popular
+package com.arturkida.popularmovies_kotlin.ui.movies
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import com.arturkida.popularmovies_kotlin.R
 import com.arturkida.popularmovies_kotlin.ui.BaseFragment
 
-class MoviesFragment : BaseFragment() {
+class PopularFragment : BaseFragment() {
 
     companion object {
-        fun newInstance() = MoviesFragment()
+        fun newInstance() = PopularFragment()
     }
 
     private lateinit var viewModel: MoviesViewModel

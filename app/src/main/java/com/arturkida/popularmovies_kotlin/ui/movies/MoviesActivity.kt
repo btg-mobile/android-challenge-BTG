@@ -1,4 +1,4 @@
-package com.arturkida.popularmovies_kotlin.ui.popular
+package com.arturkida.popularmovies_kotlin.ui.movies
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -11,7 +11,7 @@ class MoviesActivity : AppCompatActivity() {
         setContentView(R.layout.movies_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MoviesFragment.newInstance())
+                .replace(R.id.container, PopularFragment.newInstance())
                 .commitNow()
         }
     }
