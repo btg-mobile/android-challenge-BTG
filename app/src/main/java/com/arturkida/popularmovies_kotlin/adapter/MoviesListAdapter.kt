@@ -2,17 +2,20 @@ package com.arturkida.popularmovies_kotlin.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arturkida.popularmovies_kotlin.BuildConfig
 import com.arturkida.popularmovies_kotlin.R
 import com.arturkida.popularmovies_kotlin.model.Movie
+import com.arturkida.popularmovies_kotlin.utils.Constants
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_movie_info.view.*
 
 class MoviesListAdapter(private val context: Context?,
-                        private var movies: List<Movie>)
+                        private var movies: List<Movie>,
+                        private val listener: MovieItemClickListener)
     : RecyclerView.Adapter<MoviesListAdapter.MoviesListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {
@@ -33,7 +36,11 @@ class MoviesListAdapter(private val context: Context?,
     }
 
     inner class MoviesListViewHolder(itemView: View)
-        : RecyclerView.ViewHolder(itemView) {
+        : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         fun bind(movie: Movie) {
             setMovieTitle(movie)
@@ -56,5 +63,15 @@ class MoviesListAdapter(private val context: Context?,
                 .load(posterPath)
                 .into(itemView.iv_movie_poster)
         }
+
+        override fun onClick(v: View?) {
+            Log.i(Constants.LOG_INFO, "RecyclerView item clicked")
+
+            listener.onClick(adapterPosition)
+        }
+    }
+
+    interface MovieItemClickListener {
+        fun onClick(position: Int)
     }
 }

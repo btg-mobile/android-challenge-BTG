@@ -15,18 +15,19 @@ import com.arturkida.popularmovies_kotlin.adapter.MoviesListAdapter
 import com.arturkida.popularmovies_kotlin.model.Genre
 import com.arturkida.popularmovies_kotlin.model.Movie
 import com.arturkida.popularmovies_kotlin.ui.BaseFragment
+import com.arturkida.popularmovies_kotlin.ui.details.DetailsActivity
 import com.arturkida.popularmovies_kotlin.utils.Constants
 import com.arturkida.popularmovies_kotlin.utils.SearchType
 import kotlinx.android.synthetic.main.fragment_movies.*
 
-class PopularFragment : BaseFragment() {
+class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener {
 
     private var genresList = mutableListOf<Genre>()
     private var moviesList = mutableListOf<Movie>()
 
     private lateinit var viewModel: MoviesViewModel
     private val adapter: MoviesListAdapter by lazy {
-            MoviesListAdapter(context, moviesList)
+            MoviesListAdapter(context, moviesList, this)
     }
 
     override fun onCreateView(
@@ -101,5 +102,19 @@ class PopularFragment : BaseFragment() {
     private fun setViewModel() {
         viewModel = ViewModelProviders.of(activity!!)
             .get(MoviesViewModel::class.java)
+    }
+
+    override fun onClick(position: Int) {
+        val movie = viewModel.popularMovies.value?.let {
+            it[position]
+        }
+        val intent = DetailsActivity.getIntent(context)
+
+        intent.putExtra(Constants.INTENT_MOVIE_INFO, movie)
+
+        startActivity(intent)
+
+        Log.i(Constants.LOG_INFO, "Starting Details Activity from popular movies list")
+        Log.i(Constants.LOG_INFO, "Movie data: $movie")
     }
 }
