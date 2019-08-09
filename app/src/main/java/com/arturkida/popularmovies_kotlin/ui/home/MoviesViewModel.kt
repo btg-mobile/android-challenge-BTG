@@ -1,9 +1,8 @@
-package com.arturkida.popularmovies_kotlin.ui.movies
+package com.arturkida.popularmovies_kotlin.ui.home
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import com.arturkida.popularmovies_kotlin.BuildConfig
 import com.arturkida.popularmovies_kotlin.data.ApiImpl
 import com.arturkida.popularmovies_kotlin.data.ApiResponse
 import com.arturkida.popularmovies_kotlin.model.Genre

@@ -1,4 +1,4 @@
-package com.arturkida.popularmovies_kotlin.ui.movies
+package com.arturkida.popularmovies_kotlin.ui.home
 
 import android.os.Bundle
 import android.support.design.widget.TabLayout
