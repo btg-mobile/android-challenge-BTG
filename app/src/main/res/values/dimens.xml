@@ -2,4 +2,7 @@
 <resources>
     <dimen name="default_margin">5dp</dimen>
     <dimen name="poster_size">100dp</dimen>
+    <dimen name="details_title_size">23sp</dimen>
+    <dimen name="details_movie_info_size">18sp</dimen>
+    <dimen name="details_description_text_size">16sp</dimen>
 </resources>
