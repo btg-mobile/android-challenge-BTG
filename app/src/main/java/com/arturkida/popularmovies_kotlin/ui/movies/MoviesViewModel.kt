@@ -14,12 +14,29 @@ class MoviesViewModel : ViewModel() {
 
     val genres = MutableLiveData<List<Genre>>()
     val popularMovies = MutableLiveData<List<Movie>>()
-//    val filteredMovies = mutableListOf<Movie>()
     var filteredMovies = mutableListOf<Movie>()
 
     fun getPopularMovies() {
         if (genres.value.isNullOrEmpty()) {
             getGenres()
+        }
+
+        ApiImpl().getPopularMovies(object: ApiResponse<List<Movie>> {
+            override fun sucess(result: List<Movie>) {
+                popularMovies.postValue(result)
+            }
+
+            override fun failure(error: Throwable?) {
+                // TODO Implement on failure
+            }
+        })
+    }
+
+    fun getFavoriteMovies() {
+        if (genres.value.isNullOrEmpty()) {
+            getGenres()
+        } else {
+            Log.i(Constants.LOG_INFO, "Skipping getGenres()")
         }
 
         ApiImpl().getPopularMovies(object: ApiResponse<List<Movie>> {

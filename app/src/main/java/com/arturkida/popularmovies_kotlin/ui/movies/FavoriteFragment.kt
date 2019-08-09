@@ -16,23 +16,25 @@ import com.arturkida.popularmovies_kotlin.model.Genre
 import com.arturkida.popularmovies_kotlin.model.Movie
 import com.arturkida.popularmovies_kotlin.ui.BaseFragment
 import com.arturkida.popularmovies_kotlin.utils.Constants
+import kotlinx.android.synthetic.main.fragment_favorite.*
 import kotlinx.android.synthetic.main.fragment_movies.*
 
-class PopularFragment : BaseFragment() {
+class FavoriteFragment : BaseFragment() {
 
     private var genresList = mutableListOf<Genre>()
     private var moviesList = mutableListOf<Movie>()
 
     private lateinit var viewModel: MoviesViewModel
     private val adapter: MoviesListAdapter by lazy {
-            MoviesListAdapter(context, moviesList)
+        MoviesListAdapter(context, moviesList)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_movies, container, false)
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_favorite, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -48,14 +50,19 @@ class PopularFragment : BaseFragment() {
         setListeners()
         removeFocus()
 
-        getPopularMovies()
+        getFavoriteMovies()
+    }
+
+    private fun setViewModel() {
+        viewModel = ViewModelProviders.of(this)
+            .get(MoviesViewModel::class.java)
     }
 
     private fun setListeners() {
-        et_search_popular_movies.setOnEditorActionListener { _, actionId, _ ->
+        et_search_favorite_movies.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
-                val filteredMovies = viewModel.searchMovies(et_search_popular_movies.text.toString())
+                val filteredMovies = viewModel.searchMovies(et_search_favorite_movies.text.toString())
 
                 Log.i(Constants.LOG_INFO, "Updating movie list with search criteria")
                 adapter.updateMovies(filteredMovies)
@@ -65,7 +72,7 @@ class PopularFragment : BaseFragment() {
     }
 
     private fun removeFocus() {
-        fragment_popular_movies.requestFocus()
+        fragment_favorite_movies.requestFocus()
     }
 
     private fun setObservers() {
@@ -86,18 +93,13 @@ class PopularFragment : BaseFragment() {
     }
 
     private fun setRecyclerView() {
-        rv_popular_movie_list.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        rv_favorite_movie_list.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
         context?.let {
-            rv_popular_movie_list.adapter = adapter
+            rv_favorite_movie_list.adapter = adapter
         }
     }
 
-    private fun getPopularMovies() {
-        viewModel.getPopularMovies()
-    }
-
-    private fun setViewModel() {
-        viewModel = ViewModelProviders.of(this)
-            .get(MoviesViewModel::class.java)
+    private fun getFavoriteMovies() {
+        viewModel.getFavoriteMovies()
     }
 }

@@ -5,13 +5,13 @@ import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 import com.arturkida.popularmovies_kotlin.R
 import com.arturkida.popularmovies_kotlin.adapter.TabsAdapter
-import kotlinx.android.synthetic.main.movies_activity.*
+import kotlinx.android.synthetic.main.activity_movies.*
 
 class MoviesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.movies_activity)
+        setContentView(R.layout.activity_movies)
 
         if (savedInstanceState == null) {
 
