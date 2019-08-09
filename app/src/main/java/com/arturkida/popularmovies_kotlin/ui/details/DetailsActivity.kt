@@ -5,10 +5,21 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.arturkida.popularmovies_kotlin.BuildConfig
 import com.arturkida.popularmovies_kotlin.R
+import com.arturkida.popularmovies_kotlin.model.Movie
 import com.arturkida.popularmovies_kotlin.utils.Constants
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.activity_details.*
+import kotlinx.android.synthetic.main.activity_details.view.*
+import kotlinx.android.synthetic.main.item_movie_info.*
 
 class DetailsActivity : AppCompatActivity() {
+
+    private val movie: Movie by lazy {
+        Log.i(Constants.LOG_INFO, "Getting intent from Movies List")
+        intent.getParcelableExtra<Movie>(Constants.INTENT_MOVIE_INFO)
+    }
 
     companion object {
         fun getIntent(context: Context?): Intent {
@@ -21,5 +32,21 @@ class DetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_details)
 
         Log.i(Constants.LOG_INFO, "Details Activity started")
+
+        loadMovieInfo()
+    }
+
+    private fun loadMovieInfo() {
+        val posterPath = BuildConfig.BASE_IMAGE_URL + movie.poster_path
+
+        Glide.with(this)
+            .load(posterPath)
+            .into(iv_details_movie_poster)
+
+        tv_details_movie_title.text = movie.title
+        tv_details_movie_description.text = movie.overview
+        tv_details_movie_year.text = movie.release_date
+        tv_details_movie_rate.text = movie.vote_average.toString()
+        tv_details_movie_genres.text = movie.title
     }
 }

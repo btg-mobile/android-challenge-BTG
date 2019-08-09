@@ -14,7 +14,7 @@
         <ImageView
                 android:id="@+id/iv_details_movie_poster"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/details_poster_size"
                 android:layout_margin="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -26,9 +26,11 @@
                 android:layout_margin="@dimen/default_margin"
                 android:textSize="@dimen/details_title_size"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@id/iv_details_movie_poster"
-                app:layout_constraintStart_toEndOf="@id/iv_details_movie_poster"
-                app:layout_constraintLeft_toRightOf="@id/iv_details_movie_poster"
+                android:maxLines="1"
+                android:ellipsize="end"
+                app:layout_constraintTop_toBottomOf="@id/iv_details_movie_poster"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 tools:text="Title" />
 
         <TextView
@@ -37,9 +39,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:textSize="@dimen/details_movie_info_size"
+                android:maxLines="1"
+                android:ellipsize="end"
                 app:layout_constraintTop_toBottomOf="@id/tv_details_movie_title"
-                app:layout_constraintStart_toEndOf="@id/iv_details_movie_poster"
-                app:layout_constraintLeft_toRightOf="@id/iv_details_movie_poster"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 tools:text="Year" />
 
         <TextView
@@ -48,9 +52,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:textSize="@dimen/details_movie_info_size"
+                android:maxLines="1"
+                android:ellipsize="end"
                 app:layout_constraintTop_toBottomOf="@id/tv_details_movie_year"
-                app:layout_constraintStart_toEndOf="@id/iv_details_movie_poster"
-                app:layout_constraintLeft_toRightOf="@id/iv_details_movie_poster"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 tools:text="Rate" />
 
         <TextView
@@ -59,9 +65,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:textSize="@dimen/details_movie_info_size"
+                android:maxLines="1"
+                android:ellipsize="end"
                 app:layout_constraintTop_toBottomOf="@id/tv_details_movie_rate"
-                app:layout_constraintStart_toEndOf="@id/iv_details_movie_poster"
-                app:layout_constraintLeft_toRightOf="@id/iv_details_movie_poster"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 tools:text="Action, Drama, Terror, Comedy"/>
 
         <ImageView
@@ -70,19 +78,24 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 app:layout_constraintTop_toBottomOf="@+id/tv_details_movie_genres"
-                app:layout_constraintStart_toEndOf="@id/iv_details_movie_poster"
-                app:layout_constraintLeft_toRightOf="@id/iv_details_movie_poster"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:srcCompat="@android:drawable/btn_star_big_off" />
 
         <TextView
                 android:id="@+id/tv_details_movie_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
                 android:textSize="@dimen/details_description_text_size"
-                app:layout_constraintTop_toBottomOf="@+id/iv_details_movie_poster"
-                app:layout_constraintStart_toEndOf="@id/iv_details_movie_poster"
-                app:layout_constraintLeft_toRightOf="@id/iv_details_movie_poster"
+                app:layout_constraintTop_toBottomOf="@+id/iv_favorite_star"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 tools:text="Description" />
 
     </android.support.constraint.ConstraintLayout>
