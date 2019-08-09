@@ -8,6 +8,7 @@ import com.arturkida.popularmovies_kotlin.data.ApiResponse
 import com.arturkida.popularmovies_kotlin.model.Genre
 import com.arturkida.popularmovies_kotlin.model.Movie
 import com.arturkida.popularmovies_kotlin.utils.Constants
+import com.arturkida.popularmovies_kotlin.utils.SearchType
 
 class MoviesViewModel : ViewModel() {
 
@@ -60,14 +61,23 @@ class MoviesViewModel : ViewModel() {
         })
     }
 
-    fun searchMovies(search: String): MutableList<Movie> {
+    fun searchMovies(searchText: String, searchType: SearchType, searchList: MutableLiveData<List<Movie>>): MutableList<Movie> {
         Log.i(Constants.LOG_INFO, "Entering movie search")
 
-        popularMovies.value?.let { movies ->
-            if (movies.isNotEmpty()) {
-                filteredMovies = movies.filter { movie ->
-                    movie.title.toLowerCase().contains(search.toLowerCase())
-                } as MutableList<Movie>
+        when(searchType) {
+            SearchType.TITLE -> searchList.value?.let { movies ->
+                if (movies.isNotEmpty()) {
+                    filteredMovies = movies.filter { movie ->
+                        movie.title.toLowerCase().contains(searchText.toLowerCase())
+                    } as MutableList<Movie>
+                }
+            }
+            SearchType.YEAR -> searchList.value?.let { movies ->
+                if (movies.isNotEmpty()) {
+                    filteredMovies = movies.filter { movie ->
+                        movie.release_date.contains(searchText)
+                    } as MutableList<Movie>
+                }
             }
         }
         Log.i(Constants.LOG_INFO, "Movies in filter: ${filteredMovies.size}")

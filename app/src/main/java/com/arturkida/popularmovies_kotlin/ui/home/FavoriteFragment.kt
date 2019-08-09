@@ -16,7 +16,9 @@ import com.arturkida.popularmovies_kotlin.model.Genre
 import com.arturkida.popularmovies_kotlin.model.Movie
 import com.arturkida.popularmovies_kotlin.ui.BaseFragment
 import com.arturkida.popularmovies_kotlin.utils.Constants
+import com.arturkida.popularmovies_kotlin.utils.SearchType
 import kotlinx.android.synthetic.main.fragment_favorite.*
+import kotlinx.android.synthetic.main.fragment_movies.*
 
 class FavoriteFragment : BaseFragment() {
 
@@ -60,11 +62,24 @@ class FavoriteFragment : BaseFragment() {
     private fun setListeners() {
         et_search_favorite_movies_title.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val filteredMovies = viewModel.searchMovies(et_search_favorite_movies_title.text.toString(), SearchType.TITLE, viewModel.favoriteMovies)
 
-                val filteredMovies = viewModel.searchMovies(et_search_favorite_movies_title.text.toString())
-
-                Log.i(Constants.LOG_INFO, "Updating movie list with search criteria")
+                Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by title")
                 adapter.updateMovies(filteredMovies)
+
+                et_search_favorite_movies_title.text.clear()
+            }
+            false
+        }
+
+        et_search_favorite_movies_year.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val filteredMovies = viewModel.searchMovies(et_search_favorite_movies_year.text.toString(), SearchType.YEAR, viewModel.favoriteMovies)
+
+                Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by year")
+                adapter.updateMovies(filteredMovies)
+
+                et_search_favorite_movies_year.text.clear()
             }
             false
         }

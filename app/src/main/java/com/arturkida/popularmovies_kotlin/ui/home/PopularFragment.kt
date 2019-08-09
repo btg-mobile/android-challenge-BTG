@@ -16,6 +16,7 @@ import com.arturkida.popularmovies_kotlin.model.Genre
 import com.arturkida.popularmovies_kotlin.model.Movie
 import com.arturkida.popularmovies_kotlin.ui.BaseFragment
 import com.arturkida.popularmovies_kotlin.utils.Constants
+import com.arturkida.popularmovies_kotlin.utils.SearchType
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 class PopularFragment : BaseFragment() {
@@ -54,11 +55,12 @@ class PopularFragment : BaseFragment() {
     private fun setListeners() {
         et_search_popular_movies.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val filteredMovies = viewModel.searchMovies(et_search_popular_movies.text.toString(), SearchType.TITLE, viewModel.popularMovies)
 
-                val filteredMovies = viewModel.searchMovies(et_search_popular_movies.text.toString())
-
-                Log.i(Constants.LOG_INFO, "Updating movie list with search criteria")
+                Log.i(Constants.LOG_INFO, "Updating popular movies list with search by title")
                 adapter.updateMovies(filteredMovies)
+
+                et_search_popular_movies.text.clear()
             }
             false
         }
