@@ -53,15 +53,15 @@ class FavoriteFragment : BaseFragment() {
     }
 
     private fun setViewModel() {
-        viewModel = ViewModelProviders.of(this)
+        viewModel = ViewModelProviders.of(activity!!)
             .get(MoviesViewModel::class.java)
     }
 
     private fun setListeners() {
-        et_search_favorite_movies.setOnEditorActionListener { _, actionId, _ ->
+        et_search_favorite_movies_title.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
-                val filteredMovies = viewModel.searchMovies(et_search_favorite_movies.text.toString())
+                val filteredMovies = viewModel.searchMovies(et_search_favorite_movies_title.text.toString())
 
                 Log.i(Constants.LOG_INFO, "Updating movie list with search criteria")
                 adapter.updateMovies(filteredMovies)
@@ -86,7 +86,7 @@ class FavoriteFragment : BaseFragment() {
             movies?.let {
                 moviesList.addAll(it)
                 adapter.updateMovies(moviesList)
-                Log.i(Constants.LOG_INFO, "Movies updated")
+                Log.i(Constants.LOG_INFO, "Favorite movies updated")
             }
         })
     }

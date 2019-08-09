@@ -2,8 +2,9 @@
     <string name="app_name">Popular Movies - Kotlin</string>
     <string name="preview_movie_title">Movie Title</string>
     <string name="preview_movie_year">2019</string>
-    <string name="hint_movies_search">Enter movie here</string>
+    <string name="hint_movies_search_title">Enter movie here</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_movies_search_year">Enter year here</string>
 </resources>

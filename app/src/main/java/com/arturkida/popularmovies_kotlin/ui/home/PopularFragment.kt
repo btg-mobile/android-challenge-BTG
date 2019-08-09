@@ -80,7 +80,7 @@ class PopularFragment : BaseFragment() {
             movies?.let {
                 moviesList.addAll(it)
                 adapter.updateMovies(moviesList)
-                Log.i(Constants.LOG_INFO, "Movies updated")
+                Log.i(Constants.LOG_INFO, "Popular movies updated")
             }
         })
     }
@@ -97,7 +97,7 @@ class PopularFragment : BaseFragment() {
     }
 
     private fun setViewModel() {
-        viewModel = ViewModelProviders.of(this)
+        viewModel = ViewModelProviders.of(activity!!)
             .get(MoviesViewModel::class.java)
     }
 }
