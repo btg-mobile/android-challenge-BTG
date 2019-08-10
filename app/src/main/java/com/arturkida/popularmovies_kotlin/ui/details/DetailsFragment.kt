@@ -1,7 +1,7 @@
 package com.arturkida.popularmovies_kotlin.ui.details
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.arch.persistence.room.Room
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -10,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.arturkida.popularmovies_kotlin.BuildConfig
 import com.arturkida.popularmovies_kotlin.R
-import com.arturkida.popularmovies_kotlin.data.local.AppDatabase
-import com.arturkida.popularmovies_kotlin.data.local.MovieDao
 import com.arturkida.popularmovies_kotlin.model.Movie
 import com.arturkida.popularmovies_kotlin.utils.Constants
 import com.bumptech.glide.Glide
@@ -43,11 +41,18 @@ class DetailsFragment : Fragment() {
         getIntents()
         loadMovieInfo()
         setViewModel()
-        setDatabase()
-    }
 
-    private fun setDatabase() {
-//        viewModel.setDatabase(context!!)
+        iv_favorite_star.setOnClickListener {
+            if(!movie.favorite) {
+                viewModel.addMovie(movie)
+                movie.favorite = true
+            } else {
+                viewModel.deleteMovie(movie)
+                movie.favorite = false
+            }
+        }
+
+
     }
 
     private fun getIntents() {

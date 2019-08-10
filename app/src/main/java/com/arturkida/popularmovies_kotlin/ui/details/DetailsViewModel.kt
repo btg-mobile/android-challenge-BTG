@@ -8,11 +8,9 @@ import com.arturkida.popularmovies_kotlin.model.Movie
 class DetailsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = MovieRepository(application)
-    private var allMovies = repository.getAllMovies()
+    var allMovies = repository.allMovies
 
     fun addMovie(movie: Movie) = repository.addMovie(movie)
 
     fun deleteMovie(movie: Movie) = repository.deleteMovie(movie)
-
-    fun getAllMovies() = allMovies
 }
