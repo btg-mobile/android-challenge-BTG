@@ -1,5 +1,6 @@
 package com.arturkida.popularmovies_kotlin.ui.details
 
+import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -7,14 +8,16 @@ import android.os.Bundle
 import android.util.Log
 import com.arturkida.popularmovies_kotlin.BuildConfig
 import com.arturkida.popularmovies_kotlin.R
+import com.arturkida.popularmovies_kotlin.data.local.AppDatabase
+import com.arturkida.popularmovies_kotlin.data.local.MovieDao
 import com.arturkida.popularmovies_kotlin.model.Movie
 import com.arturkida.popularmovies_kotlin.utils.Constants
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_details.*
-import kotlinx.android.synthetic.main.activity_details.view.*
-import kotlinx.android.synthetic.main.item_movie_info.*
 
 class DetailsActivity : AppCompatActivity() {
+
+    private lateinit var movieDao: MovieDao
 
     private val movie: Movie by lazy {
         Log.i(Constants.LOG_INFO, "Getting intent from Movies List")
@@ -33,7 +36,18 @@ class DetailsActivity : AppCompatActivity() {
 
         Log.i(Constants.LOG_INFO, "Details Activity started")
 
+        setDatabase()
         loadMovieInfo()
+    }
+
+    private fun setDatabase() {
+        val database = Room.databaseBuilder(
+            this,
+            AppDatabase::class.java,
+            Constants.MOVIES_DATABASE
+        ).build()
+
+        movieDao = database.movieDao()
     }
 
     private fun loadMovieInfo() {

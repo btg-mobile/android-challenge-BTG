@@ -1,4 +1,4 @@
-package com.arturkida.popularmovies_kotlin.data
+package com.arturkida.popularmovies_kotlin.data.remote
 
 import android.util.Log
 import com.arturkida.popularmovies_kotlin.BuildConfig

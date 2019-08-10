@@ -3,8 +3,8 @@ package com.arturkida.popularmovies_kotlin.ui.home
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import com.arturkida.popularmovies_kotlin.data.ApiImpl
-import com.arturkida.popularmovies_kotlin.data.ApiResponse
+import com.arturkida.popularmovies_kotlin.data.remote.ApiImpl
+import com.arturkida.popularmovies_kotlin.data.remote.ApiResponse
 import com.arturkida.popularmovies_kotlin.model.Genre
 import com.arturkida.popularmovies_kotlin.model.Movie
 import com.arturkida.popularmovies_kotlin.utils.Constants
@@ -22,7 +22,8 @@ class MoviesViewModel : ViewModel() {
             getGenres()
         }
 
-        ApiImpl().getPopularMovies(object: ApiResponse<List<Movie>> {
+        ApiImpl()
+            .getPopularMovies(object: ApiResponse<List<Movie>> {
             override fun sucess(result: List<Movie>) {
                 popularMovies.postValue(result)
             }
@@ -38,7 +39,8 @@ class MoviesViewModel : ViewModel() {
             getGenres()
         }
 
-        ApiImpl().getPopularMovies(object: ApiResponse<List<Movie>> {
+        ApiImpl()
+            .getPopularMovies(object: ApiResponse<List<Movie>> {
             override fun sucess(result: List<Movie>) {
                 favoriteMovies.postValue(result)
             }
@@ -50,7 +52,8 @@ class MoviesViewModel : ViewModel() {
     }
 
     private fun getGenres() {
-        ApiImpl().getGenres(object: ApiResponse<List<Genre>> {
+        ApiImpl()
+            .getGenres(object: ApiResponse<List<Genre>> {
             override fun sucess(result: List<Genre>) {
                 genres.postValue(result)
             }
