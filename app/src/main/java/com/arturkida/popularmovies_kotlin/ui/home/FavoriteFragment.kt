@@ -19,7 +19,6 @@ import com.arturkida.popularmovies_kotlin.ui.details.DetailsActivity
 import com.arturkida.popularmovies_kotlin.utils.Constants
 import com.arturkida.popularmovies_kotlin.utils.SearchType
 import kotlinx.android.synthetic.main.fragment_favorite.*
-import kotlinx.android.synthetic.main.fragment_movies.*
 
 class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener {
 
