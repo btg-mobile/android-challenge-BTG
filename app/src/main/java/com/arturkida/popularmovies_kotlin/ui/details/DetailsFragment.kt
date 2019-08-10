@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.arturkida.popularmovies_kotlin.BuildConfig
 import com.arturkida.popularmovies_kotlin.R
 import com.arturkida.popularmovies_kotlin.model.Movie
@@ -41,9 +42,24 @@ class DetailsFragment : Fragment() {
         getIntents()
         loadMovieInfo()
         setViewModel()
+        setListeners()
 
+        // Get Movie Test
+        viewModel.allMovies?.observe(this, Observer { list ->
+            context?.let {
+                if(list!!.isNotEmpty()) {
+                    Toast.makeText(it, list[0].original_title, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(it, "Empty List", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+    }
+
+    private fun setListeners() {
         iv_favorite_star.setOnClickListener {
-            if(!movie.favorite) {
+            if (!movie.favorite) {
                 viewModel.addMovie(movie)
                 movie.favorite = true
             } else {
@@ -51,8 +67,6 @@ class DetailsFragment : Fragment() {
                 movie.favorite = false
             }
         }
-
-
     }
 
     private fun getIntents() {
