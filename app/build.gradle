@@ -42,21 +42,20 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // Recycler View
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation "com.android.support:recyclerview-v7:$rootProject.support_version"
 
     // Material Design
-    implementation 'com.android.support:design:28.0.0'
+    implementation "com.android.support:design:$rootProject.support_version"
 
     // Retrofit
-    implementation "com.squareup.retrofit2:retrofit:2.4.0"
-    implementation "com.squareup.retrofit2:converter-gson:2.4.0"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit_version"
 
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.4.0'
-    kapt 'com.github.bumptech.glide:compiler:4.4.0'
+    implementation "com.github.bumptech.glide:glide:$rootProject.glide_version"
+    kapt "com.github.bumptech.glide:compiler:$rootProject.glide_version"
 
     // Room
-    def room_version = "1.1.0"
-    implementation "android.arch.persistence.room:runtime:$room_version"
-    kapt "android.arch.persistence.room:compiler:$room_version"
+    implementation "android.arch.persistence.room:runtime:$rootProject.room_version"
+    kapt "android.arch.persistence.room:compiler:$rootProject.room_version"
 }

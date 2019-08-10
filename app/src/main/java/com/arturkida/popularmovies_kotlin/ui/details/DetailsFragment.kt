@@ -24,7 +24,6 @@ class DetailsFragment : Fragment() {
     }
 
     private lateinit var movie: Movie
-    private lateinit var movieDao: MovieDao
     private lateinit var viewModel: DetailsViewModel
 
     override fun onCreateView(
@@ -42,9 +41,13 @@ class DetailsFragment : Fragment() {
 
     private fun setupFragment() {
         getIntents()
-        setDatabase()
         loadMovieInfo()
         setViewModel()
+        setDatabase()
+    }
+
+    private fun setDatabase() {
+//        viewModel.setDatabase(context!!)
     }
 
     private fun getIntents() {
@@ -55,19 +58,6 @@ class DetailsFragment : Fragment() {
 
     private fun setViewModel() {
         viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
-    }
-
-    private fun setDatabase() {
-
-        context?.let {
-            val database = Room.databaseBuilder(
-                it,
-                AppDatabase::class.java,
-                Constants.MOVIES_DATABASE
-            ).build()
-
-            movieDao = database.movieDao()
-        }
     }
 
     private fun loadMovieInfo() {
@@ -83,5 +73,4 @@ class DetailsFragment : Fragment() {
         tv_details_movie_rate.text = movie.vote_average.toString()
         tv_details_movie_genres.text = movie.title
     }
-
 }
