@@ -36,8 +36,13 @@ class DetailsActivity : AppCompatActivity() {
 
         Log.i(Constants.LOG_INFO, "Details Activity started")
 
+        setBackButton()
         setDatabase()
         loadMovieInfo()
+    }
+
+    private fun setBackButton() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun setDatabase() {
@@ -62,5 +67,10 @@ class DetailsActivity : AppCompatActivity() {
         tv_details_movie_year.text = movie.release_date
         tv_details_movie_rate.text = movie.vote_average.toString()
         tv_details_movie_genres.text = movie.title
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
