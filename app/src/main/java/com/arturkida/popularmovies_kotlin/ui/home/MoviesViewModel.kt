@@ -15,12 +15,11 @@ import com.arturkida.popularmovies_kotlin.utils.SearchType
 class MoviesViewModel(application: Application) : AndroidViewModel(application) {
 
     val genres = MutableLiveData<List<Genre>>()
-    val popularMovies = MutableLiveData<List<Movie>>()
-    val favoriteMovies = MutableLiveData<List<Movie>>()
+    val popularMovies: MutableLiveData<List<Movie>>? = MutableLiveData()
     var filteredMovies = mutableListOf<Movie>()
 
     private val repository = MovieRepository(application)
-    var allMovies = repository.allMovies
+    var allFavoriteMovies = repository.allFavoriteMovies
 
     fun populateGenresName(movie: Movie): Movie {
 
@@ -50,7 +49,7 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
 
         ApiImpl().getPopularMovies(object: ApiResponse<List<Movie>> {
             override fun sucess(result: List<Movie>) {
-                popularMovies.postValue(result)
+                popularMovies?.postValue(result)
             }
 
             override fun failure(error: Throwable?) {
@@ -72,24 +71,22 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
             })
     }
 
-    fun searchMovies(searchText: String, searchType: SearchType, searchList: MutableLiveData<List<Movie>>): MutableList<Movie> {
+    fun searchMovies(searchText: String, searchType: SearchType, searchList: List<Movie>): MutableList<Movie> {
         Log.i(Constants.LOG_INFO, "Entering movie search")
 
         when(searchType) {
-            SearchType.TITLE -> searchList.value?.let { movies ->
-                if (movies.isNotEmpty()) {
-                    filteredMovies = movies.filter { movie ->
+            SearchType.TITLE ->
+                if (searchList.isNotEmpty()) {
+                    filteredMovies = searchList.filter { movie ->
                         movie.title.toLowerCase().contains(searchText.toLowerCase())
                     } as MutableList<Movie>
                 }
-            }
-            SearchType.YEAR -> searchList.value?.let { movies ->
-                if (movies.isNotEmpty()) {
-                    filteredMovies = movies.filter { movie ->
+            SearchType.YEAR ->
+                if (searchList.isNotEmpty()) {
+                    filteredMovies = searchList.filter { movie ->
                         movie.release_date.contains(searchText)
                     } as MutableList<Movie>
                 }
-            }
         }
         Log.i(Constants.LOG_INFO, "Movies in filter: ${filteredMovies.size}")
 

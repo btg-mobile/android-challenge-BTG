@@ -10,12 +10,12 @@ import com.arturkida.popularmovies_kotlin.utils.Constants
 class MovieRepository(application: Application) {
 
     private var movieDao: MovieDao?
-    var allMovies: LiveData<List<Movie>>?
+    var allFavoriteMovies: LiveData<List<Movie>>?
 
     init {
         val database = AppDatabase.getAppDatabase(application.applicationContext)
         movieDao = database?.movieDao()
-        allMovies = movieDao?.getAllMovies()
+        allFavoriteMovies = movieDao?.getAllMovies()
     }
 
     fun addMovie(movie: Movie) {

@@ -56,15 +56,37 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
     private fun setListeners() {
         et_search_popular_movies.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val filteredMovies = viewModel.searchMovies(et_search_popular_movies.text.toString(), SearchType.TITLE, viewModel.popularMovies)
+                clearMoviesList()
 
-                Log.i(Constants.LOG_INFO, "Updating popular movies list with search by title")
-                adapter.updateMovies(filteredMovies)
+                viewModel.popularMovies?.value?.let {popularMovies ->
 
-                et_search_popular_movies.text.clear()
+
+                    val searchString = et_search_popular_movies.text.toString()
+
+                    if (searchString.isBlank()) {
+                            moviesList.addAll(popularMovies)
+                            adapter.updateMovies(popularMovies)
+                    } else {
+                        val filteredMovies = viewModel.searchMovies(
+                            searchString,
+                            SearchType.TITLE,
+                            popularMovies
+                        )
+
+                        Log.i(Constants.LOG_INFO, "Updating popular movies list with search by title")
+                        moviesList.addAll(filteredMovies)
+                        adapter.updateMovies(filteredMovies)
+
+                        et_search_popular_movies.text.clear()
+                    }
+                }
             }
             false
         }
+    }
+
+    private fun clearMoviesList() {
+        moviesList.clear()
     }
 
     private fun removeFocus() {
@@ -79,7 +101,7 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
             }
         })
 
-        viewModel.popularMovies.observe(this, Observer { movies ->
+        viewModel.popularMovies?.observe(this, Observer { movies ->
             movies?.let {
                 moviesList.addAll(it)
                 adapter.updateMovies(moviesList)
@@ -105,13 +127,9 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
     }
 
     override fun onClick(position: Int) {
-        var movie = viewModel.popularMovies.value?.let {
-            it[position]
-        }
+        var movie = moviesList[position]
 
-        movie?.let {
-            movie = viewModel.populateGenresName(it)
-        }
+        movie = viewModel.populateGenresName(movie)
 
         val intent = DetailsActivity.getIntent(context)
 

@@ -57,29 +57,67 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
             .get(MoviesViewModel::class.java)
     }
 
+    private fun clearMoviesList() {
+        moviesList.clear()
+    }
+
     private fun setListeners() {
         et_search_favorite_movies_title.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val filteredMovies = viewModel.searchMovies(et_search_favorite_movies_title.text.toString(), SearchType.TITLE, viewModel.favoriteMovies)
+                clearMoviesList()
 
-                Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by title")
-                adapter.updateMovies(filteredMovies)
+                viewModel.allFavoriteMovies?.value?.let {favoritesList ->
 
-                et_search_favorite_movies_title.text.clear()
+                    val searchString = et_search_favorite_movies_title.text.toString()
+
+                    if (searchString.isBlank()) {
+                        moviesList.addAll(favoritesList)
+                        adapter.updateMovies(favoritesList)
+                    } else {
+                        val filteredMovies = viewModel.searchMovies(
+                            searchString,
+                            SearchType.TITLE,
+                            favoritesList
+                        )
+
+                        Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by title")
+                        moviesList.addAll(filteredMovies)
+                        adapter.updateMovies(filteredMovies)
+
+                        et_search_favorite_movies_title.text.clear()
+                    }
+                }
             }
             false
         }
 
         et_search_favorite_movies_year.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val filteredMovies = viewModel.searchMovies(et_search_favorite_movies_year.text.toString(), SearchType.YEAR, viewModel.favoriteMovies)
+                clearMoviesList()
 
-                Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by year")
-                adapter.updateMovies(filteredMovies)
+                viewModel.allFavoriteMovies?.value?.let { favoritesList ->
 
-                et_search_favorite_movies_year.text.clear()
+                    val searchString = et_search_favorite_movies_title.text.toString()
+
+                    if (searchString.isBlank()) {
+                        moviesList.addAll(favoritesList)
+                        adapter.updateMovies(favoritesList)
+                    } else {
+                        val filteredMovies = viewModel.searchMovies(
+                            et_search_favorite_movies_year.text.toString(),
+                            SearchType.YEAR,
+                            favoritesList
+                        )
+
+
+                        Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by year")
+                        adapter.updateMovies(filteredMovies)
+
+                        et_search_favorite_movies_year.text.clear()
+                    }
+                }
             }
-            false
+                false
         }
     }
 
@@ -95,8 +133,7 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
             }
         })
 
-        // Get Movie Test
-        viewModel.allMovies?.observe(this, Observer { favoritesList ->
+        viewModel.allFavoriteMovies?.observe(this, Observer { favoritesList ->
             moviesList.clear()
 
             favoritesList?.let {
@@ -115,9 +152,7 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
     }
 
     override fun onClick(position: Int) {
-        val movie = viewModel.allMovies?.value?.let {
-            it[position]
-        }
+        val movie = moviesList[position]
         val intent = DetailsActivity.getIntent(context)
 
         intent.putExtra(Constants.INTENT_MOVIE_INFO, movie)
