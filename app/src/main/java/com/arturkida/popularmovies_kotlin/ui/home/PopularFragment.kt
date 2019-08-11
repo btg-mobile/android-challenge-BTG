@@ -105,9 +105,14 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
     }
 
     override fun onClick(position: Int) {
-        val movie = viewModel.popularMovies.value?.let {
+        var movie = viewModel.popularMovies.value?.let {
             it[position]
         }
+
+        movie?.let {
+            movie = viewModel.populateGenresName(it)
+        }
+
         val intent = DetailsActivity.getIntent(context)
 
         intent.putExtra(Constants.INTENT_MOVIE_INFO, movie)

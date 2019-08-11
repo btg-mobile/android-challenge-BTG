@@ -90,6 +90,6 @@ class DetailsFragment : Fragment() {
         tv_details_movie_description.text = movie.overview
         tv_details_movie_year.text = movie.release_date
         tv_details_movie_rate.text = movie.vote_average.toString()
-        tv_details_movie_genres.text = movie.title
+        tv_details_movie_genres.text = movie.genre_names
     }
 }

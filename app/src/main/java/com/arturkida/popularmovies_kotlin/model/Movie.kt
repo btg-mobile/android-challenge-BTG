@@ -26,7 +26,8 @@ data class Movie(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int,
-    var favorite: Boolean
+    var favorite: Boolean,
+    var genre_names: String = ""
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
@@ -44,7 +45,8 @@ data class Movie(
         parcel.readByte() != 0.toByte(),
         parcel.readDouble(),
         parcel.readInt(),
-        parcel.readByte() != 0.toByte()
+        parcel.readByte() != 0.toByte(),
+        parcel.readString() ?: ""
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -63,6 +65,7 @@ data class Movie(
         parcel.writeDouble(vote_average)
         parcel.writeInt(vote_count)
         parcel.writeByte(if (favorite) 1 else 0)
+        parcel.writeString(genre_names)
     }
 
     override fun describeContents(): Int {

@@ -17,13 +17,33 @@ class MoviesViewModel : ViewModel() {
     val favoriteMovies = MutableLiveData<List<Movie>>()
     var filteredMovies = mutableListOf<Movie>()
 
+    fun populateGenresName(movie: Movie): Movie {
+
+        movie.genre_names = ""
+
+        if (!genres.value.isNullOrEmpty()) {
+            genres.value?.let {genresList ->
+                genresList.forEach {genre ->
+                    if (movie.genre_ids.contains(genre.id)) {
+                        if (movie.genre_names == "") {
+                            movie.genre_names = genre.name
+                        } else {
+                            movie.genre_names += ", ${genre.name}"
+                        }
+                    }
+                }
+            }
+        }
+
+        return movie
+    }
+
     fun getPopularMovies() {
         if (genres.value.isNullOrEmpty()) {
             getGenres()
         }
 
-        ApiImpl()
-            .getPopularMovies(object: ApiResponse<List<Movie>> {
+        ApiImpl().getPopularMovies(object: ApiResponse<List<Movie>> {
             override fun sucess(result: List<Movie>) {
                 popularMovies.postValue(result)
             }
@@ -41,27 +61,27 @@ class MoviesViewModel : ViewModel() {
 
         ApiImpl()
             .getPopularMovies(object: ApiResponse<List<Movie>> {
-            override fun sucess(result: List<Movie>) {
-                favoriteMovies.postValue(result)
-            }
+                override fun sucess(result: List<Movie>) {
+                    favoriteMovies.postValue(result)
+                }
 
-            override fun failure(error: Throwable?) {
-                // TODO Implement on failure
-            }
-        })
+                override fun failure(error: Throwable?) {
+                    // TODO Implement on failure
+                }
+            })
     }
 
     private fun getGenres() {
         ApiImpl()
             .getGenres(object: ApiResponse<List<Genre>> {
-            override fun sucess(result: List<Genre>) {
-                genres.postValue(result)
-            }
+                override fun sucess(result: List<Genre>) {
+                    genres.postValue(result)
+                }
 
-            override fun failure(error: Throwable?) {
-                // TODO Implement on failure
-            }
-        })
+                override fun failure(error: Throwable?) {
+                    // TODO Implement on failure
+                }
+            })
     }
 
     fun searchMovies(searchText: String, searchType: SearchType, searchList: MutableLiveData<List<Movie>>): MutableList<Movie> {
