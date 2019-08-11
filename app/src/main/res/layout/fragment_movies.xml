@@ -11,8 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:descendantFocusability="beforeDescendants"
-            android:focusableInTouchMode="true"
-            android:visibility="invisible">
+            android:focusableInTouchMode="true">
 
         <EditText
                 android:id="@+id/et_search_popular_movies"
@@ -31,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
-                app:layout_constraintTop_toBottomOf="@id/et_search_popular_movies"/>
+                app:layout_constraintTop_toBottomOf="@id/et_search_popular_movies"
+                android:visibility="gone"/>
 
     </android.support.constraint.ConstraintLayout>
 

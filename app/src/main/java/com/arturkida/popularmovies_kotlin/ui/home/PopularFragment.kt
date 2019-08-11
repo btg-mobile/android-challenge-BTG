@@ -76,6 +76,7 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
             if (searchString.isBlank()) {
                 moviesList.addAll(popularList)
                 adapter.updateMovies(popularList)
+                showMovieScreen(popularList)
             } else {
                 val filteredMovies = viewModel.searchMovies(
                     searchString,
@@ -84,6 +85,7 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
                 )
 
                 updateMoviesListBy(filteredMovies, searchBar)
+                showMovieScreen(filteredMovies)
             }
         }
     }
@@ -92,7 +94,6 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
         Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by title")
         moviesList.addAll(filteredMovies)
         adapter.updateMovies(filteredMovies)
-
         searchBar.text.clear()
     }
 
@@ -133,12 +134,12 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
     }
 
     private fun showEmptyListMessage() {
-        fragment_popular_movies.visibility = View.GONE
+        rv_popular_movie_list.visibility = View.GONE
         tv_empty_popular_list.visibility = View.VISIBLE
     }
 
     private fun showPopularMoviesList() {
-        fragment_popular_movies.visibility = View.VISIBLE
+        rv_popular_movie_list.visibility = View.VISIBLE
         tv_empty_popular_list.visibility = View.GONE
     }
 
