@@ -59,23 +59,6 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
         })
     }
 
-//    fun getFavoriteMovies() {
-//        if (genres.value.isNullOrEmpty()) {
-//            getGenres()
-//        }
-//
-//        ApiImpl()
-//            .getPopularMovies(object: ApiResponse<List<Movie>> {
-//                override fun sucess(result: List<Movie>) {
-//                    favoriteMovies.postValue(result)
-//                }
-//
-//                override fun failure(error: Throwable?) {
-//                    // TODO Implement on failure
-//                }
-//            })
-//    }
-
     private fun getGenres() {
         ApiImpl()
             .getGenres(object: ApiResponse<List<Genre>> {

@@ -29,10 +29,8 @@ class MoviesListAdapter(private val context: Context?,
     override fun onBindViewHolder(holder: MoviesListViewHolder, position: Int) = holder.bind(movies[position])
 
     fun updateMovies(movies: List<Movie>) {
-        if (!movies.isNullOrEmpty()) {
-            this.movies = movies
-            notifyDataSetChanged()
-        }
+        this.movies = movies
+        notifyDataSetChanged()
     }
 
     inner class MoviesListViewHolder(itemView: View)

@@ -95,22 +95,15 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
             }
         })
 
-//        viewModel.popularMovies.observe(this, Observer { movies ->
-//            movies?.let {
-//                moviesList.addAll(it)
-//                adapter.updateMovies(moviesList)
-//                Log.i(Constants.LOG_INFO, "Favorite movies updated")
-//            }
-//        })
-
         // Get Movie Test
         viewModel.allMovies?.observe(this, Observer { favoritesList ->
+            moviesList.clear()
+
             if(favoritesList!!.isNotEmpty()) {
                 moviesList.addAll(favoritesList)
-                adapter.updateMovies(favoritesList)
-            } else {
-                Log.i(Constants.LOG_INFO, "Empty favorites list")
             }
+
+            adapter.updateMovies(moviesList)
         })
     }
 
@@ -120,10 +113,6 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
             rv_favorite_movie_list.adapter = adapter
         }
     }
-
-//    private fun getFavoriteMovies() {
-//        viewModel.getFavoriteMovies()
-//    }
 
     override fun onClick(position: Int) {
         val movie = viewModel.allMovies?.value?.let {
