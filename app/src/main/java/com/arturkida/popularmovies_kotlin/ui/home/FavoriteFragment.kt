@@ -20,7 +20,6 @@ import com.arturkida.popularmovies_kotlin.ui.details.DetailsActivity
 import com.arturkida.popularmovies_kotlin.utils.Constants
 import com.arturkida.popularmovies_kotlin.utils.SearchType
 import kotlinx.android.synthetic.main.fragment_favorite.*
-import kotlinx.android.synthetic.main.fragment_movies.*
 
 class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener {
 
@@ -132,19 +131,20 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
             moviesList.clear()
 
             favoritesList?.let {
-                moviesList.addAll(favoritesList)
+                moviesList.addAll(it)
+                showMovieScreen(it)
             }
 
             adapter.updateMovies(moviesList)
-            showMovieScreen()
+
         })
     }
 
-    private fun showMovieScreen() {
+    private fun showMovieScreen(moviesList: List<Movie>) {
         hideProgressBar()
 
-        if (viewModel.mustShowFavoriteMoviesList()) {
-            showPopularMoviesList()
+        if (viewModel.mustShowMoviesList(moviesList)) {
+            showFavoriteMoviesList()
         } else {
             showEmptyListMessage()
         }
@@ -155,7 +155,7 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
         tv_empty_favorites_list.visibility = View.VISIBLE
     }
 
-    private fun showPopularMoviesList() {
+    private fun showFavoriteMoviesList() {
         fragment_favorite_movies.visibility = View.VISIBLE
         tv_empty_favorites_list.visibility = View.GONE
     }

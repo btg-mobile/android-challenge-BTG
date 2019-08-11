@@ -21,25 +21,7 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
     private val repository = MovieRepository(application)
     val favoriteMovies = repository.allFavoriteMovies
 
-    fun mustShowPopularMoviesList(): Boolean {
-        popularMovies?.value?.let {
-            if (it.isNotEmpty()) {
-                return true
-            }
-        }
-
-        return false
-    }
-
-    fun mustShowFavoriteMoviesList(): Boolean {
-        favoriteMovies?.value?.let {
-            if (it.isNotEmpty()) {
-                return true
-            }
-        }
-
-        return false
-    }
+    fun mustShowMoviesList(moviesList: List<Movie>) = moviesList.isNotEmpty()
 
     fun populateGenresNameFrom(movie: Movie): Movie {
 

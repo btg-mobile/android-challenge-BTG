@@ -117,15 +117,15 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
                 moviesList.addAll(it)
                 adapter.updateMovies(moviesList)
                 Log.i(Constants.LOG_INFO, "Popular movies updated")
-                showMovieScreen()
+                showMovieScreen(it)
             }
         })
     }
 
-    private fun showMovieScreen() {
+    private fun showMovieScreen(moviesList: List<Movie>) {
         hideProgressBar()
 
-        if (viewModel.mustShowPopularMoviesList()) {
+        if (viewModel.mustShowMoviesList(moviesList)) {
             showPopularMoviesList()
         } else {
             showEmptyListMessage()
