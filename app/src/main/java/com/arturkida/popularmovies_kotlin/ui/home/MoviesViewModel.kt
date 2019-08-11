@@ -1,8 +1,8 @@
 package com.arturkida.popularmovies_kotlin.ui.home
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
+import android.content.Context
 import android.util.Log
 import com.arturkida.popularmovies_kotlin.data.local.MovieRepository
 import com.arturkida.popularmovies_kotlin.data.remote.ApiImpl
@@ -12,13 +12,13 @@ import com.arturkida.popularmovies_kotlin.model.Movie
 import com.arturkida.popularmovies_kotlin.utils.Constants
 import com.arturkida.popularmovies_kotlin.utils.SearchType
 
-class MoviesViewModel(application: Application) : AndroidViewModel(application) {
+class MoviesViewModel(context: Context) : ViewModel() {
 
     val genres = MutableLiveData<List<Genre>>()
     val popularMovies: MutableLiveData<List<Movie>>? = MutableLiveData()
     var filteredMovies = mutableListOf<Movie>()
 
-    private val repository = MovieRepository(application)
+    private val repository = MovieRepository(context)
     val favoriteMovies = repository.allFavoriteMovies
 
     fun mustShowMoviesList(moviesList: List<Movie>) = moviesList.isNotEmpty()

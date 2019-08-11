@@ -54,8 +54,11 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
     }
 
     private fun setViewModel() {
-        viewModel = ViewModelProviders.of(activity!!)
-            .get(MoviesViewModel::class.java)
+        context?.let {
+            viewModel = ViewModelProviders.of(activity!!,
+                viewModelFactory { MoviesViewModel(it) })
+                .get(MoviesViewModel::class.java)
+        }
     }
 
     private fun clearMoviesList() {

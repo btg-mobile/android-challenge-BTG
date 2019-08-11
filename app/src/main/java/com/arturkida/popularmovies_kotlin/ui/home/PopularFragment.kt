@@ -168,8 +168,11 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
     }
 
     private fun setViewModel() {
-        viewModel = ViewModelProviders.of(activity!!)
-            .get(MoviesViewModel::class.java)
+        context?.let {
+            viewModel = ViewModelProviders.of(activity!!,
+                viewModelFactory { MoviesViewModel(it) })
+                .get(MoviesViewModel::class.java)
+        }
     }
 
     override fun onClick(position: Int) {
