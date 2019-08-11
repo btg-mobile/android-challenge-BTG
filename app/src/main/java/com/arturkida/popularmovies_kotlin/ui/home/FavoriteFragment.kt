@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.LinearLayout
 import com.arturkida.popularmovies_kotlin.R
 import com.arturkida.popularmovies_kotlin.adapter.MoviesListAdapter
@@ -66,65 +67,52 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
         setSearchListenerByMovieYear()
     }
 
-    private fun setSearchListenerByMovieYear() {
-        et_search_favorite_movies_year.setOnEditorActionListener { _, actionId, _ ->
+    private fun setSearchListenerByMovieTitle() {
+        et_search_favorite_movies_title.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 clearMoviesList()
-
-                viewModel.allFavoriteMovies?.value?.let { favoritesList ->
-
-                    val searchString = et_search_favorite_movies_year.text.toString()
-
-                    if (searchString.isBlank()) {
-                        moviesList.addAll(favoritesList)
-                        adapter.updateMovies(favoritesList)
-                    } else {
-                        val filteredMovies = viewModel.searchMovies(
-                            searchString,
-                            SearchType.YEAR,
-                            favoritesList
-                        )
-
-                        Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by year")
-                        adapter.updateMovies(filteredMovies)
-
-                        et_search_favorite_movies_year.text.clear()
-                    }
-                }
+                searchMoviesBy(SearchType.TITLE, et_search_favorite_movies_title)
             }
             false
         }
     }
 
-    private fun setSearchListenerByMovieTitle() {
-        et_search_favorite_movies_title.setOnEditorActionListener { _, actionId, _ ->
+    private fun setSearchListenerByMovieYear() {
+        et_search_favorite_movies_year.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 clearMoviesList()
-
-                viewModel.allFavoriteMovies?.value?.let { favoritesList ->
-
-                    val searchString = et_search_favorite_movies_title.text.toString()
-
-                    if (searchString.isBlank()) {
-                        moviesList.addAll(favoritesList)
-                        adapter.updateMovies(favoritesList)
-                    } else {
-                        val filteredMovies = viewModel.searchMovies(
-                            searchString,
-                            SearchType.TITLE,
-                            favoritesList
-                        )
-
-                        Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by title")
-                        moviesList.addAll(filteredMovies)
-                        adapter.updateMovies(filteredMovies)
-
-                        et_search_favorite_movies_title.text.clear()
-                    }
-                }
+                searchMoviesBy(SearchType.YEAR, et_search_favorite_movies_year)
             }
             false
         }
+    }
+
+    private fun searchMoviesBy(searchType: SearchType, searchBar: EditText) {
+        viewModel.allFavoriteMovies?.value?.let { favoritesList ->
+
+            val searchString = searchBar.text.toString()
+
+            if (searchString.isBlank()) {
+                moviesList.addAll(favoritesList)
+                adapter.updateMovies(favoritesList)
+            } else {
+                val filteredMovies = viewModel.searchMovies(
+                    searchString,
+                    searchType,
+                    favoritesList
+                )
+
+                updateMoviesListBy(filteredMovies, searchBar)
+            }
+        }
+    }
+
+    private fun updateMoviesListBy(filteredMovies: MutableList<Movie>, searchBar: EditText) {
+        Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by title")
+        moviesList.addAll(filteredMovies)
+        adapter.updateMovies(filteredMovies)
+
+        searchBar.text.clear()
     }
 
     private fun removeFocus() {
