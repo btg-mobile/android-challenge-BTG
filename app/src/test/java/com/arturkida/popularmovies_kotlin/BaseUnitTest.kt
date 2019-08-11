@@ -2,11 +2,24 @@ package com.arturkida.popularmovies_kotlin
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import com.arturkida.popularmovies_kotlin.model.Genre
 import com.arturkida.popularmovies_kotlin.model.Movie
 
 open class BaseUnitTest {
 
     private val testGenreIds: List<Int> = listOf(12, 878, 28)
+
+    fun getGenresList(): MutableLiveData<List<Genre>> {
+        val genres = listOf(
+            Genre(12, "Action"),
+            Genre(878, "Adventure"),
+            Genre(28, "Science Fiction"))
+
+        val liveData = MutableLiveData<List<Genre>>()
+        liveData.value = genres
+
+        return liveData
+    }
 
     fun getSingleLiveDataMovieList(): LiveData<List<Movie>> {
         val liveData = MutableLiveData<List<Movie>>()

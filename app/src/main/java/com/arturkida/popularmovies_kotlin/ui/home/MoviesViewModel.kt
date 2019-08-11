@@ -60,11 +60,12 @@ class MoviesViewModel(context: Context) : ViewModel() {
     }
 
     fun getPopularMovies() {
-//        if (genres.value.isNullOrEmpty()) {
-//            getGenres()
-//        }
+        if (genres.value.isNullOrEmpty()) {
+            getGenres()
+        }
 
-        ApiImpl().getPopularMovies(object: ApiResponse<List<Movie>> {
+        ApiImpl()
+            .getPopularMovies(object: ApiResponse<List<Movie>> {
             override fun onSuccess(result: List<Movie>) {
                 postPopularMoviesResult(result)
             }
