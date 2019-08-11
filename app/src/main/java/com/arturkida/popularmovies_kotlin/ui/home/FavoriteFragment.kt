@@ -99,7 +99,7 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
         viewModel.allMovies?.observe(this, Observer { favoritesList ->
             moviesList.clear()
 
-            if(favoritesList!!.isNotEmpty()) {
+            favoritesList?.let {
                 moviesList.addAll(favoritesList)
             }
 
