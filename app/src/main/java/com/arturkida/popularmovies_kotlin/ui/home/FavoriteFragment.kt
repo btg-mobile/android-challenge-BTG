@@ -50,8 +50,6 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
         setObservers()
         setListeners()
         removeFocus()
-
-        getFavoriteMovies()
     }
 
     private fun setViewModel() {
@@ -97,11 +95,21 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
             }
         })
 
-        viewModel.popularMovies.observe(this, Observer { movies ->
-            movies?.let {
-                moviesList.addAll(it)
-                adapter.updateMovies(moviesList)
-                Log.i(Constants.LOG_INFO, "Favorite movies updated")
+//        viewModel.popularMovies.observe(this, Observer { movies ->
+//            movies?.let {
+//                moviesList.addAll(it)
+//                adapter.updateMovies(moviesList)
+//                Log.i(Constants.LOG_INFO, "Favorite movies updated")
+//            }
+//        })
+
+        // Get Movie Test
+        viewModel.allMovies?.observe(this, Observer { favoritesList ->
+            if(favoritesList!!.isNotEmpty()) {
+                moviesList.addAll(favoritesList)
+                adapter.updateMovies(favoritesList)
+            } else {
+                Log.i(Constants.LOG_INFO, "Empty favorites list")
             }
         })
     }
@@ -113,12 +121,12 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
         }
     }
 
-    private fun getFavoriteMovies() {
-        viewModel.getFavoriteMovies()
-    }
+//    private fun getFavoriteMovies() {
+//        viewModel.getFavoriteMovies()
+//    }
 
     override fun onClick(position: Int) {
-        val movie = viewModel.favoriteMovies.value?.let {
+        val movie = viewModel.allMovies?.value?.let {
             it[position]
         }
         val intent = DetailsActivity.getIntent(context)

@@ -43,18 +43,6 @@ class DetailsFragment : Fragment() {
         loadMovieInfo()
         setViewModel()
         setListeners()
-
-        // Get Movie Test
-        viewModel.allMovies?.observe(this, Observer { list ->
-            context?.let {
-                if(list!!.isNotEmpty()) {
-                    Toast.makeText(it, list[0].original_title, Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(it, "Empty List", Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
-
     }
 
     private fun setListeners() {

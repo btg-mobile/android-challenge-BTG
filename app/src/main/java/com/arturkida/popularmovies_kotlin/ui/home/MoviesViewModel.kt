@@ -1,8 +1,10 @@
 package com.arturkida.popularmovies_kotlin.ui.home
 
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.util.Log
+import com.arturkida.popularmovies_kotlin.data.local.MovieRepository
 import com.arturkida.popularmovies_kotlin.data.remote.ApiImpl
 import com.arturkida.popularmovies_kotlin.data.remote.ApiResponse
 import com.arturkida.popularmovies_kotlin.model.Genre
@@ -10,12 +12,15 @@ import com.arturkida.popularmovies_kotlin.model.Movie
 import com.arturkida.popularmovies_kotlin.utils.Constants
 import com.arturkida.popularmovies_kotlin.utils.SearchType
 
-class MoviesViewModel : ViewModel() {
+class MoviesViewModel(application: Application) : AndroidViewModel(application) {
 
     val genres = MutableLiveData<List<Genre>>()
     val popularMovies = MutableLiveData<List<Movie>>()
     val favoriteMovies = MutableLiveData<List<Movie>>()
     var filteredMovies = mutableListOf<Movie>()
+
+    private val repository = MovieRepository(application)
+    var allMovies = repository.allMovies
 
     fun populateGenresName(movie: Movie): Movie {
 
@@ -54,22 +59,22 @@ class MoviesViewModel : ViewModel() {
         })
     }
 
-    fun getFavoriteMovies() {
-        if (genres.value.isNullOrEmpty()) {
-            getGenres()
-        }
-
-        ApiImpl()
-            .getPopularMovies(object: ApiResponse<List<Movie>> {
-                override fun sucess(result: List<Movie>) {
-                    favoriteMovies.postValue(result)
-                }
-
-                override fun failure(error: Throwable?) {
-                    // TODO Implement on failure
-                }
-            })
-    }
+//    fun getFavoriteMovies() {
+//        if (genres.value.isNullOrEmpty()) {
+//            getGenres()
+//        }
+//
+//        ApiImpl()
+//            .getPopularMovies(object: ApiResponse<List<Movie>> {
+//                override fun sucess(result: List<Movie>) {
+//                    favoriteMovies.postValue(result)
+//                }
+//
+//                override fun failure(error: Throwable?) {
+//                    // TODO Implement on failure
+//                }
+//            })
+//    }
 
     private fun getGenres() {
         ApiImpl()
