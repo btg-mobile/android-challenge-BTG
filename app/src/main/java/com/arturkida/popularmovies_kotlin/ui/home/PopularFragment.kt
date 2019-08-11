@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.LinearLayout
 import com.arturkida.popularmovies_kotlin.R
 import com.arturkida.popularmovies_kotlin.adapter.MoviesListAdapter
@@ -61,32 +62,38 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
         et_search_popular_movies.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 clearMoviesList()
-
-                viewModel.popularMovies?.value?.let { popularMovies ->
-
-
-                    val searchString = et_search_popular_movies.text.toString()
-
-                    if (searchString.isBlank()) {
-                        moviesList.addAll(popularMovies)
-                        adapter.updateMovies(popularMovies)
-                    } else {
-                        val filteredMovies = viewModel.searchMovies(
-                            searchString,
-                            SearchType.TITLE,
-                            popularMovies
-                        )
-
-                        Log.i(Constants.LOG_INFO, "Updating popular movies list with search by title")
-                        moviesList.addAll(filteredMovies)
-                        adapter.updateMovies(filteredMovies)
-
-                        et_search_popular_movies.text.clear()
-                    }
-                }
+                searchMoviesBy(SearchType.TITLE, et_search_popular_movies)
             }
             false
         }
+    }
+
+    private fun searchMoviesBy(searchType: SearchType, searchBar: EditText) {
+        viewModel.popularMovies?.value?.let { popularList ->
+
+            val searchString = searchBar.text.toString()
+
+            if (searchString.isBlank()) {
+                moviesList.addAll(popularList)
+                adapter.updateMovies(popularList)
+            } else {
+                val filteredMovies = viewModel.searchMovies(
+                    searchString,
+                    searchType,
+                    popularList
+                )
+
+                updateMoviesListBy(filteredMovies, searchBar)
+            }
+        }
+    }
+
+    private fun updateMoviesListBy(filteredMovies: MutableList<Movie>, searchBar: EditText) {
+        Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by title")
+        moviesList.addAll(filteredMovies)
+        adapter.updateMovies(filteredMovies)
+
+        searchBar.text.clear()
     }
 
     private fun clearMoviesList() {
