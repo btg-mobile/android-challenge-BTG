@@ -117,8 +117,37 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
                 moviesList.addAll(it)
                 adapter.updateMovies(moviesList)
                 Log.i(Constants.LOG_INFO, "Popular movies updated")
+                showMovieScreen()
             }
         })
+    }
+
+    private fun showMovieScreen() {
+        hideProgressBar()
+
+        if (viewModel.mustShowPopularMoviesList()) {
+            showPopularMoviesList()
+        } else {
+            showEmptyListMessage()
+        }
+    }
+
+    private fun showEmptyListMessage() {
+        fragment_popular_movies.visibility = View.GONE
+        tv_empty_popular_list.visibility = View.VISIBLE
+    }
+
+    private fun showPopularMoviesList() {
+        fragment_popular_movies.visibility = View.VISIBLE
+        tv_empty_popular_list.visibility = View.GONE
+    }
+
+    private fun showProgressBar() {
+        progress_bar_popular.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        progress_bar_popular.visibility = View.GONE
     }
 
     private fun setRecyclerView() {
@@ -129,6 +158,7 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
     }
 
     private fun getPopularMovies() {
+        showProgressBar()
         viewModel.getPopularMovies()
     }
 

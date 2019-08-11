@@ -19,7 +19,27 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
     var filteredMovies = mutableListOf<Movie>()
 
     private val repository = MovieRepository(application)
-    var favoriteMovies = repository.allFavoriteMovies
+    val favoriteMovies = repository.allFavoriteMovies
+
+    fun mustShowPopularMoviesList(): Boolean {
+        popularMovies?.value?.let {
+            if (it.isNotEmpty()) {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    fun mustShowFavoriteMoviesList(): Boolean {
+        favoriteMovies?.value?.let {
+            if (it.isNotEmpty()) {
+                return true
+            }
+        }
+
+        return false
+    }
 
     fun populateGenresNameFrom(movie: Movie): Movie {
 

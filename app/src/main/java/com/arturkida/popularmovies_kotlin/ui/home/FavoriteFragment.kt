@@ -20,6 +20,7 @@ import com.arturkida.popularmovies_kotlin.ui.details.DetailsActivity
 import com.arturkida.popularmovies_kotlin.utils.Constants
 import com.arturkida.popularmovies_kotlin.utils.SearchType
 import kotlinx.android.synthetic.main.fragment_favorite.*
+import kotlinx.android.synthetic.main.fragment_movies.*
 
 class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener {
 
@@ -135,7 +136,32 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
             }
 
             adapter.updateMovies(moviesList)
+            showMovieScreen()
         })
+    }
+
+    private fun showMovieScreen() {
+        hideProgressBar()
+
+        if (viewModel.mustShowFavoriteMoviesList()) {
+            showPopularMoviesList()
+        } else {
+            showEmptyListMessage()
+        }
+    }
+
+    private fun showEmptyListMessage() {
+        fragment_favorite_movies.visibility = View.GONE
+        tv_empty_favorites_list.visibility = View.VISIBLE
+    }
+
+    private fun showPopularMoviesList() {
+        fragment_favorite_movies.visibility = View.VISIBLE
+        tv_empty_favorites_list.visibility = View.GONE
+    }
+
+    private fun hideProgressBar() {
+        progress_bar_favorites.visibility = View.GONE
     }
 
     private fun setRecyclerView() {
