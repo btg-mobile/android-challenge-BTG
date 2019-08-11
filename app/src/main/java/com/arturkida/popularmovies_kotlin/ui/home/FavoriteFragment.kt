@@ -62,11 +62,46 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
     }
 
     private fun setListeners() {
+        setSearchListenerByMovieTitle()
+        setSearchListenerByMovieYear()
+    }
+
+    private fun setSearchListenerByMovieYear() {
+        et_search_favorite_movies_year.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                clearMoviesList()
+
+                viewModel.allFavoriteMovies?.value?.let { favoritesList ->
+
+                    val searchString = et_search_favorite_movies_year.text.toString()
+
+                    if (searchString.isBlank()) {
+                        moviesList.addAll(favoritesList)
+                        adapter.updateMovies(favoritesList)
+                    } else {
+                        val filteredMovies = viewModel.searchMovies(
+                            searchString,
+                            SearchType.YEAR,
+                            favoritesList
+                        )
+
+                        Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by year")
+                        adapter.updateMovies(filteredMovies)
+
+                        et_search_favorite_movies_year.text.clear()
+                    }
+                }
+            }
+            false
+        }
+    }
+
+    private fun setSearchListenerByMovieTitle() {
         et_search_favorite_movies_title.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 clearMoviesList()
 
-                viewModel.allFavoriteMovies?.value?.let {favoritesList ->
+                viewModel.allFavoriteMovies?.value?.let { favoritesList ->
 
                     val searchString = et_search_favorite_movies_title.text.toString()
 
@@ -89,35 +124,6 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
                 }
             }
             false
-        }
-
-        et_search_favorite_movies_year.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                clearMoviesList()
-
-                viewModel.allFavoriteMovies?.value?.let { favoritesList ->
-
-                    val searchString = et_search_favorite_movies_title.text.toString()
-
-                    if (searchString.isBlank()) {
-                        moviesList.addAll(favoritesList)
-                        adapter.updateMovies(favoritesList)
-                    } else {
-                        val filteredMovies = viewModel.searchMovies(
-                            et_search_favorite_movies_year.text.toString(),
-                            SearchType.YEAR,
-                            favoritesList
-                        )
-
-
-                        Log.i(Constants.LOG_INFO, "Updating favorite movies list with search by year")
-                        adapter.updateMovies(filteredMovies)
-
-                        et_search_favorite_movies_year.text.clear()
-                    }
-                }
-            }
-                false
         }
     }
 

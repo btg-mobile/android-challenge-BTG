@@ -54,18 +54,22 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
     }
 
     private fun setListeners() {
+        setSearchListenerByMovieTitle()
+    }
+
+    private fun setSearchListenerByMovieTitle() {
         et_search_popular_movies.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 clearMoviesList()
 
-                viewModel.popularMovies?.value?.let {popularMovies ->
+                viewModel.popularMovies?.value?.let { popularMovies ->
 
 
                     val searchString = et_search_popular_movies.text.toString()
 
                     if (searchString.isBlank()) {
-                            moviesList.addAll(popularMovies)
-                            adapter.updateMovies(popularMovies)
+                        moviesList.addAll(popularMovies)
+                        adapter.updateMovies(popularMovies)
                     } else {
                         val filteredMovies = viewModel.searchMovies(
                             searchString,
