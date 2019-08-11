@@ -70,12 +70,12 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
             }
 
             override fun failure(error: Throwable?) {
-                // TODO Implement on failure
+                popularMovies?.postValue(listOf())
             }
         })
     }
 
-    private fun getGenres() {
+    fun getGenres() {
         ApiImpl()
             .getGenres(object: ApiResponse<List<Genre>> {
                 override fun sucess(result: List<Genre>) {
@@ -83,7 +83,7 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
                 }
 
                 override fun failure(error: Throwable?) {
-                    // TODO Implement on failure
+                    genres.postValue(listOf())
                 }
             })
     }

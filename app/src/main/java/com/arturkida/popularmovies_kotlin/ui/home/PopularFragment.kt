@@ -110,6 +110,10 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
             genres?.let {
                 genresList.addAll(it)
                 Log.i(Constants.LOG_INFO, "Genres updated")
+
+                if (genresList.isEmpty()) {
+                    viewModel.getGenres()
+                }
             }
         })
 
