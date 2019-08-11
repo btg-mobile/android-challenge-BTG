@@ -19,22 +19,31 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
     var filteredMovies = mutableListOf<Movie>()
 
     private val repository = MovieRepository(application)
-    var allFavoriteMovies = repository.allFavoriteMovies
+    var favoriteMovies = repository.allFavoriteMovies
 
-    fun populateGenresName(movie: Movie): Movie {
+    fun populateGenresNameFrom(movie: Movie): Movie {
 
         movie.genre_names = ""
-
-        if (!genres.value.isNullOrEmpty()) {
-            genres.value?.let {genresList ->
-                genresList.forEach {genre ->
-                    if (movie.genre_ids.contains(genre.id)) {
-                        if (movie.genre_names == "") {
-                            movie.genre_names = genre.name
-                        } else {
-                            movie.genre_names += ", ${genre.name}"
-                        }
+        genres.value?.let {genresList ->
+            genresList.forEach {genre ->
+                if (movie.genre_ids.contains(genre.id)) {
+                    if (movie.genre_names == "") {
+                        movie.genre_names = genre.name
+                    } else {
+                        movie.genre_names += ", ${genre.name}"
                     }
+                }
+            }
+        }
+
+        return movie
+    }
+
+    fun updateFavoriteStatusOf(movie: Movie): Movie {
+        favoriteMovies?.value?.let { favoritesList ->
+            favoritesList.forEach{favoriteMovie ->
+                if (favoriteMovie.id == movie.id) {
+                    movie.favorite = true
                 }
             }
         }

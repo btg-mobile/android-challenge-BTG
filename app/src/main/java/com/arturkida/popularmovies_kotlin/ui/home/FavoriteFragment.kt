@@ -88,7 +88,7 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
     }
 
     private fun searchMoviesBy(searchType: SearchType, searchBar: EditText) {
-        viewModel.allFavoriteMovies?.value?.let { favoritesList ->
+        viewModel.favoriteMovies?.value?.let { favoritesList ->
 
             val searchString = searchBar.text.toString()
 
@@ -127,7 +127,7 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
             }
         })
 
-        viewModel.allFavoriteMovies?.observe(this, Observer { favoritesList ->
+        viewModel.favoriteMovies?.observe(this, Observer { favoritesList ->
             moviesList.clear()
 
             favoritesList?.let {

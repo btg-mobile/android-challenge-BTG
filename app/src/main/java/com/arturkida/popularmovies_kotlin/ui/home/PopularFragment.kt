@@ -140,7 +140,8 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
     override fun onClick(position: Int) {
         var movie = moviesList[position]
 
-        movie = viewModel.populateGenresName(movie)
+        movie = viewModel.populateGenresNameFrom(movie)
+        movie = viewModel.updateFavoriteStatusOf(movie)
 
         val intent = DetailsActivity.getIntent(context)
 
