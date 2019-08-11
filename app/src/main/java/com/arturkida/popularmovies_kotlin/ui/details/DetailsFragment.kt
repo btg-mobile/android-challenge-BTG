@@ -1,14 +1,11 @@
 package com.arturkida.popularmovies_kotlin.ui.details
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.arturkida.popularmovies_kotlin.BuildConfig
 import com.arturkida.popularmovies_kotlin.R
 import com.arturkida.popularmovies_kotlin.model.Movie
@@ -54,6 +51,8 @@ class DetailsFragment : Fragment() {
                 viewModel.deleteMovie(movie)
                 movie.favorite = false
             }
+
+            updateFavoriteIcon()
         }
     }
 
@@ -79,5 +78,15 @@ class DetailsFragment : Fragment() {
         tv_details_movie_year.text = movie.release_date
         tv_details_movie_rate.text = movie.vote_average.toString()
         tv_details_movie_genres.text = movie.genre_names
+
+        updateFavoriteIcon()
+    }
+
+    private fun updateFavoriteIcon() {
+        if (movie.favorite) {
+            iv_favorite_star.setImageResource(android.R.drawable.btn_star_big_on)
+        } else {
+            iv_favorite_star.setImageResource(android.R.drawable.btn_star_big_off)
+        }
     }
 }
