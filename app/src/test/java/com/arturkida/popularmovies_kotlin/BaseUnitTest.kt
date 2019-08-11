@@ -10,7 +10,7 @@ open class BaseUnitTest {
 
     fun getSimpleLiveDataMovieList(): LiveData<List<Movie>> {
         val liveData = MutableLiveData<List<Movie>>()
-        liveData.postValue(getSimpleMovieList())
+        liveData.value = getSimpleMovieList()
 
         return liveData
     }
