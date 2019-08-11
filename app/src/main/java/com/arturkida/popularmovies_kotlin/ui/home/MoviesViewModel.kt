@@ -40,15 +40,21 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun updateFavoriteStatusOf(movie: Movie): Movie {
+        movie.favorite = isMovieFavorited(movie)
+
+        return movie
+    }
+
+    private fun isMovieFavorited(movie: Movie): Boolean {
         favoriteMovies?.value?.let { favoritesList ->
-            favoritesList.forEach{favoriteMovie ->
+            favoritesList.forEach { favoriteMovie ->
                 if (favoriteMovie.id == movie.id) {
-                    movie.favorite = true
+                    return true
                 }
             }
         }
 
-        return movie
+        return false
     }
 
     fun getPopularMovies() {
