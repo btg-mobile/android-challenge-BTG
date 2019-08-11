@@ -60,36 +60,39 @@ class MoviesViewModel(context: Context) : ViewModel() {
     }
 
     fun getPopularMovies() {
-        if (genres.value.isNullOrEmpty()) {
-            getGenres()
-        }
+//        if (genres.value.isNullOrEmpty()) {
+//            getGenres()
+//        }
 
         ApiImpl().getPopularMovies(object: ApiResponse<List<Movie>> {
-            override fun sucess(result: List<Movie>) {
-                popularMovies?.postValue(result)
+            override fun onSuccess(result: List<Movie>) {
+                postPopularMoviesResult(result)
             }
 
-            override fun failure(error: Throwable?) {
-                popularMovies?.postValue(listOf())
+            override fun onFailure(error: Throwable?) {
+                postPopularMoviesResult(listOf())
             }
         })
+    }
+
+    fun postPopularMoviesResult(result: List<Movie>) {
+        popularMovies?.postValue(result)
     }
 
     fun getGenres() {
         ApiImpl()
             .getGenres(object: ApiResponse<List<Genre>> {
-                override fun sucess(result: List<Genre>) {
+                override fun onSuccess(result: List<Genre>) {
                     genres.postValue(result)
                 }
 
-                override fun failure(error: Throwable?) {
+                override fun onFailure(error: Throwable?) {
                     genres.postValue(listOf())
                 }
             })
     }
 
     fun searchMovies(searchText: String, searchType: SearchType, searchList: List<Movie>): MutableList<Movie> {
-        Log.i(Constants.LOG_INFO, "Entering movie search")
 
         when(searchType) {
             SearchType.TITLE ->
@@ -105,7 +108,6 @@ class MoviesViewModel(context: Context) : ViewModel() {
                     } as MutableList<Movie>
                 }
         }
-        Log.i(Constants.LOG_INFO, "Movies in filter: ${filteredMovies.size}")
 
         return filteredMovies
     }

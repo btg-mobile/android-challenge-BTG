@@ -25,17 +25,15 @@ class ApiImpl {
 
     fun getGenres(callback: ApiResponse<List<Genre>>) {
         val call = retrofit.getGenres(BuildConfig.MOVIEDB_API_KEY)
-        Log.i(Constants.LOG_INFO, "Calling genres API")
 
         call.enqueue(object : Callback<ResultGenres?> {
             override fun onFailure(call: Call<ResultGenres?>?, t: Throwable?) {
                 Log.e(Constants.LOG_INFO, t?.message)
-                callback.failure(t)
+                callback.onFailure(t)
             }
             override fun onResponse(call: Call<ResultGenres?>?, response: Response<ResultGenres?>?) {
                 response?.body()?.let {
-                    Log.i(Constants.LOG_INFO, "Genres successfully returned")
-                    callback.sucess(it.genres)
+                    callback.onSuccess(it.genres)
                 }
             }
         })
@@ -43,17 +41,15 @@ class ApiImpl {
 
     fun getPopularMovies(callback: ApiResponse<List<Movie>>) {
         val call = retrofit.getPopularMovies(BuildConfig.MOVIEDB_API_KEY)
-        Log.i(Constants.LOG_INFO, "Calling movies API")
 
         call.enqueue(object : Callback<ResultMovies?> {
             override fun onFailure(call: Call<ResultMovies?>?, t: Throwable?) {
                 Log.e(Constants.LOG_INFO, t?.message)
-                callback.failure(t)
+                callback.onFailure(t)
             }
             override fun onResponse(call: Call<ResultMovies?>?, response: Response<ResultMovies?>?) {
                 response?.body()?.let {
-                    Log.i(Constants.LOG_INFO, "Movies successfully returned")
-                    callback.sucess(it.results)
+                    callback.onSuccess(it.results)
                 }
             }
         })

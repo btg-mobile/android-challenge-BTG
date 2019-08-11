@@ -63,5 +63,5 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$rootProject.mockito_version"
     testImplementation "org.mockito:mockito-inline:$rootProject.mockito_version"
     testImplementation "com.nhaarman:mockito-kotlin:$rootProject.mockito_kotlin_version"
-    testImplementation "android.arch.core:core-testing:1.1.1"
+    testImplementation "android.arch.core:core-testing:$rootProject.core_testing_version"
 }
