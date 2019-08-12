@@ -42,6 +42,9 @@ class MoviesActivityTest {
 
     @Test
     fun clickOnFavoriteTab_MustShowFavoriteTab() {
+        //TODO add Idling Resource
+        Thread.sleep(5000)
+
         robot {
             clickOnFavoriteTab("Favorites")
             checkIfFavoriteScreenIsDisplayed(R.id.fragment_favorite_movies)

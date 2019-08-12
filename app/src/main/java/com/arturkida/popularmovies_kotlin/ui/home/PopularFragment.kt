@@ -44,7 +44,7 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
         setupFragment()
     }
 
-    fun setupFragment() {
+    private fun setupFragment() {
         setViewModel()
         setRecyclerView()
         setObservers()

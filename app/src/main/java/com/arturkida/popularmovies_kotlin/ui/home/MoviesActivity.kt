@@ -14,35 +14,33 @@ class MoviesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_movies)
 
         if (savedInstanceState == null) {
-
-
-            tab_layout.addTab(tab_layout.newTab().setText("Popular"))
-            tab_layout.addTab(tab_layout.newTab().setText("Favorites"))
-
-            val tabLayoutAdapter = TabsAdapter(supportFragmentManager, tab_layout.tabCount)
-
-            view_pager.adapter = tabLayoutAdapter
-
-            view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
-
-            tab_layout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
-
-                override fun onTabReselected(tab: TabLayout.Tab?) {
-                }
-
-                override fun onTabUnselected(tab: TabLayout.Tab?) {
-                }
-
-                override fun onTabSelected(tab: TabLayout.Tab?) {
-                    tab?.let {
-                        view_pager.currentItem = tab.position
-                    }
-                }
-            })
-
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.container, PopularFragment.newInstance())
-//                .commitNow()
+            setupTabLayout()
         }
+    }
+
+    private fun setupTabLayout() {
+        tab_layout.addTab(tab_layout.newTab().setText("Popular"))
+        tab_layout.addTab(tab_layout.newTab().setText("Favorites"))
+
+        val tabLayoutAdapter = TabsAdapter(supportFragmentManager, tab_layout.tabCount)
+
+        view_pager.adapter = tabLayoutAdapter
+
+        view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tab_layout))
+
+        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.let {
+                    view_pager.currentItem = tab.position
+                }
+            }
+        })
     }
 }
