@@ -37,7 +37,16 @@
             app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
             app:layout_constraintStart_toEndOf="@id/iv_movie_poster"
             app:layout_constraintLeft_toRightOf="@id/iv_movie_poster"
-            tool:text="@string/preview_movie_year"
-    />
+            tool:text="@string/preview_movie_year"/>
+
+    <ImageView
+            android:id="@+id/iv_item_favorite_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_year"
+            app:layout_constraintStart_toEndOf="@id/iv_movie_poster"
+            app:layout_constraintLeft_toRightOf="@id/iv_movie_poster"
+            app:srcCompat="@android:drawable/btn_star_big_off" />
 
 </android.support.constraint.ConstraintLayout>
