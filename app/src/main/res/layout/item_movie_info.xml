@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/container_item_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+    <ImageView
+            android:id="@+id/iv_movie_poster"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/preview_poster_size"
+            android:layout_margin="@dimen/default_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+            android:id="@+id/tv_movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintTop_toTopOf="@id/iv_movie_poster"
+            app:layout_constraintStart_toEndOf="@id/iv_movie_poster"
+            app:layout_constraintLeft_toRightOf="@id/iv_movie_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            tool:text="@string/preview_movie_title"
+            app:layout_constraintHorizontal_bias="0.0"/>
+
+    <TextView
+            android:id="@+id/tv_movie_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
+            app:layout_constraintStart_toEndOf="@id/iv_movie_poster"
+            app:layout_constraintLeft_toRightOf="@id/iv_movie_poster"
+            tool:text="@string/preview_movie_year"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+            android:id="@+id/iv_item_favorite_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_year"
+            app:layout_constraintStart_toEndOf="@id/iv_movie_poster"
+            app:layout_constraintLeft_toRightOf="@id/iv_movie_poster"
+            app:srcCompat="@android:drawable/btn_star_big_off"
+    android:layout_gravity="start|bottom"/>
+
+</android.support.design.widget.CoordinatorLayout>

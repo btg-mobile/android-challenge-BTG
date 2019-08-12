@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Popular Movies - Kotlin</string>
+    <string name="preview_movie_title">Movie Title</string>
+    <string name="preview_movie_year">2019</string>
+    <string name="hint_movies_search_title">Search by movie here</string>
+    <string name="hint_movies_search_year">Search by year here</string>
+    <string name="empty_list_text">No movies found</string>
+</resources>
