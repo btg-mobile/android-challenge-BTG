@@ -7,6 +7,7 @@ import android.util.Log
 import com.arturkida.popularmovies_kotlin.data.local.MovieRepository
 import com.arturkida.popularmovies_kotlin.data.remote.ApiImpl
 import com.arturkida.popularmovies_kotlin.data.remote.ApiResponse
+import com.arturkida.popularmovies_kotlin.idlingresource.EspressoIdlingResource
 import com.arturkida.popularmovies_kotlin.model.Genre
 import com.arturkida.popularmovies_kotlin.model.Movie
 import com.arturkida.popularmovies_kotlin.utils.Constants
@@ -64,13 +65,16 @@ class MoviesViewModel(context: Context) : ViewModel() {
             getGenres()
         }
 
+        EspressoIdlingResource.increment()
         ApiImpl()
             .getPopularMovies(object: ApiResponse<List<Movie>> {
             override fun onSuccess(result: List<Movie>) {
+                EspressoIdlingResource.decrement()
                 postPopularMoviesResult(result)
             }
 
             override fun onFailure(error: Throwable?) {
+                EspressoIdlingResource.decrement()
                 postPopularMoviesResult(listOf())
             }
         })
@@ -81,13 +85,16 @@ class MoviesViewModel(context: Context) : ViewModel() {
     }
 
     fun getGenres() {
+        EspressoIdlingResource.increment()
         ApiImpl()
             .getGenres(object: ApiResponse<List<Genre>> {
                 override fun onSuccess(result: List<Genre>) {
+                    EspressoIdlingResource.decrement()
                     genres.postValue(result)
                 }
 
                 override fun onFailure(error: Throwable?) {
+                    EspressoIdlingResource.decrement()
                     genres.postValue(listOf())
                 }
             })

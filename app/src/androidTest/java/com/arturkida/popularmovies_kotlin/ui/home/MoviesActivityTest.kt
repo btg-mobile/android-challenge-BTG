@@ -1,8 +1,12 @@
 package com.arturkida.popularmovies_kotlin.ui.home
 
+import android.support.test.espresso.IdlingRegistry
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.arturkida.popularmovies_kotlin.R
+import com.arturkida.popularmovies_kotlin.idlingresource.EspressoIdlingResource
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,6 +19,11 @@ class MoviesActivityTest {
 
     fun robot(func: MoviesRobot.() -> Unit) = MoviesRobot()
         .apply { func() }
+
+    @Before
+    fun setup() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
+    }
 
     @Test
     fun onHomeScreen_CheckIfTablayoutIsDisplayed() {
@@ -42,13 +51,15 @@ class MoviesActivityTest {
 
     @Test
     fun clickOnFavoriteTab_MustShowFavoriteTab() {
-        //TODO add Idling Resource
-        Thread.sleep(5000)
-
         robot {
             clickOnFavoriteTab("Favorites")
             checkIfFavoriteScreenIsDisplayed(R.id.fragment_favorite_movies)
             checkIfPopularScreenIsNotDisplayed(R.id.fragment_popular_movies)
         }
+    }
+
+    @After
+    fun unregister() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
     }
 }
