@@ -22,6 +22,16 @@ class MoviesViewModel(context: Context) : ViewModel() {
     private val repository = MovieRepository(context)
     val favoriteMovies = repository.allFavoriteMovies
 
+    private var retryGetGenresCount = 0
+
+    fun retryGetGenres() {
+        retryGetGenresCount++
+
+        if (retryGetGenresCount <= 3) {
+            getGenres()
+        }
+    }
+
     fun mustShowMoviesList(moviesList: List<Movie>) = moviesList.isNotEmpty()
 
     fun populateGenresNameFrom(movie: Movie): Movie {
@@ -119,4 +129,8 @@ class MoviesViewModel(context: Context) : ViewModel() {
 
         return filteredMovies
     }
+
+    fun addFavoriteMovie(movie: Movie) = repository.addMovie(movie)
+
+    fun deleteFavoriteMovie(movie: Movie) = repository.deleteMovie(movie)
 }

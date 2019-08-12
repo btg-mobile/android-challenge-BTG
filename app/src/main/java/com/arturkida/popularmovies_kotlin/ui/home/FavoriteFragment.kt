@@ -1,7 +1,9 @@
 package com.arturkida.popularmovies_kotlin.ui.home
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -9,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.arturkida.popularmovies_kotlin.R
@@ -20,6 +23,7 @@ import com.arturkida.popularmovies_kotlin.ui.details.DetailsActivity
 import com.arturkida.popularmovies_kotlin.utils.Constants
 import com.arturkida.popularmovies_kotlin.utils.SearchType
 import kotlinx.android.synthetic.main.fragment_favorite.*
+
 
 class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener {
 
@@ -75,6 +79,7 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 clearMoviesList()
                 searchMoviesBy(SearchType.TITLE, et_search_favorite_movies_title)
+                hideKeyboard()
             }
             false
         }
@@ -85,6 +90,7 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 clearMoviesList()
                 searchMoviesBy(SearchType.YEAR, et_search_favorite_movies_year)
+                hideKeyboard()
             }
             false
         }
@@ -122,6 +128,11 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
 
     private fun removeFocus() {
         fragment_favorite_movies.requestFocus()
+    }
+
+    private fun hideKeyboard() {
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(activity?.window?.currentFocus?.windowToken, 0)
     }
 
     private fun setObservers() {
@@ -172,6 +183,14 @@ class FavoriteFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListene
         rv_favorite_movie_list.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
         context?.let {
             rv_favorite_movie_list.adapter = adapter
+        }
+    }
+
+    override fun updateFavorite(position: Int) {
+        if (moviesList[position].favorite) {
+            viewModel.addFavoriteMovie(moviesList[position])
+        } else {
+            viewModel.deleteFavoriteMovie(moviesList[position])
         }
     }
 

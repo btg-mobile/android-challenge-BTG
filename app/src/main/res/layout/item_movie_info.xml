@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tool="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/container_item_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
     <ImageView
             android:id="@+id/iv_movie_poster"
@@ -39,6 +44,8 @@
             app:layout_constraintLeft_toRightOf="@id/iv_movie_poster"
             tool:text="@string/preview_movie_year"/>
 
+    </android.support.constraint.ConstraintLayout>
+
     <ImageView
             android:id="@+id/iv_item_favorite_star"
             android:layout_width="wrap_content"
@@ -47,6 +54,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_movie_year"
             app:layout_constraintStart_toEndOf="@id/iv_movie_poster"
             app:layout_constraintLeft_toRightOf="@id/iv_movie_poster"
-            app:srcCompat="@android:drawable/btn_star_big_off" />
+            app:srcCompat="@android:drawable/btn_star_big_off"
+    android:layout_gravity="start|bottom"/>
 
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -37,13 +37,21 @@ class MoviesListAdapter(private val context: Context?,
         : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         init {
-            itemView.setOnClickListener(this)
+            itemView.container_item_list.setOnClickListener {
+                listener.onClick(adapterPosition)
+            }
+
+            itemView.iv_item_favorite_star.setOnClickListener {
+                updateFavorites()
+                listener.updateFavorite(adapterPosition)
+            }
         }
 
         fun bind(movie: Movie) {
             setMovieTitle(movie)
             setMovieDate(movie)
             setMoviePoster(movie)
+            setFavorite()
         }
 
         private fun setMovieDate(movie: Movie) {
@@ -62,14 +70,32 @@ class MoviesListAdapter(private val context: Context?,
                 .into(itemView.iv_movie_poster)
         }
 
-        override fun onClick(v: View?) {
-            Log.i(Constants.LOG_INFO, "RecyclerView item clicked")
+        private fun setFavorite() {
+            if (movies[adapterPosition].favorite) {
+                itemView.iv_item_favorite_star.setImageResource(android.R.drawable.btn_star_big_on)
+            } else {
+                itemView.iv_item_favorite_star.setImageResource(android.R.drawable.btn_star_big_off)
+            }
+        }
 
+        private fun updateFavorites() {
+            if (movies[adapterPosition].favorite) {
+                itemView.iv_item_favorite_star.setImageResource(android.R.drawable.btn_star_big_off)
+                movies[adapterPosition].favorite = false
+            } else {
+                itemView.iv_item_favorite_star.setImageResource(android.R.drawable.btn_star_big_on)
+                movies[adapterPosition].favorite = true
+            }
+        }
+
+        override fun onClick(v: View?) {
             listener.onClick(adapterPosition)
+            Log.i(Constants.LOG_INFO, "AAAAAAAAAAAAA")
         }
     }
 
     interface MovieItemClickListener {
         fun onClick(position: Int)
+        fun updateFavorite(position: Int)
     }
 }

@@ -2,6 +2,7 @@ package com.arturkida.popularmovies_kotlin.ui.home
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.arturkida.popularmovies_kotlin.R
@@ -63,9 +65,15 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 clearMoviesList()
                 searchMoviesBy(SearchType.TITLE, et_search_popular_movies)
+                hideKeyboard()
             }
             false
         }
+    }
+
+    private fun hideKeyboard() {
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(activity?.window?.currentFocus?.windowToken, 0)
     }
 
     private fun searchMoviesBy(searchType: SearchType, searchBar: EditText) {
@@ -109,10 +117,10 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
         viewModel.genres.observe(this, Observer { genres ->
             genres?.let {
                 genresList.addAll(it)
-                Log.i(Constants.LOG_INFO, "Genres updated")
 
+                // Retry
                 if (genresList.isEmpty()) {
-                    viewModel.getGenres()
+                    viewModel.retryGetGenres()
                 }
             }
         })
@@ -120,11 +128,28 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
         viewModel.popularMovies?.observe(this, Observer { movies ->
             movies?.let {
                 moviesList.addAll(it)
-                adapter.updateMovies(moviesList)
-                Log.i(Constants.LOG_INFO, "Popular movies updated")
+                updateMoviesFavoriteStatus()
+                updateAdapter()
                 showMovieScreen(it)
             }
         })
+
+        viewModel.favoriteMovies?.observe(this, Observer { movies ->
+            movies?.let {
+                updateMoviesFavoriteStatus()
+                updateAdapter()
+            }
+        })
+    }
+
+    private fun updateAdapter() {
+        adapter.updateMovies(moviesList)
+    }
+
+    private fun updateMoviesFavoriteStatus() {
+        moviesList.forEach {
+            viewModel.updateFavoriteStatusOf(it)
+        }
     }
 
     private fun showMovieScreen(moviesList: List<Movie>) {
@@ -175,11 +200,19 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
         }
     }
 
+    override fun updateFavorite(position: Int) {
+        if (moviesList[position].favorite) {
+            viewModel.populateGenresNameFrom(moviesList[position])
+            viewModel.addFavoriteMovie(moviesList[position])
+        } else {
+            viewModel.deleteFavoriteMovie(moviesList[position])
+        }
+    }
+
     override fun onClick(position: Int) {
         var movie = moviesList[position]
 
         movie = viewModel.populateGenresNameFrom(movie)
-        movie = viewModel.updateFavoriteStatusOf(movie)
 
         val intent = DetailsActivity.getIntent(context)
 
