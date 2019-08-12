@@ -58,6 +58,13 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
 
     private fun setListeners() {
         setSearchListenerByMovieTitle()
+        setSwipeToRefreshListener()
+    }
+
+    private fun setSwipeToRefreshListener() {
+        swipe_movie_list.setOnRefreshListener {
+            getPopularMovies()
+        }
     }
 
     private fun setSearchListenerByMovieTitle() {
@@ -127,10 +134,11 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
 
         viewModel.popularMovies?.observe(this, Observer { movies ->
             movies?.let {
-                moviesList.addAll(it)
+                updateMoviesList(it)
                 updateMoviesFavoriteStatus()
                 updateAdapter()
                 showMovieScreen(it)
+                swipe_movie_list.isRefreshing = false
             }
         })
 
@@ -140,6 +148,11 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
                 updateAdapter()
             }
         })
+    }
+
+    private fun updateMoviesList(it: List<Movie>) {
+        clearMoviesList()
+        moviesList.addAll(it)
     }
 
     private fun updateAdapter() {
@@ -188,7 +201,6 @@ class PopularFragment : BaseFragment(), MoviesListAdapter.MovieItemClickListener
     }
 
     private fun getPopularMovies() {
-        showProgressBar()
         viewModel.getPopularMovies()
     }
 

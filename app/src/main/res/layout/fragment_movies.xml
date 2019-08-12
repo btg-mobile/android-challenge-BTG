@@ -1,52 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe_movie_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
-
-            android:id="@+id/fragment_popular_movies"
+    <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:descendantFocusability="beforeDescendants"
-            android:focusableInTouchMode="true">
+            android:layout_height="wrap_content">
 
-        <EditText
-                android:id="@+id/et_search_popular_movies"
+        <android.support.constraint.ConstraintLayout
+                android:id="@+id/fragment_popular_movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:hint="@string/hint_movies_search_title"
-                android:inputType="text"
-                android:imeOptions="actionSearch"
-                android:maxLines="1"
-                android:ellipsize="end"
-                app:layout_constraintTop_toTopOf="@id/fragment_popular_movies"/>
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true">
 
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_popular_movie_list"
-                android:layout_width="match_parent"
+            <EditText
+                    android:id="@+id/et_search_popular_movies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:hint="@string/hint_movies_search_title"
+                    android:inputType="text"
+                    android:imeOptions="actionSearch"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    app:layout_constraintTop_toTopOf="@id/fragment_popular_movies"/>
+
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_popular_movie_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    app:layout_constraintTop_toBottomOf="@id/et_search_popular_movies"
+                    android:visibility="gone"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+                android:id="@+id/tv_empty_popular_list"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                app:layout_constraintTop_toBottomOf="@id/et_search_popular_movies"
+                android:text="@string/empty_list_text"
+                android:layout_gravity="center"
                 android:visibility="gone"/>
 
-    </android.support.constraint.ConstraintLayout>
+        <ProgressBar
+                android:id="@+id/progress_bar_popular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
 
-    <TextView
-            android:id="@+id/tv_empty_popular_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty_list_text"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
-
-    <ProgressBar
-            android:id="@+id/progress_bar_popular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
