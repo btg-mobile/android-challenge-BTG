@@ -25,6 +25,11 @@ class MoviesActivityTest {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
     }
 
+    @After
+    fun unregister() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
+    }
+
     @Test
     fun onHomeScreen_CheckIfTablayoutIsDisplayed() {
         robot {
@@ -56,10 +61,5 @@ class MoviesActivityTest {
             checkIfFavoriteScreenIsDisplayed(R.id.fragment_favorite_movies)
             checkIfPopularScreenIsNotDisplayed(R.id.fragment_popular_movies)
         }
-    }
-
-    @After
-    fun unregister() {
-        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
     }
 }
