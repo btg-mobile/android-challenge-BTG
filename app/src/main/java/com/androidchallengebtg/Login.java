@@ -7,11 +7,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.androidchallengebtg.application.ApplicationBTG;
 import com.androidchallengebtg.helpers.connection.Connection;
 import com.androidchallengebtg.helpers.connection.ConnectionListener;
-import com.androidchallengebtg.helpers.connection.ConnectionQueue;
 import com.androidchallengebtg.helpers.storage.PrefManager;
 
 import org.json.JSONException;
@@ -23,7 +21,7 @@ email: raphaelrocha86+btg@gmail.com
 pass: 2405
  */
 
-public class MainActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     private EditText mInputLogin;
     private EditText mInputPassword;
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         mInputLogin = findViewById(R.id.input_login);
         mInputPassword = findViewById(R.id.input_password);
