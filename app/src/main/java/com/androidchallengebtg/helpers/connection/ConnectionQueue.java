@@ -1,4 +1,4 @@
-package com.androidchallengebtg.helpers;
+package com.androidchallengebtg.helpers.connection;
 
 import android.content.Context;
 

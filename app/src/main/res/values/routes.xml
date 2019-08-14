@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string type="string" name="authentication_token_new">/authentication/token/new</string>
+    <string type="string" name="authentication_token_validate_with_login">/authentication/token/validate_with_login</string>
+    <string type="string" name="movie">/movie/</string>
+</resources>
