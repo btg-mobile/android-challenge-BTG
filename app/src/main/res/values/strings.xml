@@ -3,5 +3,8 @@
     <string name="unknow_error">Unexpected error.</string>
     <string name="empty_login_or_pass">Login and password must be completed.</string>
     <string name="authenticating">Authenticating…</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     Authenticating
 </resources>

@@ -2,14 +2,13 @@ package com.androidchallengebtg.activities.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.androidchallengebtg.R;
 import com.androidchallengebtg.activities.BaseActivity;
-import com.androidchallengebtg.activities.MoviesActivity;
+import com.androidchallengebtg.activities.movies.MoviesActivity;
 import com.androidchallengebtg.application.ApplicationBTG;
 
 /*
