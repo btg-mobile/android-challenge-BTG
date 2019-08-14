@@ -13,6 +13,9 @@ import com.androidchallengebtg.application.ApplicationBTG;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Connection {
 
     private Context context;
@@ -25,9 +28,13 @@ public class Connection {
         apiKey = "?api_key="+context.getString(R.string.tmdb_api_key);
     }
 
-    private void get(String url, final ConnectionListener connectionListener){
+    private void request(int method, String url, JSONObject body, final ConnectionListener connectionListener){
+
+        Log.w("request url",url);
+        Log.w("request body",body != null ? body.toString() : "");
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                (method, url, body, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         connectionListener.onSuccess(response);
@@ -50,16 +57,29 @@ public class Connection {
         ConnectionQueue.getINSTANCE().addQueue(jsonObjectRequest);
     }
 
-    public void request (String route, final ConnectionListener connectionListener){
+    public void requestGet (String route, final ConnectionListener connectionListener){
         String url = baseUrl+route+apiKey;
         Log.d("vai chamar", url);
-        get(url,connectionListener);
+        request(Request.Method.GET,url,null,connectionListener);
     }
 
     public void createRequestToken (final ConnectionListener connectionListener){
         String route = context.getString(R.string.authentication_token_new);
         String url = baseUrl+route+apiKey;
         Log.d("vai chamar", url);
-        get(url,connectionListener);
+        request(Request.Method.GET,url,null,connectionListener);
+    }
+
+    public void performLogin (String username, String password, String requestToken, ConnectionListener connectionListener){
+        Map<String, String > map = new HashMap<>();
+        map.put("username",username);
+        map.put("password",password);
+        map.put("request_token",requestToken);
+
+        JSONObject body = new JSONObject(map);
+
+        String url = baseUrl+ApplicationBTG.getContext().getString(R.string.authentication_token_validate_with_login)+apiKey;
+
+        request(Request.Method.POST,url,body,connectionListener);
     }
 }

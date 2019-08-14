@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         mInputLogin = findViewById(R.id.input_login);
         mInputPassword = findViewById(R.id.input_password);
 
-        mInputLogin.setText("raphaelrocha86+btg@gmail.com");
+        mInputLogin.setText("btgchallenge");
         mInputPassword.setText("2405");
 
         findViewById(R.id.button_login).setOnClickListener(new View.OnClickListener() {
@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void performLogin () {
 
-        String username = mInputLogin.getText().toString().trim();
-        String password = mInputPassword.getText().toString().trim();
+        final String username = mInputLogin.getText().toString().trim();
+        final String password = mInputPassword.getText().toString().trim();
 
         /*
         Aborta se login ou senha estiverem vazios
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Connection connection = new Connection();
+        final Connection connection = new Connection();
 
         /*
         Pede request token da api
@@ -77,8 +77,29 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(JSONObject response) {
                 Log.w("LOG", response.toString());
                 try {
-                    String requestToken = response.getString("request_token");
-                    Log.w("onSuccess", requestToken);
+                    boolean success = response.getBoolean("success");
+                    if(success){
+                        String requestToken = response.getString("request_token");
+                        connection.performLogin(username, password, requestToken, new ConnectionListener() {
+                            @Override
+                            public void onSuccess(JSONObject response1) {
+                                Log.w("LOG", response1.toString());
+                            }
+
+                            @Override
+                            public void onError(JSONObject error) {
+                                try {
+                                    Log.e("onError",error.toString());
+                                    String message = error.getString("status_message");
+                                    Toast.makeText(ApplicationBTG.getContext(),message,Toast.LENGTH_LONG).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }else{
+                        Log.w("onSuccess", ApplicationBTG.getContext().getString(R.string.unknow_error));
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(ApplicationBTG.getContext(),getString(R.string.unknow_error),Toast.LENGTH_LONG).show();
