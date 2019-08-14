@@ -1,7 +1,8 @@
-package com.androidchallengebtg;
+package com.androidchallengebtg.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.androidchallengebtg.R;
 
 public class MoviesActivity extends BaseActivity {
 

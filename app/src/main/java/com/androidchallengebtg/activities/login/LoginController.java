@@ -1,14 +1,7 @@
-package com.androidchallengebtg;
+package com.androidchallengebtg.activities.login;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.androidchallengebtg.application.ApplicationBTG;
 import com.androidchallengebtg.helpers.connection.Connection;
 import com.androidchallengebtg.helpers.connection.ConnectionListener;
 import com.androidchallengebtg.helpers.storage.PrefManager;
@@ -16,69 +9,23 @@ import com.androidchallengebtg.helpers.storage.PrefManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/*
-user: btgchallenge
-email: raphaelrocha86+btg@gmail.com
-pass: 2405
- */
+class LoginController {
 
-public class LoginActivity extends BaseActivity {
+    private Listener listener;
 
-    private EditText mInputLogin;
-    private EditText mInputPassword;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        mInputLogin = findViewById(R.id.input_login);
-        mInputPassword = findViewById(R.id.input_password);
-
-        mInputLogin.setText("btgchallenge");
-        mInputPassword.setText("2405");
-
-        findViewById(R.id.button_login).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                performLogin();
-            }
-        });
+    public interface Listener{
+        void onSuccess();
+        void onError(String message);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.w("onResume", "main");
+    LoginController(Listener listener) {
+        this.listener = listener;
     }
 
     /*
-    Valida os campos do formuário de login
-     */
-    private void performLogin () {
-
-        final String username = mInputLogin.getText().toString().trim();
-        final String password = mInputPassword.getText().toString().trim();
-
-        /*
-        Aborta se login ou senha estiverem vazios
+        Usa o api token para criar um request token
          */
-        if(username.length() <1 || password.length() <1){
-            Toast.makeText(this,getString(R.string.empty_login_or_pass),Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        showProgressDialog(this, getString(R.string.authenticating),true);
-
-        createRequestToken(username,password);
-
-    }
-
-    /*
-    Usa o api token para criar um request token
-     */
-    private void createRequestToken(final String username, final String password){
+    void createRequestToken(final String username, final String password){
 
         Connection connection = new Connection();
 
@@ -100,11 +47,10 @@ public class LoginActivity extends BaseActivity {
                 try {
                     Log.e("onError",error.toString());
                     String message = error.getString("status_message");
-                    Toast.makeText(ApplicationBTG.getContext(),message,Toast.LENGTH_LONG).show();
+                    listener.onError(message);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                hideProgressDialog();
             }
         });
     }
@@ -134,11 +80,10 @@ public class LoginActivity extends BaseActivity {
                 try {
                     Log.e("onError",error.toString());
                     String message = error.getString("status_message");
-                    Toast.makeText(ApplicationBTG.getContext(),message,Toast.LENGTH_LONG).show();
+                    listener.onError(message);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                hideProgressDialog();
             }
         });
     }
@@ -167,11 +112,10 @@ public class LoginActivity extends BaseActivity {
                 try {
                     Log.e("onError",error.toString());
                     String message = error.getString("status_message");
-                    Toast.makeText(ApplicationBTG.getContext(),message,Toast.LENGTH_LONG).show();
+                    listener.onError(message);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                hideProgressDialog();
             }
         });
     }
@@ -187,7 +131,7 @@ public class LoginActivity extends BaseActivity {
             public void onSuccess(JSONObject response) {
                 Log.w("onSuccess", response.toString());
                 PrefManager.getINSTANCE().saveUser(response);
-                goAhead();
+                listener.onSuccess();
             }
 
             @Override
@@ -195,22 +139,11 @@ public class LoginActivity extends BaseActivity {
                 try {
                     Log.e("onError",error.toString());
                     String message = error.getString("status_message");
-                    Toast.makeText(ApplicationBTG.getContext(),message,Toast.LENGTH_LONG).show();
+                    listener.onError(message);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                hideProgressDialog();
             }
         });
     }
-
-    /*
-    Segue para a tela principal do aplicativo para início da navegação
-     */
-    private void goAhead(){
-        hideProgressDialog();
-        Intent intent = new Intent(this,MoviesActivity.class);
-        startActivity(intent);
-    }
-
 }

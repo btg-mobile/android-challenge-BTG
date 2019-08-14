@@ -1,20 +1,19 @@
-package com.androidchallengebtg;
+package com.androidchallengebtg.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
-import com.androidchallengebtg.application.ApplicationBTG;
-
+@SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
 
     protected ProgressDialog dialog;
 
-    public boolean showProgressDialog(final Activity activity, String msg, boolean cancelable) {
+    public void showProgressDialog(final Activity activity, String msg, boolean cancelable) {
 
         if(dialog==null){
             dialog = new ProgressDialog(activity);
@@ -42,7 +41,6 @@ public class BaseActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
     }
 
     public void hideProgressDialog() {

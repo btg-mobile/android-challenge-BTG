@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string type="string" name="login">btgchallenge</string>
+    <string type="string" name="password">2405</string>
     <string type="string" name="tmdb_api_key">3aed26fd9817374e9be559fd1d9e5a75</string>
     <string type="string" name="tmdb_base_url">https://api.themoviedb.org/3</string>
     <string type="string" name="shared_preferences_name">com.androidchallengebtg</string>
