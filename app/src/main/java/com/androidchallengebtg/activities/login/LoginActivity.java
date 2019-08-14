@@ -45,7 +45,6 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.w("onResume", "main");
     }
 
     /*

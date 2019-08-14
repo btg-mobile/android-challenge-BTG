@@ -32,7 +32,7 @@ class LoginController {
         connection.createRequestToken(new ConnectionListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.w("onSuccess", response.toString());
+                Log.d("onSuccess", response.toString());
                 try {
                     String requestToken = response.getString("request_token");
                     PrefManager.getINSTANCE().saveRequestToken(requestToken);
@@ -65,7 +65,7 @@ class LoginController {
         connection.validateRequestToken(username, password, requestToken, new ConnectionListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.w("LOG", response.toString());
+                Log.d("LOG", response.toString());
                 try {
                     String requestToken = response.getString("request_token");
                     createSession(requestToken);
@@ -97,7 +97,7 @@ class LoginController {
         connection.createSession(requestToken,new ConnectionListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.w("onSuccess", response.toString());
+                Log.d("onSuccess", response.toString());
                 try {
                     String sessionId = response.getString("session_id");
                     PrefManager.getINSTANCE().saveSessionId(sessionId);
@@ -129,7 +129,7 @@ class LoginController {
         connection.getAccountDetails(new ConnectionListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.w("onSuccess", response.toString());
+                Log.d("onSuccess", response.toString());
                 PrefManager.getINSTANCE().saveUser(response);
                 listener.onSuccess();
             }
