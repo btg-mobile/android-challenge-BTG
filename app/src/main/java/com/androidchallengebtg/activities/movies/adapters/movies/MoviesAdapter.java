@@ -40,6 +40,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
             JSONObject item = list.getJSONObject(i);
 
             movieHolder.title.setText(item.getString("title"));
+            movieHolder.releaseDate.setText(item.getString("release_date"));
 
         } catch (JSONException e) {
             e.printStackTrace();
