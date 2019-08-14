@@ -22,7 +22,7 @@ email: raphaelrocha86+btg@gmail.com
 pass: 2405
  */
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private EditText mInputLogin;
     private EditText mInputPassword;
@@ -69,6 +69,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        showProgressDialog(this, getString(R.string.authenticating),true);
+
         createRequestToken(username,password);
 
     }
@@ -95,7 +97,14 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(JSONObject error) {
-
+                try {
+                    Log.e("onError",error.toString());
+                    String message = error.getString("status_message");
+                    Toast.makeText(ApplicationBTG.getContext(),message,Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                hideProgressDialog();
             }
         });
     }
@@ -129,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                hideProgressDialog();
             }
         });
     }
@@ -154,7 +164,14 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(JSONObject error) {
-                Log.e("onError",error.toString());
+                try {
+                    Log.e("onError",error.toString());
+                    String message = error.getString("status_message");
+                    Toast.makeText(ApplicationBTG.getContext(),message,Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                hideProgressDialog();
             }
         });
     }
@@ -175,7 +192,14 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(JSONObject error) {
-                Log.e("onError",error.toString());
+                try {
+                    Log.e("onError",error.toString());
+                    String message = error.getString("status_message");
+                    Toast.makeText(ApplicationBTG.getContext(),message,Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                hideProgressDialog();
             }
         });
     }
@@ -184,6 +208,7 @@ public class LoginActivity extends AppCompatActivity {
     Segue para a tela principal do aplicativo para início da navegação
      */
     private void goAhead(){
+        hideProgressDialog();
         Intent intent = new Intent(this,MoviesActivity.class);
         startActivity(intent);
     }

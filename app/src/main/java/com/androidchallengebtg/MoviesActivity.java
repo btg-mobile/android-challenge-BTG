@@ -3,7 +3,7 @@ package com.androidchallengebtg;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MoviesActivity extends AppCompatActivity {
+public class MoviesActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
