@@ -1,5 +1,6 @@
 package com.androidchallengebtg;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +22,7 @@ email: raphaelrocha86+btg@gmail.com
 pass: 2405
  */
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText mInputLogin;
     private EditText mInputPassword;
@@ -52,6 +53,9 @@ public class Login extends AppCompatActivity {
         Log.w("onResume", "main");
     }
 
+    /*
+    Valida os campos do formuário de login
+     */
     private void performLogin () {
 
         final String username = mInputLogin.getText().toString().trim();
@@ -69,6 +73,9 @@ public class Login extends AppCompatActivity {
 
     }
 
+    /*
+    Usa o api token para criar um request token
+     */
     private void createRequestToken(final String username, final String password){
 
         Connection connection = new Connection();
@@ -93,6 +100,9 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    /*
+    Vaida o request token mediante login e senha
+     */
     private void validateRequestToken(String username, String password, String requestToken){
 
         Connection connection = new Connection();
@@ -123,6 +133,9 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    /*
+    Uma vez que o request token é validado, é solicitada a criação de uma sessão.
+     */
     private void createSession(final String requestToken){
         Connection connection = new Connection();
 
@@ -146,6 +159,9 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    /*
+    Com uma sessão criada e ativa, são solicitados os dados da conta do usuário
+     */
     private void getAccountDetails(){
         Connection connection = new Connection();
 
@@ -154,6 +170,7 @@ public class Login extends AppCompatActivity {
             public void onSuccess(JSONObject response) {
                 Log.w("onSuccess", response.toString());
                 PrefManager.getINSTANCE().saveUser(response);
+                goAhead();
             }
 
             @Override
@@ -163,8 +180,12 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    /*
+    Segue para a tela principal do aplicativo para início da navegação
+     */
     private void goAhead(){
-
+        Intent intent = new Intent(this,MoviesActivity.class);
+        startActivity(intent);
     }
 
 }
