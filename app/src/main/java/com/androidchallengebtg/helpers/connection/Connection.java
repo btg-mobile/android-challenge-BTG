@@ -95,4 +95,10 @@ public class Connection {
         String url = baseUrl+route+apiKey+sessionId;
         request(Request.Method.GET,url,null,connectionListener);
     }
+
+    public void getMovies(ConnectionListener connectionListener){
+        String route = context.getString(R.string.movie_popular);
+        String url = baseUrl+route+apiKey;
+        request(Request.Method.GET,url,null,connectionListener);
+    }
 }

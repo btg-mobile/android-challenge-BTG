@@ -18,8 +18,8 @@ public class MoviesActivity extends BaseActivity {
         setContentView(R.layout.activity_movies);
 
         PageAdapter adapter = new PageAdapter( getSupportFragmentManager() );
-        adapter.addPage( new MoviesFragment() , "Filmes");
-        adapter.addPage( new FavoritesFragment(), "Favoritos");
+        adapter.addPage( new MoviesFragment() , getString(R.string.tab_movies_title));
+        adapter.addPage( new FavoritesFragment(), getString(R.string.tab_favorites_title));
 
         ViewPager viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
