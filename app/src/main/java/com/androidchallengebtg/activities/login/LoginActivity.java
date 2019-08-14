@@ -23,7 +23,6 @@ public class LoginActivity extends BaseActivity {
     private EditText mInputLogin;
     private EditText mInputPassword;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,5 +95,4 @@ public class LoginActivity extends BaseActivity {
         Intent intent = new Intent(this, MoviesActivity.class);
         startActivity(intent);
     }
-
 }
