@@ -14,6 +14,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
 
     private Context context;
@@ -38,11 +43,22 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
     public void onBindViewHolder(@NonNull MovieHolder movieHolder, int i) {
         try {
             JSONObject item = list.getJSONObject(i);
+            String urlPoster = baseImageUrl+item.getString("poster_path");
+            String releaseDate = item.getString("release_date");
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date convertedCurrentDate = sdf.parse(releaseDate);
+
+            SimpleDateFormat sdf2 = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
+            String date = sdf2.format(convertedCurrentDate );
+
             movieHolder.title.setText(item.getString("title"));
-            movieHolder.releaseDate.setText(item.getString("release_date"));
-            String url = baseImageUrl+item.getString("poster_path");
-            Picasso.get().load(url).into(movieHolder.poster);
+            movieHolder.releaseDate.setText(date);
+            Picasso.get().load(urlPoster).into(movieHolder.poster);
+
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
     }
