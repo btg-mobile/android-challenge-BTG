@@ -4,5 +4,6 @@
     <string type="string" name="password">2405</string>
     <string type="string" name="tmdb_api_key">3aed26fd9817374e9be559fd1d9e5a75</string>
     <string type="string" name="tmdb_base_url">https://api.themoviedb.org/3</string>
+    <string type="string" name="tmdb_images_base_url">https://image.tmdb.org/t/p/w185</string>
     <string type="string" name="shared_preferences_name">com.androidchallengebtg</string>
 </resources>

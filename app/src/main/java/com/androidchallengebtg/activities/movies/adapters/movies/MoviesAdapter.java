@@ -3,12 +3,12 @@ package com.androidchallengebtg.activities.movies.adapters.movies;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.androidchallengebtg.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,10 +18,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
 
     private Context context;
     private JSONArray list;
+    private String baseImageUrl;
 
     public MoviesAdapter(Context context) {
         this.context = context;
         this.list = new JSONArray();
+        this.baseImageUrl = context.getString(R.string.tmdb_images_base_url);
     }
 
     @NonNull
@@ -35,13 +37,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
     @Override
     public void onBindViewHolder(@NonNull MovieHolder movieHolder, int i) {
         try {
-            Log.d("filme",list.get(i).toString());
-
             JSONObject item = list.getJSONObject(i);
-
             movieHolder.title.setText(item.getString("title"));
             movieHolder.releaseDate.setText(item.getString("release_date"));
-
+            String url = baseImageUrl+item.getString("poster_path");
+            Picasso.get().load(url).into(movieHolder.poster);
         } catch (JSONException e) {
             e.printStackTrace();
         }
