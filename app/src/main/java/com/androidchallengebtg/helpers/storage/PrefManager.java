@@ -52,4 +52,24 @@ public class PrefManager {
 
         return user;
     }
+
+    public void saveRequestToken(String requestToken){
+        editor = pref.edit();
+        editor.putString("request_token", requestToken);
+        editor.commit();
+    }
+
+    public String getRequestToken(){
+        return pref.getString("request_token",null);
+    }
+
+    public void saveSessionId(String sessionId){
+        editor = pref.edit();
+        editor.putString("session_id", sessionId);
+        editor.commit();
+    }
+
+    public String getSessionId(){
+        return pref.getString("session_id",null);
+    }
 }

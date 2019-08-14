@@ -12,6 +12,7 @@ import com.androidchallengebtg.application.ApplicationBTG;
 import com.androidchallengebtg.helpers.connection.Connection;
 import com.androidchallengebtg.helpers.connection.ConnectionListener;
 import com.androidchallengebtg.helpers.connection.ConnectionQueue;
+import com.androidchallengebtg.helpers.storage.PrefManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText mInputLogin;
     private EditText mInputPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.w("onResume", "main");
-
-
     }
 
     private void performLogin () {
@@ -67,48 +67,53 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        final Connection connection = new Connection();
+        createRequestToken(username,password);
 
-        /*
-        Pede request token da api
-         */
+    }
+
+    private void createRequestToken(final String username, final String password){
+
+        Connection connection = new Connection();
+
         connection.createRequestToken(new ConnectionListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.w("LOG", response.toString());
+                Log.w("onSuccess", response.toString());
                 try {
-                    boolean success = response.getBoolean("success");
-                    if(success){
-                        String requestToken = response.getString("request_token");
-                        connection.performLogin(username, password, requestToken, new ConnectionListener() {
-                            @Override
-                            public void onSuccess(JSONObject response1) {
-                                Log.w("LOG", response1.toString());
-                            }
-
-                            @Override
-                            public void onError(JSONObject error) {
-                                try {
-                                    Log.e("onError",error.toString());
-                                    String message = error.getString("status_message");
-                                    Toast.makeText(ApplicationBTG.getContext(),message,Toast.LENGTH_LONG).show();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                    }else{
-                        Log.w("onSuccess", ApplicationBTG.getContext().getString(R.string.unknow_error));
-                    }
+                    String requestToken = response.getString("request_token");
+                    PrefManager.getINSTANCE().saveRequestToken(requestToken);
+                    validateRequestToken(username, password, requestToken);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(ApplicationBTG.getContext(),getString(R.string.unknow_error),Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onError(JSONObject error) {
 
+            }
+        });
+    }
+
+    private void validateRequestToken(String username, String password, String requestToken){
+
+        Connection connection = new Connection();
+
+        connection.validateRequestToken(username, password, requestToken, new ConnectionListener() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                Log.w("LOG", response.toString());
+                try {
+                    String requestToken = response.getString("request_token");
+                    createSession(requestToken);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(JSONObject error) {
                 try {
                     Log.e("onError",error.toString());
                     String message = error.getString("status_message");
@@ -116,9 +121,52 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         });
+    }
+
+    private void createSession(final String requestToken){
+        Connection connection = new Connection();
+
+        connection.createSession(requestToken,new ConnectionListener() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                Log.w("onSuccess", response.toString());
+                try {
+                    String sessionId = response.getString("session_id");
+                    PrefManager.getINSTANCE().saveSessionId(sessionId);
+                    getAccountDetails();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(JSONObject error) {
+                Log.e("onError",error.toString());
+            }
+        });
+    }
+
+    private void getAccountDetails(){
+        Connection connection = new Connection();
+
+        connection.getAccountDetails(new ConnectionListener() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                Log.w("onSuccess", response.toString());
+                PrefManager.getINSTANCE().saveUser(response);
+            }
+
+            @Override
+            public void onError(JSONObject error) {
+                Log.e("onError",error.toString());
+            }
+        });
+    }
+
+    private void goAhead(){
 
     }
+
 }

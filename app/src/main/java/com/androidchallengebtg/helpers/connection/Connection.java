@@ -9,6 +9,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.Response;
 import com.androidchallengebtg.R;
 import com.androidchallengebtg.application.ApplicationBTG;
+import com.androidchallengebtg.helpers.storage.PrefManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,20 +67,32 @@ public class Connection {
     public void createRequestToken (final ConnectionListener connectionListener){
         String route = context.getString(R.string.authentication_token_new);
         String url = baseUrl+route+apiKey;
-        Log.d("vai chamar", url);
         request(Request.Method.GET,url,null,connectionListener);
     }
 
-    public void performLogin (String username, String password, String requestToken, ConnectionListener connectionListener){
+    public void validateRequestToken (String username, String password, String requestToken, ConnectionListener connectionListener){
         Map<String, String > map = new HashMap<>();
         map.put("username",username);
         map.put("password",password);
         map.put("request_token",requestToken);
-
         JSONObject body = new JSONObject(map);
-
         String url = baseUrl+ApplicationBTG.getContext().getString(R.string.authentication_token_validate_with_login)+apiKey;
-
         request(Request.Method.POST,url,body,connectionListener);
+    }
+
+    public void createSession(String requestToken, ConnectionListener connectionListener){
+        String route = context.getString(R.string.authentication_session_new);
+        String url = baseUrl+route+apiKey;
+        Map<String, String > map = new HashMap<>();
+        map.put("request_token",requestToken);
+        JSONObject body = new JSONObject(map);
+        request(Request.Method.POST,url,body,connectionListener);
+    }
+
+    public void getAccountDetails(ConnectionListener connectionListener){
+        String sessionId = "&session_id="+PrefManager.getINSTANCE().getSessionId();
+        String route = context.getString(R.string.account);
+        String url = baseUrl+route+apiKey+sessionId;
+        request(Request.Method.GET,url,null,connectionListener);
     }
 }
