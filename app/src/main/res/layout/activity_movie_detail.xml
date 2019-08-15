@@ -8,15 +8,17 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/backdrop"
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:layout_marginBottom="140dp"
+            android:layout_marginBottom="492dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             tools:layout_editor_absoluteX="0dp"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -62,9 +64,9 @@
             app:layout_constraintTop_toBottomOf="@+id/overview" />
 
         <android.support.v7.widget.RecyclerView
-            android:background="@color/colorAccent"
+            android:id="@+id/recyclerViewGenres"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -72,6 +74,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/voteAverage" />
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v4.widget.NestedScrollView>

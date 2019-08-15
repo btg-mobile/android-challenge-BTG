@@ -2,6 +2,10 @@ package com.androidchallengebtg.activities.movieDetail;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,11 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidchallengebtg.R;
+import com.androidchallengebtg.activities.movieDetail.adapters.GenresAdapter;
 import com.androidchallengebtg.helpers.Tools;
 import com.androidchallengebtg.helpers.connection.Connection;
 import com.androidchallengebtg.helpers.connection.ConnectionListener;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,7 +46,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 connection.getMovie(movie.getInt("id"), new ConnectionListener() {
                     @Override
                     public void onSuccess(JSONObject response) {
-                        Log.e("movie",response.toString());
                         fillScreen(response);
                     }
 
@@ -74,6 +79,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         TextView tvTitle = findViewById(R.id.title);
         TextView tvOverview = findViewById(R.id.overview);
         TextView tvVoteAverage = findViewById(R.id.voteAverage);
+        RecyclerView recyclerViewGenres = findViewById(R.id.recyclerViewGenres);
 
         ImageView ivBackdrop = findViewById(R.id.backdrop);
         String baseImageUrl = Tools.getBaseImageUrl("original");
@@ -102,6 +108,24 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 Picasso.get().load(urlBackdrop).into(ivBackdrop);
             }else{
                 ivBackdrop.setVisibility(View.GONE);
+            }
+
+            if(movie.has("genres")){
+                GenresAdapter adapter = new GenresAdapter(this);
+                recyclerViewGenres.setLayoutManager(new GridLayoutManager(this,4));
+                recyclerViewGenres.setItemAnimator(new DefaultItemAnimator());
+                recyclerViewGenres.setAdapter(adapter);
+
+                JSONArray jsonArray = movie.getJSONArray("genres");
+
+                for(int i = 0; i<100; i++){
+                    jsonArray.put(new JSONObject(jsonArray.get(0).toString()));
+                }
+
+                adapter.setList(jsonArray);
+                recyclerViewGenres.setVisibility(View.VISIBLE);
+            }else{
+                recyclerViewGenres.setVisibility(View.GONE);
             }
 
         } catch (JSONException e) {

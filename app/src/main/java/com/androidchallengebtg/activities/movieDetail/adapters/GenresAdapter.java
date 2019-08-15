@@ -1,39 +1,31 @@
-package com.androidchallengebtg.activities.movies.adapters.movies;
+package com.androidchallengebtg.activities.movieDetail.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.androidchallengebtg.R;
-import com.androidchallengebtg.helpers.Tools;
 import com.androidchallengebtg.helpers.interfaces.EndlessScrollListener;
 import com.androidchallengebtg.helpers.interfaces.ItemViewHolderClickListener;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
+public class GenresAdapter extends RecyclerView.Adapter<GenreHolder> {
 
     private Context context;
     private JSONArray list;
-    private String baseImageUrl;
     private ItemViewHolderClickListener clickListener;
     private EndlessScrollListener endlessScrollListener;
 
-    public MoviesAdapter(Context context) {
+    public GenresAdapter(Context context) {
         this.context = context;
         this.list = new JSONArray();
-        this.baseImageUrl = Tools.getBaseImageUrl(185);
     }
 
     public void setClickListener(ItemViewHolderClickListener clickListener) {
@@ -46,35 +38,21 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
 
     @NonNull
     @Override
-    public MovieHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public GenreHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(this.context)
-                .inflate(R.layout.item_list_movies, viewGroup, false);
-        MovieHolder movieHolder = new MovieHolder(itemView);
+                .inflate(R.layout.item_list_genre, viewGroup, false);
+        GenreHolder movieHolder = new GenreHolder(itemView);
         movieHolder.setClickListener(this.clickListener);
         return movieHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieHolder movieHolder, int position) {
-        movieHolder.setPosition(position);
+    public void onBindViewHolder(@NonNull GenreHolder genreHolder, int position) {
+        genreHolder.setPosition(position);
         try {
             JSONObject item = list.getJSONObject(position);
-            String urlPoster = baseImageUrl+item.getString("poster_path");
-            String releaseDate = item.getString("release_date");
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            Date convertedCurrentDate = sdf.parse(releaseDate);
-
-            SimpleDateFormat sdf2 = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
-            String date = sdf2.format(convertedCurrentDate );
-
-            movieHolder.title.setText(item.getString("title"));
-            movieHolder.releaseDate.setText(date);
-            Picasso.get().load(urlPoster).into(movieHolder.poster);
-
+            genreHolder.name.setText(item.getString("name"));
         } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
             e.printStackTrace();
         }
 
@@ -92,6 +70,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
 
     public void setList(JSONArray list) {
         this.list = list;
+        Log.e("generos",list.toString());
         notifyDataSetChanged();
     }
 
