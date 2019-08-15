@@ -1,6 +1,7 @@
 package com.androidchallengebtg.helpers.storage;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.androidchallengebtg.R;
 import com.androidchallengebtg.application.ApplicationBTG;
@@ -72,4 +73,27 @@ public class PrefManager {
     public String getSessionId(){
         return pref.getString("session_id",null);
     }
+
+    public void savePass(JSONObject pass){
+        Log.w("SALVAR",pass.toString());
+        editor = pref.edit();
+        editor.putString("pass", pass.toString());
+        editor.commit();
+    }
+
+    public JSONObject getPass(){
+        JSONObject pass = null;
+        String stringPass = pref.getString("pass",null);
+
+        try {
+            pass = new JSONObject(stringPass);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return pass;
+    }
+
 }

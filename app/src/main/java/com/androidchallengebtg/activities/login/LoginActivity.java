@@ -15,12 +15,13 @@ import com.androidchallengebtg.application.ApplicationBTG;
 user: btgchallenge
 email: raphaelrocha86+btg@gmail.com
 pass: 2405
- */
+*/
 
 public class LoginActivity extends BaseActivity {
 
     private EditText mInputLogin;
     private EditText mInputPassword;
+    private LoginController loginController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +40,33 @@ public class LoginActivity extends BaseActivity {
                 performLogin();
             }
         });
+
+        loginController = new LoginController(new LoginController.Listener() {
+            @Override
+            public void onSuccess() {
+                goAhead();
+            }
+
+            @Override
+            public void onError(String message) {
+                hideProgressDialog();
+                Toast.makeText(ApplicationBTG.getContext(),message,Toast.LENGTH_LONG).show();
+            }
+        }
+        );
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        loginController.loginWithPass(new LoginController.LoginWithPassListener() {
+            @Override
+            public void onFound(boolean b) {
+                if(b){
+                    showProgressDialog(LoginActivity.this, getString(R.string.authenticating),true);
+                }
+            }
+        });
     }
 
     /*
@@ -63,20 +86,6 @@ public class LoginActivity extends BaseActivity {
         }
 
         showProgressDialog(this, getString(R.string.authenticating),true);
-
-        LoginController loginController = new LoginController(new LoginController.Listener() {
-            @Override
-            public void onSuccess() {
-                goAhead();
-            }
-
-            @Override
-            public void onError(String message) {
-                hideProgressDialog();
-                Toast.makeText(ApplicationBTG.getContext(),message,Toast.LENGTH_LONG).show();
-            }
-        }
-        );
 
         /*
         inicia o processo de autenticação

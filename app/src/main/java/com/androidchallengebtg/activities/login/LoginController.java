@@ -9,6 +9,9 @@ import com.androidchallengebtg.helpers.storage.PrefManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 class LoginController {
 
     private Listener listener;
@@ -18,13 +21,33 @@ class LoginController {
         void onError(String message);
     }
 
+    public interface LoginWithPassListener {
+        void onFound(boolean b);
+    }
+
     LoginController(Listener listener) {
         this.listener = listener;
     }
 
+    void loginWithPass(LoginWithPassListener loginWithPassListener){
+        JSONObject pass = PrefManager.getINSTANCE().getPass();
+
+        if(pass!=null){
+            try {
+                createRequestToken(pass.getString("username"),pass.getString("password"));
+                loginWithPassListener.onFound(true);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                loginWithPassListener.onFound(false);
+            }
+        }else{
+            loginWithPassListener.onFound(false);
+        }
+    }
+
     /*
-        Usa o api token para criar um request token
-         */
+    Usa o api token para criar um request token
+     */
     void createRequestToken(final String username, final String password){
 
         Connection connection = new Connection();
@@ -58,7 +81,7 @@ class LoginController {
     /*
     Vaida o request token mediante login e senha
      */
-    private void validateRequestToken(String username, String password, String requestToken){
+    private void validateRequestToken(final String username, final String password, String requestToken){
 
         Connection connection = new Connection();
 
@@ -68,7 +91,7 @@ class LoginController {
                 Log.d("LOG", response.toString());
                 try {
                     String requestToken = response.getString("request_token");
-                    createSession(requestToken);
+                    createSession(username,password,requestToken);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -91,7 +114,7 @@ class LoginController {
     /*
     Uma vez que o request token é validado, é solicitada a criação de uma sessão.
      */
-    private void createSession(final String requestToken){
+    private void createSession(final String username, final String password, final String requestToken){
         Connection connection = new Connection();
 
         connection.createSession(requestToken,new ConnectionListener() {
@@ -101,7 +124,7 @@ class LoginController {
                 try {
                     String sessionId = response.getString("session_id");
                     PrefManager.getINSTANCE().saveSessionId(sessionId);
-                    getAccountDetails();
+                    getAccountDetails(username,password);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -123,7 +146,7 @@ class LoginController {
     /*
     Com uma sessão criada e ativa, são solicitados os dados da conta do usuário
      */
-    private void getAccountDetails(){
+    private void getAccountDetails(final String username, final String password){
         Connection connection = new Connection();
 
         connection.getAccountDetails(new ConnectionListener() {
@@ -131,6 +154,11 @@ class LoginController {
             public void onSuccess(JSONObject response) {
                 Log.d("onSuccess", response.toString());
                 PrefManager.getINSTANCE().saveUser(response);
+                Map<String,String> map = new HashMap<>();
+                map.put("username",username);
+                map.put("password",password);
+                JSONObject pass = new JSONObject(map);
+                PrefManager.getINSTANCE().savePass(pass);
                 listener.onSuccess();
             }
 
