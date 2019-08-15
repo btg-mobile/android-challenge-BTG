@@ -21,9 +21,14 @@ public class MoviesController {
         this.listener = listener;
     }
 
-    public void getListMovies(){
+    public void getListMovies(int page){
+
+        if(page < 1){
+            page = 1;
+        }
+
         Connection connection = new Connection();
-        connection.getMovies(new ConnectionListener() {
+        connection.getMovies(page, new ConnectionListener() {
             @Override
             public void onSuccess(JSONObject response) {
                 listener.onSuccess(response);

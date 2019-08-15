@@ -96,9 +96,9 @@ public class Connection {
         request(Request.Method.GET,url,null,connectionListener);
     }
 
-    public void getMovies(ConnectionListener connectionListener){
+    public void getMovies(int page, ConnectionListener connectionListener){
         String route = context.getString(R.string.movie_popular);
-        String url = baseUrl+route+apiKey;
+        String url = baseUrl+route+apiKey+"%&page="+String.valueOf(page);;
         request(Request.Method.GET,url,null,connectionListener);
     }
 }

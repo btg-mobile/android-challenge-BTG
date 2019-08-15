@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.androidchallengebtg.R;
+import com.androidchallengebtg.helpers.interfaces.EndlessScrollListener;
 import com.androidchallengebtg.helpers.interfaces.ItemViewHolderClickListener;
 import com.squareup.picasso.Picasso;
 
@@ -26,6 +27,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
     private JSONArray list;
     private String baseImageUrl;
     private ItemViewHolderClickListener clickListener;
+    private EndlessScrollListener endlessScrollListener;
 
     public MoviesAdapter(Context context) {
         this.context = context;
@@ -37,13 +39,17 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
         this.clickListener = clickListener;
     }
 
+    public void setEndlessScrollListener(EndlessScrollListener endlessScrollListener) {
+        this.endlessScrollListener = endlessScrollListener;
+    }
+
     @NonNull
     @Override
     public MovieHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(this.context)
                 .inflate(R.layout.item_list_movies, viewGroup, false);
         MovieHolder movieHolder = new MovieHolder(itemView);
-        movieHolder.setClickListener(clickListener);
+        movieHolder.setClickListener(this.clickListener);
         return movieHolder;
     }
 
@@ -70,6 +76,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        if(position == list.length()-1){
+            this.endlessScrollListener.onEndReached(position);
+        }
     }
 
     @Override
@@ -78,6 +88,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
     }
 
     public void setList(JSONArray list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
+    public void putList(JSONArray list){
         for(int i = 0; i<list.length(); i++){
             try {
                 JSONObject jsonObject = list.getJSONObject(i);
