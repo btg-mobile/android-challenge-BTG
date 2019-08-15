@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.androidchallengebtg.R;
+import com.androidchallengebtg.helpers.interfaces.ItemViewHolderClickListener;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -24,6 +25,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
     private Context context;
     private JSONArray list;
     private String baseImageUrl;
+    private ItemViewHolderClickListener clickListener;
 
     public MoviesAdapter(Context context) {
         this.context = context;
@@ -31,18 +33,25 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
         this.baseImageUrl = context.getString(R.string.tmdb_images_base_url);
     }
 
+    public void setClickListener(ItemViewHolderClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
     @NonNull
     @Override
     public MovieHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(this.context)
                 .inflate(R.layout.item_list_movies, viewGroup, false);
-        return new MovieHolder(itemView);
+        MovieHolder movieHolder = new MovieHolder(itemView);
+        movieHolder.setClickListener(clickListener);
+        return movieHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieHolder movieHolder, int i) {
+    public void onBindViewHolder(@NonNull MovieHolder movieHolder, int position) {
+        movieHolder.setPosition(position);
         try {
-            JSONObject item = list.getJSONObject(i);
+            JSONObject item = list.getJSONObject(position);
             String urlPoster = baseImageUrl+item.getString("poster_path");
             String releaseDate = item.getString("release_date");
 
@@ -78,5 +87,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
             }
         }
         notifyDataSetChanged();
+    }
+
+    public JSONObject getItem(int position){
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = list.getJSONObject(position);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 }
