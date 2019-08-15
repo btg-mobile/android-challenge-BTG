@@ -46,6 +46,7 @@ public class Connection {
                     public void onErrorResponse(VolleyError volleyError) {
                         JSONObject error = null;
                         try {
+                            Log.e("volleyError",new String(volleyError.networkResponse.data));
                             error = new JSONObject(new String(volleyError.networkResponse.data));
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -102,7 +103,8 @@ public class Connection {
             JSONObject user = PrefManager.getINSTANCE().getUser();
             int accountId = user.getInt("id");
             route = route.replace("{account_id}",String.valueOf(accountId));
-            String url = baseUrl+route+apiKey+"%&page="+page;
+            String sessionId = "&session_id="+PrefManager.getINSTANCE().getSessionId();
+            String url = baseUrl+route+apiKey+"&page="+page+sessionId;
             request(Request.Method.GET,url,null,connectionListener);
         } catch (JSONException e) {
             e.printStackTrace();

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidchallengebtg.R;
@@ -42,6 +43,9 @@ public class MoviesFragment extends Fragment {
         if(getContext()!=null){
             RecyclerView recyclerView =  view.findViewById(R.id.recyclerViewMovies);
             final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipeRefreshMovies);
+            final TextView emptyListMessage = view.findViewById(R.id.emptyListMessage);
+            emptyListMessage.setVisibility(View.GONE);
+
             final MoviesAdapter adapter = new MoviesAdapter(getContext());
 
             final MoviesController moviesController = new MoviesController(new MoviesController.Listener() {
@@ -52,10 +56,16 @@ public class MoviesFragment extends Fragment {
                         MoviesFragment.this.totalPages = response.getInt("total_pages");
                         JSONArray movies = response.getJSONArray("results");
 
-                        if(MoviesFragment.this.currentPage == 1){
-                            adapter.setList(movies);
+                        if(movies.length()>0){
+                            emptyListMessage.setVisibility(View.GONE);
+                            if(MoviesFragment.this.currentPage == 1){
+                                adapter.setList(movies);
+                            }else{
+                                adapter.putList(movies);
+                            }
                         }else{
-                            adapter.putList(movies);
+                            adapter.clearList();
+                            emptyListMessage.setVisibility(View.VISIBLE);
                         }
 
                         swipeRefreshLayout.setRefreshing(false);

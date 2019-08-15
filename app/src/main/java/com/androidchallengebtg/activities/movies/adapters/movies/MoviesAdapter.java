@@ -104,6 +104,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
         notifyDataSetChanged();
     }
 
+    public void clearList(){
+        this.list = new JSONArray();
+        notifyDataSetChanged();
+    }
+
     public JSONObject getItem(int position){
         JSONObject jsonObject = null;
         try {

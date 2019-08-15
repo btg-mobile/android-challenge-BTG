@@ -46,4 +46,29 @@ public class MoviesController {
             }
         });
     }
-}
+
+    public void getFavoriteMovies(int page){
+
+        if(page < 1){
+            page = 1;
+        }
+
+        Connection connection = new Connection();
+        connection.getFavoriteMovies(page, new ConnectionListener() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                listener.onSuccess(response);
+            }
+
+            @Override
+            public void onError(JSONObject error) {
+                try {
+                    Log.e("onError",error.toString());
+                    String message = error.getString("status_message");
+                    listener.onError(message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }}
