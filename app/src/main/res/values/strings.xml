@@ -5,7 +5,8 @@
     <string name="authenticating">Authenticating…</string>
     <string name="tab_movies_title">Movies</string>
     <string name="tab_favorites_title">Favorites</string>
-
+    <string name="no_favorite_movies_to_show">No favorite movies to show.</string>
+    <string name="no_movies_to_show">No movies to show.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
