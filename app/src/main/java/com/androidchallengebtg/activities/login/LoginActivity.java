@@ -11,12 +11,6 @@ import com.androidchallengebtg.activities.BaseActivity;
 import com.androidchallengebtg.activities.movies.MoviesActivity;
 import com.androidchallengebtg.application.ApplicationBTG;
 
-/*
-user: btgchallenge
-email: raphaelrocha86+btg@gmail.com
-pass: 2405
-*/
-
 public class LoginActivity extends BaseActivity {
 
     private EditText mInputLogin;
