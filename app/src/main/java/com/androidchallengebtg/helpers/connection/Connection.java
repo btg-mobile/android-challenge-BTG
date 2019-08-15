@@ -14,9 +14,6 @@ import com.androidchallengebtg.helpers.storage.PrefManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Connection {
 
     private Context context;
@@ -66,22 +63,28 @@ public class Connection {
     }
 
     public void validateRequestToken (String username, String password, String requestToken, ConnectionListener connectionListener){
-        Map<String, String > map = new HashMap<>();
-        map.put("username",username);
-        map.put("password",password);
-        map.put("request_token",requestToken);
-        JSONObject body = new JSONObject(map);
-        String url = baseUrl+ApplicationBTG.getContext().getString(R.string.authentication_token_validate_with_login)+apiKey;
-        request(Request.Method.POST,url,body,connectionListener);
+        try {
+            JSONObject body = new JSONObject();
+            body.put("username",username);
+            body.put("password",password);
+            body.put("request_token",requestToken);
+            String url = baseUrl+ApplicationBTG.getContext().getString(R.string.authentication_token_validate_with_login)+apiKey;
+            request(Request.Method.POST,url,body,connectionListener);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void createSession(String requestToken, ConnectionListener connectionListener){
-        String route = context.getString(R.string.authentication_session_new);
-        String url = baseUrl+route+apiKey;
-        Map<String, String > map = new HashMap<>();
-        map.put("request_token",requestToken);
-        JSONObject body = new JSONObject(map);
-        request(Request.Method.POST,url,body,connectionListener);
+        try {
+            String route = context.getString(R.string.authentication_session_new);
+            String url = baseUrl+route+apiKey;
+            JSONObject body = new JSONObject();
+            body.put("request_token",requestToken);
+            request(Request.Method.POST,url,body,connectionListener);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getAccountDetails(ConnectionListener connectionListener){
@@ -124,5 +127,20 @@ public class Connection {
         String sessionId = "&session_id="+PrefManager.getINSTANCE().getSessionId();
         String url = baseUrl+route+apiKey+sessionId;
         request(Request.Method.GET,url,null,connectionListener);
+    }
+
+    public void markAsFavorite(String mediaType, int mediaId, boolean favorite, ConnectionListener connectionListener){
+        try {
+            String route = context.getString(R.string.mark_as_favorite);
+            String sessionId = "&session_id="+PrefManager.getINSTANCE().getSessionId();
+            JSONObject body = new JSONObject();
+            body.put("media_type",mediaType);
+            body.put("media_id",mediaId);
+            body.put("favorite",favorite);
+            String url = baseUrl+route+apiKey+sessionId;
+            request(Request.Method.POST,url,body,connectionListener);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
