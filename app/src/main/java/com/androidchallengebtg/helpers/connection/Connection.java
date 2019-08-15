@@ -117,4 +117,12 @@ public class Connection {
         String url = baseUrl+route+apiKey;
         request(Request.Method.GET,url,null,connectionListener);
     }
+
+    public void getMovieAccountState(int id, ConnectionListener connectionListener){
+        String route = context.getString(R.string.movie_account_state);
+        route = route.replace("{movie_id}",String.valueOf(id));
+        String sessionId = "&session_id="+PrefManager.getINSTANCE().getSessionId();
+        String url = baseUrl+route+apiKey+sessionId;
+        request(Request.Method.GET,url,null,connectionListener);
+    }
 }

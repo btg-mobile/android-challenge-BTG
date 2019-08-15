@@ -7,5 +7,5 @@
     <string type="string" name="movie_popular">/movie/popular</string>
     <string type="string" name="movie">/movie/{movie_id}</string>
     <string type="string" name="favorite_movies">/account/{account_id}/favorite/movies</string>
-
+    <string type="string" name="movie_account_state">/movie/{movie_id}/account_states</string>
 </resources>

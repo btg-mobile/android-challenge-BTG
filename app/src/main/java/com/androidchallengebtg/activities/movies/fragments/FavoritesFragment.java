@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +52,6 @@ public class FavoritesFragment extends Fragment {
                 @Override
                 public void onSuccess(JSONObject response) {
                     try {
-                        Log.e("resultado favoritos",response.toString());
-
                         FavoritesFragment.this.currentPage = response.getInt("page");
                         FavoritesFragment.this.totalPages = response.getInt("total_pages");
                         JSONArray movies = response.getJSONArray("results");

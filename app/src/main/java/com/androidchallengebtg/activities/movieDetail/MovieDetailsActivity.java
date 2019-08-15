@@ -2,6 +2,7 @@ package com.androidchallengebtg.activities.movieDetail;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,7 +38,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 fillScreen(movie);
 
                 Connection connection = new Connection();
-                connection.getMovie(movie.getInt("id"), new ConnectionListener() {
+                int id = movie.getInt("id");
+                connection.getMovie(id, new ConnectionListener() {
                     @Override
                     public void onSuccess(JSONObject response) {
                         fillScreen(response);
@@ -51,6 +53,18 @@ public class MovieDetailsActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                    }
+                });
+
+                connection.getMovieAccountState(id, new ConnectionListener() {
+                    @Override
+                    public void onSuccess(JSONObject response) {
+                        Log.e(" account state", response.toString());
+                    }
+
+                    @Override
+                    public void onError(JSONObject error) {
+
                     }
                 });
 
