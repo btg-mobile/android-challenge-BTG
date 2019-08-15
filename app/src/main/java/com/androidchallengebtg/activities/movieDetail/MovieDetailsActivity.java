@@ -2,11 +2,6 @@ package com.androidchallengebtg.activities.movieDetail;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidchallengebtg.R;
-import com.androidchallengebtg.activities.movieDetail.adapters.GenresAdapter;
 import com.androidchallengebtg.helpers.Tools;
 import com.androidchallengebtg.helpers.connection.Connection;
 import com.androidchallengebtg.helpers.connection.ConnectionListener;
@@ -79,7 +73,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         TextView tvTitle = findViewById(R.id.title);
         TextView tvOverview = findViewById(R.id.overview);
         TextView tvVoteAverage = findViewById(R.id.voteAverage);
-        RecyclerView recyclerViewGenres = findViewById(R.id.recyclerViewGenres);
+        TextView tvGenres = findViewById(R.id.genres);
 
         ImageView ivBackdrop = findViewById(R.id.backdrop);
         String baseImageUrl = Tools.getBaseImageUrl("original");
@@ -111,21 +105,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
             }
 
             if(movie.has("genres")){
-                GenresAdapter adapter = new GenresAdapter(this);
-                recyclerViewGenres.setLayoutManager(new GridLayoutManager(this,4));
-                recyclerViewGenres.setItemAnimator(new DefaultItemAnimator());
-                recyclerViewGenres.setAdapter(adapter);
-
-                JSONArray jsonArray = movie.getJSONArray("genres");
-
-                for(int i = 0; i<100; i++){
-                    jsonArray.put(new JSONObject(jsonArray.get(0).toString()));
+                StringBuilder genres = new StringBuilder();
+                JSONArray genresArray = movie.getJSONArray("genres");
+                for(int i = 0; i<=genresArray.length()-1; i++){
+                    JSONObject genre = new JSONObject(genresArray.get(i).toString());
+                    if(i == 0){
+                        genres = new StringBuilder(genre.getString("name"));
+                    }else{
+                        genres.append(" ").append(genre.getString("name"));
+                    }
                 }
-
-                adapter.setList(jsonArray);
-                recyclerViewGenres.setVisibility(View.VISIBLE);
+                tvGenres.setText(genres.toString());
+                tvGenres.setVisibility(View.VISIBLE);
             }else{
-                recyclerViewGenres.setVisibility(View.GONE);
+                tvGenres.setVisibility(View.GONE);
             }
 
         } catch (JSONException e) {
