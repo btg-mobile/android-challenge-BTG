@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +87,6 @@ public class MoviesFragment extends Fragment {
             adapter.setEndlessScrollListener(new EndlessScrollListener() {
                 @Override
                 public void onEndReached(int position) {
-                    Log.e("fim da lista",String.valueOf(position));
                     if(MoviesFragment.this.currentPage < MoviesFragment.this.totalPages){
                         moviesController.getListMovies(MoviesFragment.this.currentPage+1);
                     }
