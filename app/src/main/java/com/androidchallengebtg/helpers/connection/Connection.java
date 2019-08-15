@@ -58,12 +58,6 @@ public class Connection {
         ConnectionQueue.getINSTANCE().addQueue(jsonObjectRequest);
     }
 
-    public void requestGet (String route, final ConnectionListener connectionListener){
-        String url = baseUrl+route+apiKey;
-        Log.d("vai chamar", url);
-        request(Request.Method.GET,url,null,connectionListener);
-    }
-
     public void createRequestToken (final ConnectionListener connectionListener){
         String route = context.getString(R.string.authentication_token_new);
         String url = baseUrl+route+apiKey;
@@ -98,7 +92,20 @@ public class Connection {
 
     public void getMovies(int page, ConnectionListener connectionListener){
         String route = context.getString(R.string.movie_popular);
-        String url = baseUrl+route+apiKey+"%&page="+String.valueOf(page);;
+        String url = baseUrl+route+apiKey+"%&page="+page;
         request(Request.Method.GET,url,null,connectionListener);
+    }
+
+    public void getFavoriteMovies(int page, ConnectionListener connectionListener){
+        try {
+            String route = context.getString(R.string.favorite_movies);
+            JSONObject user = PrefManager.getINSTANCE().getUser();
+            int accountId = user.getInt("id");
+            route = route.replace("{account_id}",String.valueOf(accountId));
+            String url = baseUrl+route+apiKey+"%&page="+page;
+            request(Request.Method.GET,url,null,connectionListener);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

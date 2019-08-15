@@ -6,4 +6,6 @@
     <string type="string" name="account">/account</string>
     <string type="string" name="movie_popular">/movie/popular</string>
     <string type="string" name="movie">/movie/</string>
+    <string type="string" name="favorite_movies">/account/{account_id}/favorite/movies</string>
+
 </resources>
