@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,9 @@ public class MoviesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_movies, container, false);
 
         if(getContext()!=null){
+            RecyclerView recyclerView =  view.findViewById(R.id.recyclerViewMovies);
+            final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipeRefreshMovies);
+
             final MoviesAdapter adapter = new MoviesAdapter(getContext());
             adapter.setClickListener(new ItemViewHolderClickListener() {
                 @Override
@@ -49,17 +53,17 @@ public class MoviesFragment extends Fragment {
                 }
             });
 
-            RecyclerView recyclerView =  view.findViewById(R.id.recyclerViewMovies);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(adapter);
 
-            MoviesController moviesController = new MoviesController(new MoviesController.Listener() {
+            final MoviesController moviesController = new MoviesController(new MoviesController.Listener() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     try {
                         JSONArray movies = response.getJSONArray("results");
                         adapter.setList(movies);
+                        swipeRefreshLayout.setRefreshing(false);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -67,11 +71,20 @@ public class MoviesFragment extends Fragment {
 
                 @Override
                 public void onError(String message) {
+                    swipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
                 }
             });
 
+            swipeRefreshLayout.setRefreshing(true);
             moviesController.getListMovies();
+
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    moviesController.getListMovies();
+                }
+            });
         }
 
         return view;
