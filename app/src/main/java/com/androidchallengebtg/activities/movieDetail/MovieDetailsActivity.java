@@ -1,6 +1,7 @@
 package com.androidchallengebtg.activities.movieDetail;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -60,6 +61,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(JSONObject response) {
                         Log.e(" account state", response.toString());
+                        fillStatus(response);
                     }
 
                     @Override
@@ -80,6 +82,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void fillStatus(JSONObject status){
+        FloatingActionButton floatingActionButton = findViewById(R.id.floatButtonFav);
+        try {
+            boolean favorite = status.getBoolean("favorite");
+            if(favorite){
+                floatingActionButton.setImageDrawable(this.getDrawable(R.drawable.heart_custom));
+            }else{
+                floatingActionButton.setImageDrawable(this.getDrawable(R.drawable.heart_outline_custom));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void fillScreen(JSONObject movie){
