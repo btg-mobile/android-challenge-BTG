@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android Challenge BTG</string>
+    <string name="app_name">Movies</string>
     <string name="unknow_error">Unexpected error.</string>
     <string name="empty_login_or_pass">Login and password must be completed.</string>
     <string name="authenticating">Authenticating…</string>

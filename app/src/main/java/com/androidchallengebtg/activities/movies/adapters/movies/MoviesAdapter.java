@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.androidchallengebtg.R;
+import com.androidchallengebtg.helpers.Tools;
 import com.androidchallengebtg.helpers.interfaces.EndlessScrollListener;
 import com.androidchallengebtg.helpers.interfaces.ItemViewHolderClickListener;
 import com.squareup.picasso.Picasso;
@@ -32,7 +33,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
     public MoviesAdapter(Context context) {
         this.context = context;
         this.list = new JSONArray();
-        this.baseImageUrl = context.getString(R.string.tmdb_images_base_url);
+        this.baseImageUrl = Tools.getBaseImageUrl(185);
     }
 
     public void setClickListener(ItemViewHolderClickListener clickListener) {
