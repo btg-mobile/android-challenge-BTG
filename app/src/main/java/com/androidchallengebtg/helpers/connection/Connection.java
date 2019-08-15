@@ -110,4 +110,11 @@ public class Connection {
             e.printStackTrace();
         }
     }
+
+    public void getMovie(int id, ConnectionListener connectionListener){
+        String route = context.getString(R.string.movie);
+        route = route.replace("{movie_id}",String.valueOf(id));
+        String url = baseUrl+route+apiKey;
+        request(Request.Method.GET,url,null,connectionListener);
+    }
 }

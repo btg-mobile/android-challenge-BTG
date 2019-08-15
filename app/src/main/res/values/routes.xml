@@ -5,7 +5,7 @@
     <string type="string" name="authentication_token_validate_with_login">/authentication/token/validate_with_login</string>
     <string type="string" name="account">/account</string>
     <string type="string" name="movie_popular">/movie/popular</string>
-    <string type="string" name="movie">/movie/</string>
+    <string type="string" name="movie">/movie/{movie_id}</string>
     <string type="string" name="favorite_movies">/account/{account_id}/favorite/movies</string>
 
 </resources>
