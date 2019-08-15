@@ -99,8 +99,6 @@ public class MoviesFragment extends Fragment {
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(adapter);
 
-
-
             swipeRefreshLayout.setRefreshing(true);
             moviesController.getListMovies(1);
 
