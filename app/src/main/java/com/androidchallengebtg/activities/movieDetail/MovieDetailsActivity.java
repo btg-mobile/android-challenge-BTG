@@ -104,7 +104,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 ivBackdrop.setVisibility(View.GONE);
             }
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
