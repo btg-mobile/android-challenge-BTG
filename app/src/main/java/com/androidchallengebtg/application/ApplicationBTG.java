@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.androidchallengebtg.helpers.connection.ConnectionQueue;
 
-public class ApplicationBTG extends Application {
+public class ApplicationBTG extends Application{
 
     private static ApplicationBTG mInstance;
 
@@ -19,5 +19,4 @@ public class ApplicationBTG extends Application {
     public static synchronized Context getContext() {
         return mInstance.getApplicationContext();
     }
-
 }

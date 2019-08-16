@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidchallengebtg.R;
+import com.androidchallengebtg.helpers.EventBus;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -70,6 +71,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onSuccess() {
                 getMovieAccountState();
+                EventBus.getInstance().emit("olá");
             }
 
             @Override

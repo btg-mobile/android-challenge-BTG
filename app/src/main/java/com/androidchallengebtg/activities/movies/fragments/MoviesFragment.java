@@ -18,6 +18,7 @@ import com.androidchallengebtg.R;
 import com.androidchallengebtg.activities.movieDetail.MovieDetailsActivity;
 import com.androidchallengebtg.activities.movies.adapters.movies.MoviesAdapter;
 import com.androidchallengebtg.activities.movies.controllers.MoviesController;
+import com.androidchallengebtg.helpers.EventBus;
 import com.androidchallengebtg.helpers.interfaces.EndlessScrollListener;
 import com.androidchallengebtg.helpers.interfaces.ItemViewHolderClickListener;
 
@@ -25,14 +26,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MoviesFragment extends Fragment {
+public class MoviesFragment extends Fragment implements EventBus.EventBusListener {
 
     private int currentPage = 1;
     private int totalPages = 1;
+    private MoviesController moviesController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getInstance().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getInstance().unRegister(this);
     }
 
     @Override
@@ -48,7 +57,7 @@ public class MoviesFragment extends Fragment {
 
             final MoviesAdapter adapter = new MoviesAdapter(getContext());
 
-            final MoviesController moviesController = new MoviesController(new MoviesController.Listener() {
+            moviesController = new MoviesController(new MoviesController.Listener() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     try {
@@ -121,11 +130,22 @@ public class MoviesFragment extends Fragment {
         return view;
     }
 
+    private void getMovies(){
+
+    }
+
     private void goToDetailsScreen(JSONObject jsonObject){
         if(getContext()!=null){
             Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
             intent.putExtra("movie",jsonObject.toString());
             getContext().startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onEvent(Object object) {
+        if(moviesController!=null){
+            moviesController.getListMovies(1);
         }
     }
 }
