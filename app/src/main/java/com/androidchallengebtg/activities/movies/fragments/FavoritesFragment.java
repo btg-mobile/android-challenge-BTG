@@ -55,6 +55,8 @@ public class FavoritesFragment extends Fragment implements EventBus.EventBusList
             final TextView emptyListMessage = view.findViewById(R.id.emptyListMessage);
             emptyListMessage.setVisibility(View.GONE);
 
+            swipeRefreshLayout.setRefreshing(true);
+
             final MoviesAdapter adapter = new MoviesAdapter(getContext());
 
             moviesController = new MoviesController(new MoviesController.Listener() {
@@ -116,7 +118,6 @@ public class FavoritesFragment extends Fragment implements EventBus.EventBusList
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(adapter);
 
-            swipeRefreshLayout.setRefreshing(true);
             moviesController.getFavoriteMovies(1);
 
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

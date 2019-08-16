@@ -55,6 +55,8 @@ public class MoviesFragment extends Fragment implements EventBus.EventBusListene
             final TextView emptyListMessage = view.findViewById(R.id.emptyListMessage);
             emptyListMessage.setVisibility(View.GONE);
 
+            swipeRefreshLayout.setRefreshing(true);
+
             final MoviesAdapter adapter = new MoviesAdapter(getContext());
 
             moviesController = new MoviesController(new MoviesController.Listener() {
@@ -116,7 +118,6 @@ public class MoviesFragment extends Fragment implements EventBus.EventBusListene
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(adapter);
 
-            swipeRefreshLayout.setRefreshing(true);
             moviesController.getListMovies(1);
 
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
