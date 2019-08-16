@@ -10,12 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidchallengebtg.R;
-import com.androidchallengebtg.helpers.Tools;
-import com.androidchallengebtg.helpers.connection.Connection;
-import com.androidchallengebtg.helpers.connection.ConnectionListener;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,17 +30,15 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
         }
 
         if(getIntent().getExtras()!=null){
-            String extraMovie = getIntent().getStringExtra("movie");
+            String movie = getIntent().getStringExtra("movie");
             try {
-                JSONObject movie = new JSONObject(extraMovie);
-                movieDetailController = new MovieDetailController(movie);
+                movieDetailController = new MovieDetailController(new JSONObject(movie));
                 fillScreen();
-                getMovie();
+                getMovieDetails();
                 getMovieAccountState();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             FloatingActionButton floatingActionButton = findViewById(R.id.floatButtonFav);
             floatingActionButton.setOnClickListener(this);
         }
@@ -60,68 +54,65 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    private void markAsFavorite(){
-        int id = movieDetailController.getMovieId();
-        boolean favorite = movieDetailController.isFavorite();
-        Connection connection = new Connection();
-        connection.markAsFavorite("movie",id, !favorite, new ConnectionListener() {
-            @Override
-            public void onSuccess(JSONObject response) {
-                getMovieAccountState();
-            }
-
-            @Override
-            public void onError(JSONObject error) {
-
-            }
-        });
-    }
-
-    private void getMovie(){
-        int id = movieDetailController.getMovieId();
-        Connection connection = new Connection();
-        connection.getMovie(id, new ConnectionListener() {
-            @Override
-            public void onSuccess(JSONObject response) {
-                movieDetailController.setMovie(response);
-                fillScreen();
-            }
-
-            @Override
-            public void onError(JSONObject error) {
-                try {
-                    String message = error.getString("status_message");
-                    Toast.makeText(MovieDetailsActivity.this,message,Toast.LENGTH_LONG).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private void getMovieAccountState(){
-        int id = movieDetailController.getMovieId();
-        Connection connection = new Connection();
-        connection.getMovieAccountState(id, new ConnectionListener() {
-            @Override
-            public void onSuccess(JSONObject response) {
-                movieDetailController.setMovieStatus(response);
-                fillStatus();
-            }
-
-            @Override
-            public void onError(JSONObject error) {
-
-            }
-        });
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /*
+    metodos para interagir com a api.
+     */
+    private void markAsFavorite(){
+        movieDetailController.markAsFavorite(new MovieDetailController.MovieChangeLister(){
+            @Override
+            public void onSuccess() {
+                getMovieAccountState();
+            }
+
+            @Override
+            public void onError(String message) {
+                showToast(message);
+            }
+        });
+
+    }
+
+    private void getMovieDetails(){
+        movieDetailController.getMovie(new MovieDetailController.MovieChangeLister() {
+            @Override
+            public void onSuccess() {
+                fillScreen();
+            }
+
+            @Override
+            public void onError(String message) {
+                showToast(message);
+            }
+        });
+    }
+
+    private void getMovieAccountState(){
+        movieDetailController.getMovieStatus(new MovieDetailController.MovieChangeLister() {
+            @Override
+            public void onSuccess() {
+                fillStatus();
+            }
+
+            @Override
+            public void onError(String message) {
+                showToast(message);
+            }
+        });
+    }
+
+    /*
+    Metodos que alteram a tela
+     */
+    private void showToast(String message){
+        Toast.makeText(this,message,Toast.LENGTH_LONG).show();
     }
 
     private void fillStatus(){
@@ -137,60 +128,16 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
     Preenche a tela com os dados do filme.
      */
     private void fillScreen(){
-        JSONObject movie = movieDetailController.getMovie();
-
         TextView tvTitle = findViewById(R.id.title);
         TextView tvOverview = findViewById(R.id.overview);
         TextView tvVoteAverage = findViewById(R.id.voteAverage);
         TextView tvGenres = findViewById(R.id.genres);
         ImageView ivBackdrop = findViewById(R.id.backdrop);
-        String baseImageUrl = Tools.getBaseImageUrl("original");
 
-        try {
-            if(movie.has("title")){
-                tvTitle.setText(movie.getString("title"));
-            }else{
-                tvTitle.setVisibility(View.GONE);
-            }
-
-            if(movie.has("overview")){
-                tvOverview.setText(movie.getString("overview"));
-            }else{
-                tvOverview.setVisibility(View.GONE);
-            }
-
-            if(movie.has("vote_average")){
-                tvVoteAverage.setText(movie.getString("vote_average"));
-            }else{
-                tvVoteAverage.setVisibility(View.GONE);
-            }
-
-            if(movie.has("backdrop_path")){
-                String urlBackdrop = baseImageUrl+movie.getString("backdrop_path");
-                Picasso.get().load(urlBackdrop).into(ivBackdrop);
-            }else{
-                ivBackdrop.setVisibility(View.GONE);
-            }
-
-            if(movie.has("genres")){
-                StringBuilder genres = new StringBuilder();
-                JSONArray genresArray = movie.getJSONArray("genres");
-                for(int i = 0; i<=genresArray.length()-1; i++){
-                    JSONObject genre = new JSONObject(genresArray.get(i).toString());
-                    if(i == 0){
-                        genres = new StringBuilder(genre.getString("name"));
-                    }else{
-                        genres.append(" ").append(genre.getString("name"));
-                    }
-                }
-                tvGenres.setText(genres.toString());
-                tvGenres.setVisibility(View.VISIBLE);
-            }else{
-                tvGenres.setVisibility(View.GONE);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        Picasso.get().load(movieDetailController.getBackdropUrl()).into(ivBackdrop);
+        tvTitle.setText(movieDetailController.getTitle());
+        tvOverview.setText(movieDetailController.getOverview());
+        tvVoteAverage.setText(movieDetailController.getVoteAverage());
+        tvGenres.setText(movieDetailController.getGenres());
     }
 }
