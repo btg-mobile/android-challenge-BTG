@@ -74,14 +74,17 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
             String urlPoster = baseImageUrl+item.getString("poster_path");
             String releaseDate = item.getString("release_date");
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            Date convertedCurrentDate = sdf.parse(releaseDate);
+            if(releaseDate != null && releaseDate.trim().length()>1){
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                Date convertedCurrentDate = sdf.parse(releaseDate);
 
-            SimpleDateFormat sdf2 = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
-            String date = sdf2.format(convertedCurrentDate );
+                SimpleDateFormat sdf2 = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
+                String date = sdf2.format(convertedCurrentDate );
 
-            movieHolder.title.setText(item.getString("title"));
-            movieHolder.releaseDate.setText(date);
+                movieHolder.title.setText(item.getString("title"));
+                movieHolder.releaseDate.setText(date);
+            }
+
             Picasso.get().load(urlPoster).into(movieHolder.poster);
 
             if(this.favoriteList){

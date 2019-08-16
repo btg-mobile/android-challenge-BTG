@@ -46,11 +46,8 @@ public class MovieDetailsActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.floatButtonFav:{
-                markAsFavorite();
-                break;
-            }
+        if (v.getId() == R.id.floatButtonFav) {
+            markAsFavorite();
         }
     }
 
@@ -78,7 +75,6 @@ public class MovieDetailsActivity extends BaseActivity implements View.OnClickLi
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
 
                 if(!movieDetailController.isFavorite()){
                     showToast(MovieDetailsActivity.this.getString(R.string.added_to_your_favorites));

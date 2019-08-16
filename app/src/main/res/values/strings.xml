@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movies</string>
+    <string name="app_name">Android Challenge BTG</string>
     <string name="unknow_error">Unexpected error.</string>
     <string name="empty_login_or_pass">Login and password must be completed.</string>
     <string name="authenticating">Authenticating…</string>
@@ -13,4 +13,7 @@
     <string name="removed_from_your_favorites">Removed from your favorites</string>
     <string name="there_was_a_problem_try_again">There was a problem. Try again.</string>
     <string name="press_again_to_leave">Press again to leave</string>
+    <string name="search_title">Search</string>
+    <string name="search_hint">Search for a movie.</string>
+
 </resources>

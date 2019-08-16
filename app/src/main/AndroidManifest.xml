@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.movieDetail.MovieDetailsActivity"></activity>
+        <activity android:name=".activities.search.SearchActivity"></activity>
+        <activity android:name=".activities.movieDetail.MovieDetailsActivity" />
         <activity android:name=".activities.movies.MoviesActivity" />
         <activity android:name=".activities.login.LoginActivity">
             <intent-filter>

@@ -146,4 +146,10 @@ public class Connection {
             e.printStackTrace();
         }
     }
+
+    public void search(String query, int page, ConnectionListener connectionListener){
+        String route = context.getString(R.string.search_movie);
+        String url = baseUrl+route+apiKey+"&query="+query+"&page="+page;
+        request(Request.Method.GET,url,null,connectionListener);
+    }
 }
