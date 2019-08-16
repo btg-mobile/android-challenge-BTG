@@ -92,5 +92,6 @@ public class LoginActivity extends BaseActivity {
         hideProgressDialog();
         Intent intent = new Intent(this, MoviesActivity.class);
         startActivity(intent);
+        finish();
     }
 }

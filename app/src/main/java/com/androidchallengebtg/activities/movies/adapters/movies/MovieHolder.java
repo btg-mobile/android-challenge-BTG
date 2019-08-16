@@ -1,6 +1,7 @@
 package com.androidchallengebtg.activities.movies.adapters.movies;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidchallengebtg.R;
+import com.androidchallengebtg.application.ApplicationBTG;
 import com.androidchallengebtg.helpers.interfaces.ItemViewHolderClickListener;
 import com.androidchallengebtg.helpers.interfaces.ItemViewHolderFavIconClickListner;
 
@@ -31,6 +33,8 @@ class MovieHolder extends RecyclerView.ViewHolder implements View.OnClickListene
         CardView cardView = itemView.findViewById(R.id.cardViewMovie);
 
         favIcon.setOnClickListener(this);
+        favIcon.setImageTintList(ContextCompat.getColorStateList(ApplicationBTG.getContext(), R.color.colorAccent));
+
         cardView.setOnLongClickListener(this);
 
         itemView.setOnClickListener(this);
