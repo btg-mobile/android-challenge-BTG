@@ -25,9 +25,6 @@ public class LoginActivity extends BaseActivity {
         mInputLogin = findViewById(R.id.input_login);
         mInputPassword = findViewById(R.id.input_password);
 
-        mInputLogin.setText("btgchallenge");
-        mInputPassword.setText("2405");
-
         findViewById(R.id.button_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
