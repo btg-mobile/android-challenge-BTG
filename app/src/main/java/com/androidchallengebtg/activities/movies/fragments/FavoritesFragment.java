@@ -21,6 +21,7 @@ import com.androidchallengebtg.activities.movies.controllers.MoviesController;
 import com.androidchallengebtg.helpers.EventBus;
 import com.androidchallengebtg.helpers.interfaces.EndlessScrollListener;
 import com.androidchallengebtg.helpers.interfaces.ItemViewHolderClickListener;
+import com.androidchallengebtg.helpers.interfaces.ItemViewHolderFavIconClickListner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -115,6 +116,32 @@ public class FavoritesFragment extends Fragment implements EventBus.EventBusList
                 }
             });
 
+            adapter.setItemViewHolderFavIconClickListner(new ItemViewHolderFavIconClickListner() {
+                @Override
+                public void onClick(int position) {
+                    try {
+                        JSONObject movie = adapter.getItem(position);
+                        int id = movie.getInt("id");
+                        moviesController.markAsFavorite(id, false, new MoviesController.FavoriteListener() {
+                            @Override
+                            public void onSuccess(JSONObject response) {
+                                moviesController.getFavoriteMovies(1);
+                                if(FavoritesFragment.this.getContext()!=null){
+                                    showToast(FavoritesFragment.this.getContext().getString(R.string.removed_from_your_favorites));
+                                }
+                            }
+
+                            @Override
+                            public void onError(String message) {
+                                showToast(message);
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setAdapter(adapter);
@@ -144,6 +171,12 @@ public class FavoritesFragment extends Fragment implements EventBus.EventBusList
     public void onEvent(Object object) {
         if(moviesController!=null){
             moviesController.getFavoriteMovies(1);
+        }
+    }
+
+    private void showToast(String message){
+        if(getContext()!=null){
+            Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
         }
     }
 }

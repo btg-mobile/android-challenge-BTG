@@ -47,7 +47,7 @@ public class EventBus {
         List<EventBusListener> tempListeners = new ArrayList<>(listeners.values());
         for (EventBusListener listener: tempListeners) {
             listener.onEvent(object);
-            Log.e("Listener",listener.getClass().getName());
+            Log.e("ListMoviesListener",listener.getClass().getName());
         }
     }
 

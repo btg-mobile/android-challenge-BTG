@@ -17,6 +17,11 @@ public class MoviesController {
         void onError(String message);
     }
 
+    public interface FavoriteListener{
+        void onSuccess(JSONObject response);
+        void onError(String message);
+    }
+
     public MoviesController(Listener listener) {
         this.listener = listener;
     }
@@ -71,17 +76,23 @@ public class MoviesController {
         });
     }
 
-    public void markAsFavorite(int movieId, boolean favorite){
+    public void markAsFavorite(int movieId, boolean favorite, final FavoriteListener favoriteListener){
         Connection connection = new Connection();
         connection.markAsFavorite("movie",movieId, favorite, new ConnectionListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                listener.onSuccess(response);
+                favoriteListener.onSuccess(response);
             }
 
             @Override
             public void onError(JSONObject error) {
-                responseError(error);
+                String message = ApplicationBTG.getContext().getString(R.string.unknow_error);
+                try {
+                    message = error.getString("status_message");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                favoriteListener.onError(message);
             }
         });
     }

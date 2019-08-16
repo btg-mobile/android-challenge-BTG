@@ -12,6 +12,7 @@ import com.androidchallengebtg.R;
 import com.androidchallengebtg.helpers.Tools;
 import com.androidchallengebtg.helpers.interfaces.EndlessScrollListener;
 import com.androidchallengebtg.helpers.interfaces.ItemViewHolderClickListener;
+import com.androidchallengebtg.helpers.interfaces.ItemViewHolderFavIconClickListner;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -30,6 +31,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
     private String baseImageUrl;
     private ItemViewHolderClickListener clickListener;
     private EndlessScrollListener endlessScrollListener;
+    private ItemViewHolderFavIconClickListner itemViewHolderFavIconClickListner;
     private boolean favoriteList;
 
     public MoviesAdapter(Context context) {
@@ -50,6 +52,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
         this.favoriteList = favoriteList;
     }
 
+    public void setItemViewHolderFavIconClickListner(ItemViewHolderFavIconClickListner itemViewHolderFavIconClickListner) {
+        this.itemViewHolderFavIconClickListner = itemViewHolderFavIconClickListner;
+    }
+
     @NonNull
     @Override
     public MovieHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -57,6 +63,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
                 .inflate(R.layout.item_list_movies, viewGroup, false);
         MovieHolder movieHolder = new MovieHolder(itemView);
         movieHolder.setClickListener(this.clickListener);
+        movieHolder.setItemViewHolderFavIconClickListner(itemViewHolderFavIconClickListner);
         return movieHolder;
     }
 

@@ -133,6 +133,9 @@ public class Connection {
         try {
             String route = context.getString(R.string.mark_as_favorite);
             String sessionId = "&session_id="+PrefManager.getINSTANCE().getSessionId();
+            JSONObject user = PrefManager.getINSTANCE().getUser();
+            int accountId = user.getInt("id");
+            route = route.replace("{account_id}",String.valueOf(accountId));
             JSONObject body = new JSONObject();
             body.put("media_type",mediaType);
             body.put("media_id",mediaId);

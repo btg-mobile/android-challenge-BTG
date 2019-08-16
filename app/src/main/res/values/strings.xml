@@ -11,4 +11,5 @@
     <string name="password">Password</string>
     <string name="added_to_your_favorites">Added to your favorites</string>
     <string name="removed_from_your_favorites">removed from your favorites</string>
+    <string name="there_was_a_problem_try_again">There was a problem. Try again.</string>
 </resources>
