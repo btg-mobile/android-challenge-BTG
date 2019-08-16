@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 
 import com.androidchallengebtg.R;
 import com.androidchallengebtg.activities.BaseActivity;
@@ -15,6 +16,7 @@ import com.androidchallengebtg.activities.movies.adapters.PageAdapter;
 import com.androidchallengebtg.activities.movies.fragments.FavoritesFragment;
 import com.androidchallengebtg.activities.movies.fragments.MoviesFragment;
 import com.androidchallengebtg.activities.search.SearchActivity;
+import com.androidchallengebtg.helpers.storage.PrefManager;
 
 public class MoviesActivity extends BaseActivity implements SearchView.OnQueryTextListener {
 
@@ -34,6 +36,13 @@ public class MoviesActivity extends BaseActivity implements SearchView.OnQueryTe
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+
+        findViewById(R.id.tv_logout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
     }
 
     @Override

@@ -25,5 +25,7 @@
     <string name="movie_image">Movie image</string>
     <string name="release_date">Release date</string>
     <string name="title">Title</string>
+    <string name="logout">Logout</string>
+    <string name="logging_out">Logging out</string>
 
 </resources>

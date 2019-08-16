@@ -88,12 +88,14 @@ public class PrefManager {
         JSONObject pass = null;
         String stringPass = pref.getString("pass",null);
 
-        try {
-            pass = new JSONObject(stringPass);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (Exception e){
-            e.printStackTrace();
+        if(stringPass!=null){
+            try {
+                pass = new JSONObject(stringPass);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         return pass;

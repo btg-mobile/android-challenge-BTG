@@ -71,13 +71,15 @@ class MovieDetailController {
     String getGenres(){
         StringBuilder genresBuilder = new StringBuilder();
         try {
-            JSONArray genresArray = movie.getJSONArray("genres");
-            for(int i = 0; i<=genresArray.length()-1; i++){
-                JSONObject genre = new JSONObject(genresArray.get(i).toString());
-                if(i == 0){
-                    genresBuilder = new StringBuilder(genre.getString("name"));
-                }else{
-                    genresBuilder.append(" ").append(genre.getString("name"));
+            if(movie.has("genres")){
+                JSONArray genresArray = movie.getJSONArray("genres");
+                for(int i = 0; i<=genresArray.length()-1; i++){
+                    JSONObject genre = new JSONObject(genresArray.get(i).toString());
+                    if(i == 0){
+                        genresBuilder = new StringBuilder(genre.getString("name"));
+                    }else{
+                        genresBuilder.append(" ").append(genre.getString("name"));
+                    }
                 }
             }
         } catch (JSONException e) {

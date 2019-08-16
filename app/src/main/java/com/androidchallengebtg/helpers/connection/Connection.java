@@ -152,4 +152,11 @@ public class Connection {
         String url = baseUrl+route+apiKey+"&query="+query+"&page="+page;
         request(Request.Method.GET,url,null,connectionListener);
     }
+
+    public void logout(ConnectionListener connectionListener){
+        String route = context.getString(R.string.authentication_session);
+        String sessionId = "&session_id="+PrefManager.getINSTANCE().getSessionId();
+        String url = baseUrl+route+apiKey+sessionId;
+        request(Request.Method.DELETE,url,null,connectionListener);
+    }
 }

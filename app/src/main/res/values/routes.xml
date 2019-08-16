@@ -2,6 +2,7 @@
 <resources>
     <string type="string" name="authentication_token_new">/authentication/token/new</string>
     <string type="string" name="authentication_session_new">/authentication/session/new</string>
+    <string type="string" name="authentication_session">/authentication/session</string>
     <string type="string" name="authentication_token_validate_with_login">/authentication/token/validate_with_login</string>
     <string type="string" name="account">/account</string>
     <string type="string" name="movie_popular">/movie/popular</string>
