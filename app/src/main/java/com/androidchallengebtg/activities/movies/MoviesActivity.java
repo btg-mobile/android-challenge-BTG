@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.widget.Toast;
 
 import com.androidchallengebtg.R;
 import com.androidchallengebtg.activities.BaseActivity;
@@ -39,7 +38,7 @@ public class MoviesActivity extends BaseActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, getString(R.string.press_again_to_leave), Toast.LENGTH_SHORT).show();
+        showToast(getString(R.string.press_again_to_leave));
 
         new Handler().postDelayed(new Runnable() {
 

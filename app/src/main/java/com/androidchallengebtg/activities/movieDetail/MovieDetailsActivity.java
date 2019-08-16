@@ -2,21 +2,20 @@ package com.androidchallengebtg.activities.movieDetail;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidchallengebtg.R;
+import com.androidchallengebtg.activities.BaseActivity;
 import com.androidchallengebtg.helpers.EventBus;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MovieDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class MovieDetailsActivity extends BaseActivity implements View.OnClickListener {
 
     private MovieDetailController movieDetailController;
 
@@ -127,10 +126,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
     /*
     Metodos que alteram a tela
      */
-    private void showToast(String message){
-        Toast.makeText(this,message,Toast.LENGTH_LONG).show();
-    }
-
     private void fillStatus(){
         FloatingActionButton floatingActionButton = findViewById(R.id.floatButtonFav);
         if(movieDetailController.isFavorite()){

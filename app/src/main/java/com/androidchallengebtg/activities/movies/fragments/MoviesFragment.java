@@ -12,10 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidchallengebtg.R;
 import com.androidchallengebtg.activities.movieDetail.MovieDetailsActivity;
+import com.androidchallengebtg.activities.movies.MoviesActivity;
 import com.androidchallengebtg.activities.movies.adapters.movies.MoviesAdapter;
 import com.androidchallengebtg.activities.movies.controllers.MoviesController;
 import com.androidchallengebtg.helpers.EventBus;
@@ -88,7 +88,7 @@ public class MoviesFragment extends Fragment implements EventBus.EventBusListene
                 @Override
                 public void onError(String message) {
                     swipeRefreshLayout.setRefreshing(false);
-                    Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
+                    showToast(message);
                 }
             });
 
@@ -186,7 +186,7 @@ public class MoviesFragment extends Fragment implements EventBus.EventBusListene
 
     private void showToast(String message){
         if(getContext()!=null){
-            Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
+            ((MoviesActivity)getContext()).showToast(message);
         }
     }
 }

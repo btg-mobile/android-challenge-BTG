@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.androidchallengebtg.R;
 import com.androidchallengebtg.activities.BaseActivity;
 import com.androidchallengebtg.activities.movies.MoviesActivity;
-import com.androidchallengebtg.application.ApplicationBTG;
 
 public class LoginActivity extends BaseActivity {
 
@@ -41,7 +39,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onError(String message) {
                 hideProgressDialog();
-                Toast.makeText(ApplicationBTG.getContext(),message,Toast.LENGTH_LONG).show();
+                LoginActivity.this.showToast(message);
             }
         }
         );
@@ -72,7 +70,7 @@ public class LoginActivity extends BaseActivity {
         Aborta se login ou senha estiverem vazios
          */
         if(username.length() <1 || password.length() <1){
-            Toast.makeText(this,getString(R.string.empty_login_or_pass),Toast.LENGTH_LONG).show();
+            showToast(getString(R.string.empty_login_or_pass));
             return;
         }
 
@@ -94,4 +92,6 @@ public class LoginActivity extends BaseActivity {
         startActivity(intent);
         finish();
     }
+
+
 }
