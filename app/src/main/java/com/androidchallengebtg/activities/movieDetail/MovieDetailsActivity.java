@@ -3,7 +3,6 @@ package com.androidchallengebtg.activities.movieDetail;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,11 +19,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MovieDetailsActivity extends AppCompatActivity {
+public class MovieDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private JSONObject movie;
-    private JSONObject movieStatus;
-    private FloatingActionButton floatingActionButton;
+    private MovieDetailController movieDetailController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,70 +36,77 @@ public class MovieDetailsActivity extends AppCompatActivity {
         if(getIntent().getExtras()!=null){
             String extraMovie = getIntent().getStringExtra("movie");
             try {
-                movie = new JSONObject(extraMovie);
-                fillScreen(movie);
-
-                Connection connection = new Connection();
-                int id = movie.getInt("id");
-                connection.getMovie(id, new ConnectionListener() {
-                    @Override
-                    public void onSuccess(JSONObject response) {
-                        fillScreen(response);
-                    }
-
-                    @Override
-                    public void onError(JSONObject error) {
-                        try {
-                            String message = error.getString("status_message");
-                            Toast.makeText(MovieDetailsActivity.this,message,Toast.LENGTH_LONG).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-                getMovieAccountState(id);
-
+                JSONObject movie = new JSONObject(extraMovie);
+                movieDetailController = new MovieDetailController(movie);
+                fillScreen();
+                getMovie();
+                getMovieAccountState();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            floatingActionButton = findViewById(R.id.floatButtonFav);
-
-            floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try {
-                        Connection connection = new Connection();
-                        boolean currentStatus = MovieDetailsActivity.this.movieStatus.getBoolean("favorite");
-                        final int id = movie.getInt("id");
-                        connection.markAsFavorite("movie",id, !currentStatus, new ConnectionListener() {
-                            @Override
-                            public void onSuccess(JSONObject response) {
-                                Log.e("resultado do favorito",response.toString());
-                                getMovieAccountState(id);
-                            }
-
-                            @Override
-                            public void onError(JSONObject error) {
-
-                            }
-                        });
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+            FloatingActionButton floatingActionButton = findViewById(R.id.floatButtonFav);
+            floatingActionButton.setOnClickListener(this);
         }
     }
 
-    private void getMovieAccountState(int id){
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.floatButtonFav:{
+                markAsFavorite();
+                break;
+            }
+        }
+    }
+
+    private void markAsFavorite(){
+        int id = movieDetailController.getMovieId();
+        boolean favorite = movieDetailController.isFavorite();
+        Connection connection = new Connection();
+        connection.markAsFavorite("movie",id, !favorite, new ConnectionListener() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                getMovieAccountState();
+            }
+
+            @Override
+            public void onError(JSONObject error) {
+
+            }
+        });
+    }
+
+    private void getMovie(){
+        int id = movieDetailController.getMovieId();
+        Connection connection = new Connection();
+        connection.getMovie(id, new ConnectionListener() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                movieDetailController.setMovie(response);
+                fillScreen();
+            }
+
+            @Override
+            public void onError(JSONObject error) {
+                try {
+                    String message = error.getString("status_message");
+                    Toast.makeText(MovieDetailsActivity.this,message,Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void getMovieAccountState(){
+        int id = movieDetailController.getMovieId();
         Connection connection = new Connection();
         connection.getMovieAccountState(id, new ConnectionListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.e(" account state", response.toString());
-                fillStatus(response);
+                movieDetailController.setMovieStatus(response);
+                fillStatus();
             }
 
             @Override
@@ -120,21 +124,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void fillStatus(JSONObject status){
-        this.movieStatus = status;
-        try {
-            boolean favorite = status.getBoolean("favorite");
-            if(favorite){
-                floatingActionButton.setImageDrawable(this.getDrawable(R.drawable.heart_custom));
-            }else{
-                floatingActionButton.setImageDrawable(this.getDrawable(R.drawable.heart_outline_custom));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+    private void fillStatus(){
+        FloatingActionButton floatingActionButton = findViewById(R.id.floatButtonFav);
+        if(movieDetailController.isFavorite()){
+            floatingActionButton.setImageDrawable(this.getDrawable(R.drawable.heart_custom));
+        }else{
+            floatingActionButton.setImageDrawable(this.getDrawable(R.drawable.heart_outline_custom));
         }
     }
 
-    private void fillScreen(JSONObject movie){
+    /*
+    Preenche a tela com os dados do filme.
+     */
+    private void fillScreen(){
+        JSONObject movie = movieDetailController.getMovie();
 
         TextView tvTitle = findViewById(R.id.title);
         TextView tvOverview = findViewById(R.id.overview);
