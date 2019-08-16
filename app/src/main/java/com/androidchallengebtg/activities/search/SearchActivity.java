@@ -1,16 +1,13 @@
 package com.androidchallengebtg.activities.search;
 
 import android.content.Intent;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,8 +18,6 @@ import com.androidchallengebtg.R;
 import com.androidchallengebtg.activities.BaseActivity;
 import com.androidchallengebtg.activities.movieDetail.MovieDetailsActivity;
 import com.androidchallengebtg.activities.movies.adapters.movies.MoviesAdapter;
-import com.androidchallengebtg.activities.movies.controllers.MoviesController;
-import com.androidchallengebtg.activities.movies.fragments.MoviesFragment;
 import com.androidchallengebtg.activities.search.contollers.SearchController;
 import com.androidchallengebtg.helpers.EventBus;
 import com.androidchallengebtg.helpers.interfaces.EndlessScrollListener;

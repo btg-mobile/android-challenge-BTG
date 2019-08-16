@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Title"
+            android:text="@string/title"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -44,20 +44,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Release date" />
+            android:text="@string/release_date" />
 
         <ImageView
             android:foreground="@drawable/ripple_circle"
             android:padding="10dp"
             android:id="@+id/imageViewFav"
-            android:layout_above="@+id/bottomLine"
+            android:layout_above="@+id/bottom_line"
             android:layout_alignParentEnd="true"
             android:src="@drawable/heart_custom"
             android:layout_width="50dp"
             android:layout_height="50dp" />
 
         <View
-            android:id="@+id/bottomLine"
+            android:id="@+id/bottom_line"
             android:layout_below="@+id/poster"
             android:layout_width="match_parent"
             android:layout_height="0dp"/>

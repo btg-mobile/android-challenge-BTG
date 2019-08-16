@@ -1,5 +1,6 @@
 package com.androidchallengebtg.helpers.storage;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 
 import com.androidchallengebtg.R;
@@ -12,7 +13,6 @@ public class PrefManager {
 
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
-
     private static final int PRIVATE_MODE = 0;
     private static final String PREF_NAME = ApplicationBTG.getContext().getString(R.string.shared_preferences_name);
     private static PrefManager INSTANCE;
@@ -28,12 +28,14 @@ public class PrefManager {
         return INSTANCE;
     }
 
+    @SuppressLint("ApplySharedPref")
     public void clearSession() {
         editor = pref.edit();
         editor.clear();
         editor.commit();
     }
 
+    @SuppressLint("ApplySharedPref")
     public void saveUser(JSONObject user){
         editor = pref.edit();
         editor.putString("user", user.toString());
@@ -53,6 +55,7 @@ public class PrefManager {
         return user;
     }
 
+    @SuppressLint("ApplySharedPref")
     public void saveRequestToken(String requestToken){
         editor = pref.edit();
         editor.putString("request_token", requestToken);
@@ -63,6 +66,7 @@ public class PrefManager {
         return pref.getString("request_token",null);
     }
 
+    @SuppressLint("ApplySharedPref")
     public void saveSessionId(String sessionId){
         editor = pref.edit();
         editor.putString("session_id", sessionId);
@@ -73,6 +77,7 @@ public class PrefManager {
         return pref.getString("session_id",null);
     }
 
+    @SuppressLint("ApplySharedPref")
     public void savePass(JSONObject pass){
         editor = pref.edit();
         editor.putString("pass", pass.toString());

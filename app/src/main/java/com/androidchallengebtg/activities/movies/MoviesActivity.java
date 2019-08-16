@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.support.v7.widget.SearchView;
 
 import com.androidchallengebtg.R;
 import com.androidchallengebtg.activities.BaseActivity;
@@ -20,7 +19,6 @@ import com.androidchallengebtg.activities.search.SearchActivity;
 public class MoviesActivity extends BaseActivity implements SearchView.OnQueryTextListener {
 
     private boolean doubleBackToExitPressedOnce;
-    private int currentPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +31,6 @@ public class MoviesActivity extends BaseActivity implements SearchView.OnQueryTe
 
         ViewPager viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                MoviesActivity.this.currentPage = i;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
