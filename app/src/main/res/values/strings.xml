@@ -9,5 +9,6 @@
     <string name="no_movies_to_show">No movies to show.</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
-    Authenticating
+    <string name="added_to_your_favorites">Added to your favorites</string>
+    <string name="removed_from_your_favorites">removed from your favorites</string>
 </resources>

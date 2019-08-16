@@ -72,6 +72,11 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
             public void onSuccess() {
                 getMovieAccountState();
                 EventBus.getInstance().emit("olá");
+                if(!movieDetailController.isFavorite()){
+                    showToast(MovieDetailsActivity.this.getString(R.string.added_to_your_favorites));
+                }else{
+                    showToast(MovieDetailsActivity.this.getString(R.string.removed_from_your_favorites));
+                }
             }
 
             @Override
