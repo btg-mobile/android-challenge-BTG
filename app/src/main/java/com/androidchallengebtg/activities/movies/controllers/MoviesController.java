@@ -1,7 +1,7 @@
 package com.androidchallengebtg.activities.movies.controllers;
 
-import android.util.Log;
-
+import com.androidchallengebtg.R;
+import com.androidchallengebtg.application.ApplicationBTG;
 import com.androidchallengebtg.helpers.connection.Connection;
 import com.androidchallengebtg.helpers.connection.ConnectionListener;
 
@@ -21,6 +21,16 @@ public class MoviesController {
         this.listener = listener;
     }
 
+    private void responseError(JSONObject error){
+        String message = ApplicationBTG.getContext().getString(R.string.unknow_error);
+        try {
+            message = error.getString("status_message");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        listener.onError(message);
+    }
+
     public void getListMovies(int page){
 
         if(page < 1){
@@ -36,13 +46,7 @@ public class MoviesController {
 
             @Override
             public void onError(JSONObject error) {
-                try {
-                    Log.e("onError",error.toString());
-                    String message = error.getString("status_message");
-                    listener.onError(message);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                responseError(error);
             }
         });
     }
@@ -62,13 +66,23 @@ public class MoviesController {
 
             @Override
             public void onError(JSONObject error) {
-                try {
-                    Log.e("onError",error.toString());
-                    String message = error.getString("status_message");
-                    listener.onError(message);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                responseError(error);
             }
         });
-    }}
+    }
+
+    public void markAsFavorite(int movieId, boolean favorite){
+        Connection connection = new Connection();
+        connection.markAsFavorite("movie",movieId, favorite, new ConnectionListener() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                listener.onSuccess(response);
+            }
+
+            @Override
+            public void onError(JSONObject error) {
+                responseError(error);
+            }
+        });
+    }
+}

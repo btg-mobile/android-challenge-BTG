@@ -14,6 +14,7 @@ class MovieHolder extends RecyclerView.ViewHolder implements View.OnClickListene
     TextView title;
     TextView releaseDate;
     ImageView poster;
+    ImageView favIcon;
 
     private ItemViewHolderClickListener clickListener;
     private int position;
@@ -24,6 +25,7 @@ class MovieHolder extends RecyclerView.ViewHolder implements View.OnClickListene
         title = itemView.findViewById(R.id.title);
         releaseDate = itemView.findViewById(R.id.releaseDate);
         poster = itemView.findViewById(R.id.poster);
+        favIcon = itemView.findViewById(R.id.imageViewFav);
 
         itemView.setOnClickListener(this);
     }

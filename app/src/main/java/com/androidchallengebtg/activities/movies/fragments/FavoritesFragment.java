@@ -58,6 +58,7 @@ public class FavoritesFragment extends Fragment implements EventBus.EventBusList
             swipeRefreshLayout.setRefreshing(true);
 
             final MoviesAdapter adapter = new MoviesAdapter(getContext());
+            adapter.setFavoriteList(true);
 
             moviesController = new MoviesController(new MoviesController.Listener() {
                 @Override

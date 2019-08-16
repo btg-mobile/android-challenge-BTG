@@ -131,10 +131,6 @@ public class MoviesFragment extends Fragment implements EventBus.EventBusListene
         return view;
     }
 
-    private void getMovies(){
-
-    }
-
     private void goToDetailsScreen(JSONObject jsonObject){
         if(getContext()!=null){
             Intent intent = new Intent(getContext(), MovieDetailsActivity.class);

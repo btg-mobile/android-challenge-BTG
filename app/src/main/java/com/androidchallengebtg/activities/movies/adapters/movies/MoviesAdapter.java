@@ -1,6 +1,7 @@
 package com.androidchallengebtg.activities.movies.adapters.movies;
 
 import android.content.Context;
+import android.opengl.Visibility;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
     private String baseImageUrl;
     private ItemViewHolderClickListener clickListener;
     private EndlessScrollListener endlessScrollListener;
+    private boolean favoriteList;
 
     public MoviesAdapter(Context context) {
         this.context = context;
@@ -42,6 +44,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
 
     public void setEndlessScrollListener(EndlessScrollListener endlessScrollListener) {
         this.endlessScrollListener = endlessScrollListener;
+    }
+
+    public void setFavoriteList(boolean favoriteList) {
+        this.favoriteList = favoriteList;
     }
 
     @NonNull
@@ -71,6 +77,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MovieHolder> {
             movieHolder.title.setText(item.getString("title"));
             movieHolder.releaseDate.setText(date);
             Picasso.get().load(urlPoster).into(movieHolder.poster);
+
+            if(this.favoriteList){
+                if(movieHolder.favIcon.getVisibility() == View.GONE){
+                    movieHolder.favIcon.setVisibility(View.VISIBLE);
+                }
+            }else{
+                if(movieHolder.favIcon.getVisibility() == View.VISIBLE){
+                    movieHolder.favIcon.setVisibility(View.GONE);
+                }
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();

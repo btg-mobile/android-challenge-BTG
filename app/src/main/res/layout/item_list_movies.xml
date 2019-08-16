@@ -44,7 +44,19 @@
             android:layout_marginStart="8dp"
             android:text="Release date" />
 
+        <ImageView
+            android:id="@+id/imageViewFav"
+            android:layout_above="@+id/bottomLine"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/heart_custom"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
 
+        <View
+            android:id="@+id/bottomLine"
+            android:layout_below="@+id/poster"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
 
     </RelativeLayout>
 

@@ -132,6 +132,7 @@ class MovieDetailController {
             }
         });
     }
+
     void getMovieStatus(final MovieChangeLister movieChangeLister){
         connection.getMovieAccountState(this.movieId, new ConnectionListener() {
             @Override
