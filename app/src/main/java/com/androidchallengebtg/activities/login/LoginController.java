@@ -1,7 +1,5 @@
 package com.androidchallengebtg.activities.login;
 
-import android.util.Log;
-
 import com.androidchallengebtg.helpers.connection.Connection;
 import com.androidchallengebtg.helpers.connection.ConnectionListener;
 import com.androidchallengebtg.helpers.storage.PrefManager;
@@ -31,7 +29,6 @@ class LoginController {
 
     void loginWithPass(LoginWithPassListener loginWithPassListener){
         JSONObject pass = PrefManager.getINSTANCE().getPass();
-
         if(pass!=null){
             try {
                 createRequestToken(pass.getString("username"),pass.getString("password"));
@@ -49,13 +46,10 @@ class LoginController {
     Usa o api token para criar um request token
      */
     void createRequestToken(final String username, final String password){
-
         Connection connection = new Connection();
-
         connection.createRequestToken(new ConnectionListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.d("onSuccess", response.toString());
                 try {
                     String requestToken = response.getString("request_token");
                     PrefManager.getINSTANCE().saveRequestToken(requestToken);
@@ -68,7 +62,6 @@ class LoginController {
             @Override
             public void onError(JSONObject error) {
                 try {
-                    Log.e("onError",error.toString());
                     String message = error.getString("status_message");
                     listener.onError(message);
                 } catch (JSONException e) {
@@ -88,7 +81,6 @@ class LoginController {
         connection.validateRequestToken(username, password, requestToken, new ConnectionListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.d("LOG", response.toString());
                 try {
                     String requestToken = response.getString("request_token");
                     createSession(username,password,requestToken);
@@ -101,7 +93,6 @@ class LoginController {
             @Override
             public void onError(JSONObject error) {
                 try {
-                    Log.e("onError",error.toString());
                     String message = error.getString("status_message");
                     listener.onError(message);
                 } catch (JSONException e) {
@@ -120,7 +111,6 @@ class LoginController {
         connection.createSession(requestToken,new ConnectionListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.d("onSuccess", response.toString());
                 try {
                     String sessionId = response.getString("session_id");
                     PrefManager.getINSTANCE().saveSessionId(sessionId);
@@ -133,7 +123,6 @@ class LoginController {
             @Override
             public void onError(JSONObject error) {
                 try {
-                    Log.e("onError",error.toString());
                     String message = error.getString("status_message");
                     listener.onError(message);
                 } catch (JSONException e) {
@@ -152,7 +141,6 @@ class LoginController {
         connection.getAccountDetails(new ConnectionListener() {
             @Override
             public void onSuccess(JSONObject response) {
-                Log.d("onSuccess", response.toString());
                 PrefManager.getINSTANCE().saveUser(response);
                 Map<String,String> map = new HashMap<>();
                 map.put("username",username);
@@ -165,7 +153,6 @@ class LoginController {
             @Override
             public void onError(JSONObject error) {
                 try {
-                    Log.e("onError",error.toString());
                     String message = error.getString("status_message");
                     listener.onError(message);
                 } catch (JSONException e) {

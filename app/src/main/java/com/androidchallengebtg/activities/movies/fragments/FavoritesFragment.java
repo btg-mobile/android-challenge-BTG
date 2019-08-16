@@ -168,9 +168,16 @@ public class FavoritesFragment extends Fragment implements EventBus.EventBusList
     }
 
     @Override
-    public void onEvent(Object object) {
-        if(moviesController!=null){
-            moviesController.getFavoriteMovies(1);
+    public void onEvent(JSONObject jsonObject) {
+        try {
+            boolean reloadPopular = jsonObject.getBoolean("reload_favorites");
+            if(reloadPopular){
+                if(moviesController!=null){
+                    moviesController.getFavoriteMovies(1);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

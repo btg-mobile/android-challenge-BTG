@@ -107,7 +107,7 @@ public class Connection {
             int accountId = user.getInt("id");
             route = route.replace("{account_id}",String.valueOf(accountId));
             String sessionId = "&session_id="+PrefManager.getINSTANCE().getSessionId();
-            String url = baseUrl+route+apiKey+"&page="+page+sessionId;
+            String url = baseUrl+route+apiKey+"&page="+page+sessionId+"&sort_by=created_at.desc";
             request(Request.Method.GET,url,null,connectionListener);
         } catch (JSONException e) {
             e.printStackTrace();

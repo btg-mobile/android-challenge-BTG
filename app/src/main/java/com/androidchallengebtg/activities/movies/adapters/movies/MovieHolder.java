@@ -1,8 +1,8 @@
 package com.androidchallengebtg.activities.movies.adapters.movies;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,7 +17,6 @@ class MovieHolder extends RecyclerView.ViewHolder implements View.OnClickListene
     TextView releaseDate;
     ImageView poster;
     ImageView favIcon;
-
     private ItemViewHolderClickListener clickListener;
     private ItemViewHolderFavIconClickListner itemViewHolderFavIconClickListner;
     private int position;
@@ -29,8 +28,10 @@ class MovieHolder extends RecyclerView.ViewHolder implements View.OnClickListene
         releaseDate = itemView.findViewById(R.id.releaseDate);
         poster = itemView.findViewById(R.id.poster);
         favIcon = itemView.findViewById(R.id.imageViewFav);
+        CardView cardView = itemView.findViewById(R.id.cardViewMovie);
 
         favIcon.setOnClickListener(this);
+        cardView.setOnLongClickListener(this);
 
         itemView.setOnClickListener(this);
     }
@@ -49,7 +50,6 @@ class MovieHolder extends RecyclerView.ViewHolder implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        Log.e("clicou ", "clicoou");
         if(v.getId() == R.id.imageViewFav){
             if(this.itemViewHolderFavIconClickListner != null){
                 itemViewHolderFavIconClickListner.onClick(this.position);
@@ -64,9 +64,16 @@ class MovieHolder extends RecyclerView.ViewHolder implements View.OnClickListene
 
     @Override
     public boolean onLongClick(View v) {
-        if(clickListener!=null){
-            clickListener.onLongClick(this.position);
+        if(v.getId() == R.id.cardViewMovie){
+            if(clickListener!=null){
+                clickListener.onLongClick(this.position);
+            }
+        }else{
+            if(clickListener!=null){
+                clickListener.onLongClick(this.position);
+            }
         }
-        return false;
+
+        return true;
     }
 }

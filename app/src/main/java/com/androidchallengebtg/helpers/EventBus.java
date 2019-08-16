@@ -1,6 +1,6 @@
 package com.androidchallengebtg.helpers;
 
-import android.util.Log;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ public class EventBus {
     private Map<String,EventBusListener> listeners;
 
     public interface EventBusListener {
-        void onEvent(Object object);
+        void onEvent(JSONObject jsonObject);
     }
 
     private EventBus() {
@@ -43,12 +43,10 @@ public class EventBus {
         listeners.remove(classId);
     }
 
-    public void emit(Object object){
+    public void emit(JSONObject jsonObject){
         List<EventBusListener> tempListeners = new ArrayList<>(listeners.values());
         for (EventBusListener listener: tempListeners) {
-            listener.onEvent(object);
-            Log.e("ListMoviesListener",listener.getClass().getName());
+            listener.onEvent(jsonObject);
         }
     }
-
 }

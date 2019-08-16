@@ -102,6 +102,37 @@ public class MoviesFragment extends Fragment implements EventBus.EventBusListene
                 @Override
                 public void onLongClick(int position) {
 
+
+                    try {
+                        JSONObject movie = adapter.getItem(position);
+                        int id = movie.getInt("id");
+                        moviesController.markAsFavorite(id, true, new MoviesController.FavoriteListener() {
+                            @Override
+                            public void onSuccess(JSONObject response) {
+
+                                try {
+                                    JSONObject event = new JSONObject();
+                                    event.put("reload_favorites",true);
+                                    event.put("reload_popular",false);
+                                    EventBus.getInstance().emit(event);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if(MoviesFragment.this.getContext()!=null){
+                                    showToast(MoviesFragment.this.getContext().getString(R.string.added_to_your_favorites));
+                                }
+                            }
+
+                            @Override
+                            public void onError(String message) {
+                                showToast(message);
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             });
 
@@ -140,9 +171,22 @@ public class MoviesFragment extends Fragment implements EventBus.EventBusListene
     }
 
     @Override
-    public void onEvent(Object object) {
-        if(moviesController!=null){
-            moviesController.getListMovies(1);
+    public void onEvent(JSONObject jsonObject) {
+        try {
+            boolean reloadPopular = jsonObject.getBoolean("reload_popular");
+            if(reloadPopular){
+                if(moviesController!=null){
+                    moviesController.getListMovies(1);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showToast(String message){
+        if(getContext()!=null){
+            Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
         }
     }
 }

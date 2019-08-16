@@ -1,7 +1,6 @@
 package com.androidchallengebtg.helpers.storage;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.androidchallengebtg.R;
 import com.androidchallengebtg.application.ApplicationBTG;
@@ -75,7 +74,6 @@ public class PrefManager {
     }
 
     public void savePass(JSONObject pass){
-        Log.w("SALVAR",pass.toString());
         editor = pref.edit();
         editor.putString("pass", pass.toString());
         editor.commit();
