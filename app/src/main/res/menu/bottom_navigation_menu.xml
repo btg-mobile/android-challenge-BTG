@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/popular_movies"
+        android:icon="@drawable/baseline_local_movies_black_49"
+        android:title="Popular"/>
+
+    <item
+        android:id="@+id/favorites_movies"
+        android:icon="@drawable/baseline_movie_black_48"
+        android:title="Favoritos"/>
+
+
+</menu>
