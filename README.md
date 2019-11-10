@@ -1,4 +1,4 @@
-# Desafio BTG [Android]
+﻿# Desafio BTG [Android]
 Seja bem-vindo! Este é o seu primeiro passo para fazer parte do time de desenvolvimento do maior banco de investimentos da América Latina.
 
 #### LEIA AS INSTRUÇÕES POR COMPLETO ANTES DE COMEÇAR
@@ -45,5 +45,19 @@ Atente-se aos seguintes pontos:
 
 ## Processo de submissão
 Para submeter o seu desafio, faça um fork deste projeto, desenvolva o desafio **no seu fork** abrindo um pull request até a data limite estabelecida.
+## **Goals of use of the Architeture and Libraries**
+* [Architeture MVP with DataManager](https://labs.ribot.co.uk/android-application-architecture-8b6e34acda65) ✔︎
+* [Rxjava](http://reactivex.io/) ✔︎
+* [Room](https://developer.android.com/training/data-storage/room/index.html) ✔︎
+* [Kotlin](https://kotlinlang.org/) ✔︎
+* [Picasso](http://square.github.io/picasso/) ✔︎
+* [Timber](https://github.com/JakeWharton/timber) ✔︎
+* [Stetho](http://facebook.github.io/stetho/) ✔︎
+* [Retrofit](http://square.github.io/retrofit/) ✔︎
+* [ConstraintLayout](https://developer.android.com/training/constraint-layout/index.html) ✔︎
+* [Test Unit and Test Espresso](https://google.github.io/android-testing-support-library/docs/espresso/) ✔︎
+* [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver) ✔︎
+* [Kodein](https://salomonbrys.github.io/Kodein/) ✔︎
+
 
 ### Boa Sorte.
