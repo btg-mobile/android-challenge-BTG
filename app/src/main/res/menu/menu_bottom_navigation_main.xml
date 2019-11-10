@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_character"
+        android:enabled="true"
+        android:icon="@drawable/ic_spiderman"
+        android:title="@string/characters"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/ic_favorite_white_24px"
+        android:title="@string/favorite"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_comic"
+        android:icon="@drawable/ic_comic_white_24px"
+        android:title="@string/comic"
+        app:showAsAction="ifRoom"/>
+</menu>
