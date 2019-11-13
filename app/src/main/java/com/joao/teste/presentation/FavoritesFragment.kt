@@ -55,6 +55,7 @@ class FavoritesFragment : Fragment() {
                 sw_layout_favorite.isRefreshing = false
                 listFavoritesMovies.clear()
                 listFavoritesMovies.addAll(it)
+                this@FavoritesFragment.tv_empty_list.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
                 rv_favorites_movies?.adapter?.notifyDataSetChanged()
             })
         }

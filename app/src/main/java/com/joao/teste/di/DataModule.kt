@@ -18,7 +18,7 @@ object DataModule {
     val dataModules = module {
 
         single<MoviesDataSource> {
-            MoviesDataSourceImpl(get())
+            MoviesDataSourceImpl(get(), get())
         }
         single<FavoritesDataSource> {
             FavoritesDataSourceImpl(get())

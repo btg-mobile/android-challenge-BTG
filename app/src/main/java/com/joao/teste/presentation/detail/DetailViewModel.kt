@@ -1,5 +1,6 @@
 package com.joao.teste.presentation.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.joao.domain.entity.ErrorResponse
 import com.joao.domain.entity.MoviesItem
@@ -12,10 +13,10 @@ class DetailViewModel(private val moviesUseCase: MoviesUseCase) : DefaultViewMod
 
     var model: MoviesItem? = null
 
-    val success: MutableLiveData<String> get() = _success
-    val loading: MutableLiveData<Boolean> get() = _loading
-    val error: MutableLiveData<String> get() = _error
-    val update: MutableLiveData<Boolean> get() = _update
+    val success: LiveData<String> get() = _success
+    val loading: LiveData<Boolean> get() = _loading
+    val error: LiveData<String> get() = _error
+    val update: LiveData<Boolean> get() = _update
 
     private val _success: MutableLiveData<String> = MutableLiveData()
     private val _loading: MutableLiveData<Boolean> = MutableLiveData()
@@ -44,7 +45,7 @@ class DetailViewModel(private val moviesUseCase: MoviesUseCase) : DefaultViewMod
                         genreIdsText += " - ${it.name}"
                     }
                     genreIdsText = genreIdsText?.substring(2) ?: ""
-                    success.postValue(genreIdsText)
+                    _success.postValue(genreIdsText)
                     _loading.postValue(false)
                 }
                 is ErrorResponse -> {

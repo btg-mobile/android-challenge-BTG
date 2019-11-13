@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
 
         rv_movies.layoutManager = LinearLayoutManager(context)
         with(activity as MainActivity) {
-            adapterHome = BaseAdapter(R.layout.item_movie,listMovies) { viewAdapter, item ->
+            adapterHome = BaseAdapter(R.layout.item_movie, listMovies) { viewAdapter, item ->
                 viewAdapter.tv_name_movie.text = item?.title
                 viewAdapter.tv_date.text = item?.releaseDate
                 viewAdapter.ib_star.setImageResource(if (item?.isFavorite == true) R.drawable.ic_star else R.drawable.ic_star_border)
@@ -57,7 +57,12 @@ class HomeFragment : Fragment() {
                 sw_layout.isRefreshing = false
                 listMovies.clear()
                 listMovies.addAll(it)
+                this@HomeFragment.tv_empty_list.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
                 rv_movies?.adapter?.notifyDataSetChanged()
+            })
+
+            moviesViewModel.error.observe(this, Observer {
+                tv_empty_list.visibility = View.VISIBLE
             })
         }
 

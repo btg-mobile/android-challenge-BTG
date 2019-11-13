@@ -10,10 +10,10 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val moviesUseCase: MoviesUseCase) : DefaultViewModel() {
 
-    val loading: MutableLiveData<Boolean> get() = _loading
-    val updateList: MutableLiveData<ArrayList<MoviesItem?>> get() = _updateList
-    val updateListFavorites: MutableLiveData<ArrayList<MoviesItem?>> get() = _updateListFavorites
-    val error: MutableLiveData<String> get() = _error
+    val loading: LiveData<Boolean> get() = _loading
+    val updateList: LiveData<ArrayList<MoviesItem?>> get() = _updateList
+    val updateListFavorites: LiveData<ArrayList<MoviesItem?>> get() = _updateListFavorites
+    val error: LiveData<String> get() = _error
 
     private val _loading: MutableLiveData<Boolean> = MutableLiveData()
     private val _updateList: MutableLiveData<ArrayList<MoviesItem?>> = MutableLiveData()

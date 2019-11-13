@@ -1,5 +1,8 @@
 package com.joao.data.client
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -48,4 +51,11 @@ fun <T, O> Response<T>.formatResponse(mapper: Mapper<T, O>): com.joao.domain.ent
             ErrorResponse(RequestError(10, "Erro"))
         //TODO ALTERAR DEPOIS
     }
+}
+
+fun Context.isNetworkConnected(): Boolean {
+    val connectivityManager =
+        this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    var activeNetworkInfo = connectivityManager.activeNetworkInfo
+    return activeNetworkInfo != null
 }

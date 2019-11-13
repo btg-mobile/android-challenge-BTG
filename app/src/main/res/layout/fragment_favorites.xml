@@ -11,6 +11,20 @@
         android:layout_height="match_parent"
         tools:context=".presentation.HomeFragment">
 
+        <TextView
+            android:id="@+id/tv_empty_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/empty_list"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_favorites_movies"
