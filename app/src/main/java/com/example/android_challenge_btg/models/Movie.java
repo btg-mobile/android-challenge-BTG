@@ -1,68 +1,101 @@
 package com.example.android_challenge_btg.models;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
+@DatabaseTable
 public class Movie {
-    private boolean adult;
-    private String backdropPath;
-    private boolean belongsToCollection;
-    private BigDecimal budget;
-    private List<Genre> genres;
-    private String homepage;
-    private long id;
-    private String imdb_id;
-    private String originalLanguage;
-    private String originalTitle;
-    private String overview;
+    @DatabaseField
     private BigDecimal popularity;
-    private String psoterPath;
-    private List<ProductionCompany> productionCompanies;
-    private List<ProductionCountry> productionCountries;
-    private String releaseDate;
-    private BigDecimal revenue;
-    private BigDecimal runtime;
-    private List<Language> spokenLanguages;
-    private String status;
-    private String tagline;
-    private String title;
-    private boolean video;
-    private BigDecimal voteAverage;
+    @DatabaseField
     private BigInteger voteCount;
+    @DatabaseField
+    private boolean video;
+    @DatabaseField
+    private String posterPath;
+    @DatabaseField(id = true, canBeNull = false)
+    private long id;
+    @DatabaseField
+    private boolean adult;
+    @DatabaseField
+    private String backdropPath;
+    @DatabaseField
+    private String originalLanguage;
+    @DatabaseField
+    private String originalTitle;
+    @DatabaseField
+    private String genre_ids;
+    @DatabaseField
+    private String title;
+    @DatabaseField
+    private BigDecimal voteAverage;
+    @DatabaseField
+    private String overview;
+    @DatabaseField
+    private String releaseDate;
 
-    public Movie(boolean adult, String backdropPath, boolean belongsToCollection, BigDecimal budget,
-                 List<Genre> genres, String homepage, long id, String imdb_id, String originalLanguage,
-                 String originalTitle, String overview, BigDecimal popularity, String psoterPath,
-                 List<ProductionCompany> productionCompanies, List<ProductionCountry> productionCountries,
-                 String releaseDate, BigDecimal revenue, BigDecimal runtime, List<Language> spokenLanguages,
-                 String status, String tagline, String title, boolean video, BigDecimal voteAverage,
-                 BigInteger voteCount) {
+    public Movie(BigDecimal popularity, BigInteger voteCount, boolean video, String posterPath,
+                 long id, boolean adult, String backdropPath, String originalLanguage,
+                 String originalTitle, String genre_ids, String title, BigDecimal voteAverage,
+                 String overview, String releaseDate) {
+        this.popularity = popularity;
+        this.voteCount = voteCount;
+        this.video = video;
+        this.posterPath = posterPath;
+        this.id = id;
         this.adult = adult;
         this.backdropPath = backdropPath;
-        this.belongsToCollection = belongsToCollection;
-        this.budget = budget;
-        this.genres = genres;
-        this.homepage = homepage;
-        this.id = id;
-        this.imdb_id = imdb_id;
         this.originalLanguage = originalLanguage;
         this.originalTitle = originalTitle;
-        this.overview = overview;
-        this.popularity = popularity;
-        this.psoterPath = psoterPath;
-        this.productionCompanies = productionCompanies;
-        this.productionCountries = productionCountries;
-        this.releaseDate = releaseDate;
-        this.revenue = revenue;
-        this.runtime = runtime;
-        this.spokenLanguages = spokenLanguages;
-        this.status = status;
-        this.tagline = tagline;
+        this.genre_ids = genre_ids;
         this.title = title;
-        this.video = video;
         this.voteAverage = voteAverage;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+    }
+
+    public BigDecimal getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(BigDecimal popularity) {
+        this.popularity = popularity;
+    }
+
+    public BigInteger getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(BigInteger voteCount) {
         this.voteCount = voteCount;
+    }
+
+    public boolean isVideo() {
+        return video;
+    }
+
+    public void setVideo(boolean video) {
+        this.video = video;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public boolean isAdult() {
@@ -81,54 +114,6 @@ public class Movie {
         this.backdropPath = backdropPath;
     }
 
-    public boolean isBelongsToCollection() {
-        return belongsToCollection;
-    }
-
-    public void setBelongsToCollection(boolean belongsToCollection) {
-        this.belongsToCollection = belongsToCollection;
-    }
-
-    public BigDecimal getBudget() {
-        return budget;
-    }
-
-    public void setBudget(BigDecimal budget) {
-        this.budget = budget;
-    }
-
-    public List<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
-    }
-
-    public String getHomepage() {
-        return homepage;
-    }
-
-    public void setHomepage(String homepage) {
-        this.homepage = homepage;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getImdb_id() {
-        return imdb_id;
-    }
-
-    public void setImdb_id(String imdb_id) {
-        this.imdb_id = imdb_id;
-    }
-
     public String getOriginalLanguage() {
         return originalLanguage;
     }
@@ -145,92 +130,12 @@ public class Movie {
         this.originalTitle = originalTitle;
     }
 
-    public String getOverview() {
-        return overview;
+    public String getGenre_ids() {
+        return genre_ids;
     }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public BigDecimal getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(BigDecimal popularity) {
-        this.popularity = popularity;
-    }
-
-    public String getPsoterPath() {
-        return psoterPath;
-    }
-
-    public void setPsoterPath(String psoterPath) {
-        this.psoterPath = psoterPath;
-    }
-
-    public List<ProductionCompany> getProductionCompanies() {
-        return productionCompanies;
-    }
-
-    public void setProductionCompanies(List<ProductionCompany> productionCompanies) {
-        this.productionCompanies = productionCompanies;
-    }
-
-    public List<ProductionCountry> getProductionCountries() {
-        return productionCountries;
-    }
-
-    public void setProductionCountries(List<ProductionCountry> productionCountries) {
-        this.productionCountries = productionCountries;
-    }
-
-    public String getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public BigDecimal getRevenue() {
-        return revenue;
-    }
-
-    public void setRevenue(BigDecimal revenue) {
-        this.revenue = revenue;
-    }
-
-    public BigDecimal getRuntime() {
-        return runtime;
-    }
-
-    public void setRuntime(BigDecimal runtime) {
-        this.runtime = runtime;
-    }
-
-    public List<Language> getSpokenLanguages() {
-        return spokenLanguages;
-    }
-
-    public void setSpokenLanguages(List<Language> spokenLanguages) {
-        this.spokenLanguages = spokenLanguages;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getTagline() {
-        return tagline;
-    }
-
-    public void setTagline(String tagline) {
-        this.tagline = tagline;
+    public void setGenre_id(String genre_ids) {
+        this.genre_ids = genre_ids;
     }
 
     public String getTitle() {
@@ -241,14 +146,6 @@ public class Movie {
         this.title = title;
     }
 
-    public boolean isVideo() {
-        return video;
-    }
-
-    public void setVideo(boolean video) {
-        this.video = video;
-    }
-
     public BigDecimal getVoteAverage() {
         return voteAverage;
     }
@@ -257,11 +154,19 @@ public class Movie {
         this.voteAverage = voteAverage;
     }
 
-    public BigInteger getVoteCount() {
-        return voteCount;
+    public String getOverview() {
+        return overview;
     }
 
-    public void setVoteCount(BigInteger voteCount) {
-        this.voteCount = voteCount;
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 }

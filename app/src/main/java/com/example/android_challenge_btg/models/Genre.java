@@ -1,7 +1,14 @@
 package com.example.android_challenge_btg.models;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable
 public class Genre {
+
+    @DatabaseField(id = true, canBeNull = false)
     private long id;
+    @DatabaseField(canBeNull = false)
     private String name;
 
 
