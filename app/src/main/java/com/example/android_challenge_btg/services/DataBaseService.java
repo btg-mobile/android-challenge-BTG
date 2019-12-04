@@ -7,10 +7,12 @@ import com.example.android_challenge_btg.models.Genre;
 import com.example.android_challenge_btg.models.Movie;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class DataBaseService extends OrmLiteSqliteOpenHelper {
 
@@ -44,5 +46,13 @@ public class DataBaseService extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
+    }
+
+    public void createGenres(List<Genre> genres) {
+        RuntimeExceptionDao<Genre, Long> genreDao = getRuntimeExceptionDao(Genre.class);
+
+        for (Genre genre : genres) {
+            genreDao.createIfNotExists(genre);
+        }
     }
 }

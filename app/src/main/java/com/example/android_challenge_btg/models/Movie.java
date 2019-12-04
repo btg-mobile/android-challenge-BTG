@@ -5,13 +5,14 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 @DatabaseTable
-public class Movie {
+public class Movie implements Serializable {
     @DatabaseField
     private BigDecimal popularity;
     @DatabaseField
@@ -43,6 +44,7 @@ public class Movie {
 
     private List<Long> genreIds;
     private final String LIST_SEPARATOR = "-";
+    private Boolean favorite = false;
 
 
     public Movie(BigDecimal popularity, BigInteger voteCount, boolean video, String posterPath,
@@ -228,5 +230,9 @@ public class Movie {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public boolean isFavorite() {
+        return this.favorite;
     }
 }

@@ -1,11 +1,12 @@
-package com.example.android_challenge_btg;
+package com.example.android_challenge_btg.Activities;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.android_challenge_btg.fragments.FavoritesFragment;
+import com.example.android_challenge_btg.R;
+import com.example.android_challenge_btg.ViewPagerAdapter;
 import com.example.android_challenge_btg.fragments.MoviesFragment;
 import com.google.android.material.tabs.TabLayout;
 
@@ -30,8 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MoviesFragment(), "Movies");
-        adapter.addFragment(new FavoritesFragment(), "Favorites");
+        MoviesFragment popularMoviesFragment = new MoviesFragment();
+        MoviesFragment favoritesFragment = new MoviesFragment();
+        popularMoviesFragment.setFavorites(false);
+        favoritesFragment.setFavorites(true);
+        adapter.addFragment(popularMoviesFragment, "Movies");
+        adapter.addFragment(favoritesFragment, "Favorites");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }

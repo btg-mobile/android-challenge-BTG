@@ -24,6 +24,7 @@ android {
 
     buildTypes.each {
         it.buildConfigField 'String', 'API_KEY', api_key
+
     }
 }
 
@@ -44,6 +45,9 @@ dependencies {
     implementation group: 'com.j256.ormlite', name: 'ormlite-jdbc', version: '5.1'
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+
 
 
 }

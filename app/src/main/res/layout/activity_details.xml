@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/detail_movie_title"
+        android:text="Movie Name"
+        android:textAlignment="center"
+        android:maxLines="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/bigWhiteTExtStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/datail_movie_poster"
+        android:layout_width="200dp"
+        android:layout_height="330dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_movie_title"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp"/>
+
+    <Switch
+        android:id="@+id/switch_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/datail_movie_poster"
+        android:layout_marginEnd="15dp"/>
+
+    <TextView
+        android:id="@+id/genresLabel"
+        style="@style/smallWhiteTExtStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Genres:"
+        app:layout_constraintStart_toEndOf="@+id/datail_movie_poster"
+        app:layout_constraintTop_toBottomOf="@+id/switch_fav"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/genres_rv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/genresLabel"
+        app:layout_constraintTop_toBottomOf="@+id/genresLabel" />
+
+    <TextView
+        android:id="@+id/rate_label"
+        style="@style/smallWhiteTExtStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Rate:"
+        app:layout_constraintStart_toStartOf="@+id/genres_rv"
+        app:layout_constraintTop_toBottomOf="@+id/genres_rv" />
+
+    <TextView
+        android:id="@+id/rate_movie"
+        style="@style/bigWhiteTExtStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="0,0"
+        app:layout_constraintTop_toBottomOf="@+id/rate_label"
+        android:layout_marginEnd="30dp"/>
+
+
+    <TextView
+        android:id="@+id/detail_movie_overview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="7"
+        style="@style/smallWhiteTExtStyle"
+        android:layout_margin="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datail_movie_poster" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
