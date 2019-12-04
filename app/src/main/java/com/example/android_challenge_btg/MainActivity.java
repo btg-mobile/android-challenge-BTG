@@ -1,10 +1,9 @@
 package com.example.android_challenge_btg;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.android_challenge_btg.fragments.FavoritesFragment;
 import com.example.android_challenge_btg.fragments.MoviesFragment;
