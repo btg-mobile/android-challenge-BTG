@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="tab_text_1">Filmes</string>
+    <string name="tab_text_2">Favoritos</string>
+
+
+    <!-- Details Fragment -->
+    <string name="movie_details_title_label">Titulo</string>
+    <string name="movie_details_release_label">Data de lançamento</string>
+    <string name="movie_details_overview_label">Sinopse</string>
+    <string name="movie_details_vote_average_label">Nota</string>
+    <string name="movie_details_genders_label">Gêneros</string>
+    <string name="title_activity_movie_details">MovieDetailsActivity</string>
+    <string name="empty_list_movie">Não há filmes para sua pesquisa</string>
+    <string name="error_system">Ocorreu um erro no sistema</string>
+    <string name="poster_movie">Poster do filme</string>
+    <string name="search_for_name">Pesquisar por nome</string>
+    <string name="search_for_name_or_year">Pesquisar por nome ou ano</string>
+</resources>
