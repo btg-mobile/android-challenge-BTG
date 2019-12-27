@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MovieDB</string>
+
+    <!--    Movies Activity -->
+    <string name="movies_title">Movies</string>
+
+    <!--    Movie Details Activity  -->
+    <string name="movie_details_title_label">Titulo</string>
+    <string name="movie_details_overview_label">Sinopse</string>
+
+    <!--    ApiKey  -->
+    <string name="api_key"> "c65150bf5825be7478ddb11d081c804f</string>
+    <string name="movie_details_score_label">Nota</string>
+
+</resources>
