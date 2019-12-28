@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">BTG - TheMoviesDB</string>
+    <string name="tab_movie">Filmes</string>
+    <string name="tab_favorite">Favoritos</string>
+
+    <string name="find_name_year">Pesquisar por nome ou ano...</string>
+    <string name="find_name">Pesquisar por nome...</string>
+
+    <string name="PARAM_DETAIL">PARAM_DETAIL</string>
+</resources>
