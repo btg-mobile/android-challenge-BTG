@@ -7,6 +7,7 @@ import com.example.moviedb.data.Api
 import com.example.moviedb.data.model.Movie
 import com.example.moviedb.data.response.GenreResponse
 import com.example.moviedb.data.response.MovieResponse
+import com.example.moviedb.presentation.repository.DataRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,7 +16,7 @@ import retrofit2.Response
 
 class MoviesViewModel : ViewModel() {
 
-    val moviesLiveData: MutableLiveData<List<Movie>> = MutableLiveData()
+    val moviesLiveData: MutableLiveData<List<Movie>>? = DataRepository.getMoviesData()
     val moviesData: MutableLiveData<List<Movie>> = MutableLiveData()
 
     var hash: HashMap<String, String> = HashMap()
@@ -46,7 +47,7 @@ class MoviesViewModel : ViewModel() {
                         }
 
                     }
-                    moviesLiveData.value = movies
+                    DataRepository.setMoviesData(movies)
                     moviesData.value = movies
                 }
             }
@@ -86,6 +87,7 @@ class MoviesViewModel : ViewModel() {
 
     fun searchMovieByTitle(title  : String)  {
         val movies: MutableList<Movie> = mutableListOf()
+        var moviesLiveData = DataRepository.getMoviesData()
 
         for (movie in moviesLiveData.value!!) {
             if(movie.title.toLowerCase().contains(title))
@@ -96,19 +98,5 @@ class MoviesViewModel : ViewModel() {
 
     }
 
-    fun toggleFavoriteMovie(id : Int) : Boolean{
-        val movies = moviesData.value
 
-            movies?.find {
-                e ->
-                val ide = e.id
-                ide== id
-
-
-        }
-
-//        moviesLiveData.value?.find { it.id == id }?.favorite = bool
-
-        return false
-    }
 }

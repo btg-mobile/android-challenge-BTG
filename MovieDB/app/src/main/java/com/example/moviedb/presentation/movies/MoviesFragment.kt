@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MoviesFragment : Fragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

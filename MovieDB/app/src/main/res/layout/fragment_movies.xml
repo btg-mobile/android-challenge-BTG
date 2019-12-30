@@ -5,11 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".presentation.movies.MoviesFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerMovies"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperMovies"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent">
 
-        tools:listitem="@layout/item_movie" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMovies"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            tools:listitem="@layout/item_movie" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

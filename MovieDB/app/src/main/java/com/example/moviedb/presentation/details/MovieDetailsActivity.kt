@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import com.example.moviedb.R
 import com.example.moviedb.presentation.movies.MoviesViewModel
+import com.example.moviedb.presentation.repository.DataRepository
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_movie_details.*
 
@@ -19,10 +20,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
-        val viewModel: MoviesViewModel =
-            ViewModelProviders.of(this).get(MoviesViewModel::class.java)
 
-        val teste =  intent.getStringExtra(EXTRA_ID)
         id  = intent.getStringExtra(EXTRA_ID).toInt()
         val title = intent.getStringExtra(EXTRA_TITLE)
         val overview = intent.getStringExtra(EXTRA_OVERVIEW)
@@ -39,10 +37,10 @@ class MovieDetailsActivity : AppCompatActivity() {
             .into(posterDetails)
 
         favoriteImageView.setOnClickListener {
-            if(viewModel.toggleFavoriteMovie(id))
-                favoriteImageView.setImageResource(R.drawable.unfavorite)
-            else
+            if(DataRepository.toggleFavoriteMovie(id))
                 favoriteImageView.setImageResource(R.drawable.favorite)
+            else
+                favoriteImageView.setImageResource(R.drawable.unfavorite)
 
         }
     }
