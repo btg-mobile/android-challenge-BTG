@@ -21,6 +21,13 @@
             android:layout_width="250dp"
             android:layout_height="250dp" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:src="@drawable/favorite"
+            android:id="@+id/favoriteImageView"
+            tools:ignore="VectorDrawableCompat"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +49,7 @@
             android:layout_height="wrap_content"
             android:text="@string/movie_details_overview_label"
             android:textColor="@color/black"
-            android:textStyle="bold" />/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/movieDetailsOverview"
@@ -55,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="@string/movie_details_score_label"
             android:textColor="@color/black"
-            android:textStyle="bold" />/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/movieDetailsScore"

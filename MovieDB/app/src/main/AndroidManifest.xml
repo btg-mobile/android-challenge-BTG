@@ -20,13 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.details.MovieDetailsActivity" />
-        <activity android:name=".presentation.movies.MoviesActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
