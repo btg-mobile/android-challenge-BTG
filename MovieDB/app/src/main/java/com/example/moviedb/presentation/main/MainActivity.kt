@@ -1,10 +1,7 @@
 package com.example.moviedb.presentation.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.SearchEvent
-import androidx.appcompat.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.moviedb.R
 import kotlinx.android.synthetic.main.activity_main.*
 

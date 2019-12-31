@@ -7,12 +7,17 @@
     <!--    Movie Details Activity  -->
     <string name="movie_details_title_label">Titulo</string>
     <string name="movie_details_overview_label">Sinopse</string>
+    <string name="no_favorite_message">Ainda não tem nenhum filme favoritado</string>
 
     <!--    ApiKey  -->
     <string name="api_key"> "c65150bf5825be7478ddb11d081c804f</string>
+
+
     <string name="movie_details_score_label">Nota</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movie_details_genre_label">Gêneros</string>
+    <string name="item_movie_description">Poster do filme</string>
+    <string name="item_movie_favorite">Imagem Favorito</string>
+    <string name="movie_no_favorite">Imagem não tem favoritos</string>
 
 </resources>

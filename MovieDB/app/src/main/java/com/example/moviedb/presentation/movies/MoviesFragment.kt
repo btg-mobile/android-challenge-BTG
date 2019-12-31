@@ -1,24 +1,35 @@
 package com.example.moviedb.presentation.movies
 
-
+import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviedb.R
 import com.example.moviedb.presentation.details.MovieDetailsActivity
+import com.example.moviedb.presentation.repository.DataRepository
 import kotlinx.android.synthetic.main.fragment_movies.*
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MoviesFragment : Fragment() {
+
+    private lateinit var mHandler: Handler
+    private lateinit var mRunnable: Runnable
+    private var PRIVATE_MODE = 0
+    private val PREF_NAME = "movies_list"
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         val viewModel: MoviesViewModel =
             ViewModelProviders.of(this).get(MoviesViewModel::class.java)
 
@@ -26,10 +37,9 @@ class MoviesFragment : Fragment() {
             it?.let { movies ->
                 with(recyclerMovies) {
                     layoutManager =
-                        LinearLayoutManager(
+                        GridLayoutManager(
                             context,
-                            RecyclerView.VERTICAL,
-                            false
+                            2
                         )
                     setHasFixedSize(true)
                     adapter = MoviesAdapter(movies) { movie ->
@@ -39,7 +49,8 @@ class MoviesFragment : Fragment() {
                             movie.title,
                             movie.overview,
                             movie.posterPath,
-                            movie.voteAverage
+                            movie.voteAverage,
+                            movie.genres
                         )
                         this.context.startActivity(intent)
                     }
@@ -47,15 +58,45 @@ class MoviesFragment : Fragment() {
             }
         })
 
-        viewModel.getGenres()
-        viewModel.getMovies()
+
 
         return inflater.inflate(R.layout.fragment_movies, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        mHandler = Handler()
+        swiperMovies.isRefreshing = true
+        mRunnable = Runnable {
+            swiperMovies.isRefreshing = false
+        }
+        updateView()
+
+        swiperMovies.setOnRefreshListener {
+            updateView()
+            mRunnable = Runnable {
+                swiperMovies.isRefreshing = false
+            }
+        }
+    }
+
+    private fun updateView() {
+        val viewModel: MoviesViewModel =
+            ViewModelProviders.of(this).get(MoviesViewModel::class.java)
+
+        viewModel.getGenres()
+        viewModel.getMovies()
+
+        mHandler.post(mRunnable)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -64,16 +105,19 @@ class MoviesFragment : Fragment() {
             ViewModelProviders.of(this).get(MoviesViewModel::class.java)
 
         inflater.inflate(R.menu.main_search, menu)
-        val searchItem = menu?.findItem(R.id.movie_search)
+        val searchItem = menu.findItem(R.id.movie_search)
 
         if (searchItem != null) {
             val searchView = searchItem.actionView as SearchView
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean = true
+                @SuppressLint("DefaultLocale")
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText!!.isNotEmpty()) {
                         val search = newText.toLowerCase()
                         viewModel.searchMovieByTitle(search)
+                    } else {
+                        viewModel.searchMovieByTitle("")
                     }
 
                     return true

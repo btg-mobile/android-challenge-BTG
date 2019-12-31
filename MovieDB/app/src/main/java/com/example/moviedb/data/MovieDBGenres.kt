@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 
 interface MovieDBGenres {
-        @GET("genre/movie/list/")
+        @GET("genre/movie/list")
         fun getGenres(
             @Query("api_key") apiKey :String = "c65150bf5825be7478ddb11d081c804f",
             @Query("language") language : String = "pt-BR"

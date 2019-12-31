@@ -16,6 +16,8 @@ data class MovieResults (
     val releaseDate: String,
     @SerializedName("vote_average")
     val voteAverage: Number,
+    @SerializedName("genre_ids")
+    val genres: List<Int>,
 
     @Expose(deserialize = false) // deserialize is this field is not required
     @SerializedName("poster_path")
