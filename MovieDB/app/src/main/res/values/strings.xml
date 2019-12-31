@@ -9,8 +9,6 @@
     <string name="movie_details_overview_label">Sinopse</string>
     <string name="no_favorite_message">Ainda não tem nenhum filme favoritado</string>
 
-    <!--    ApiKey  -->
-    <string name="api_key"> "c65150bf5825be7478ddb11d081c804f</string>
 
 
     <string name="movie_details_score_label">Nota</string>
@@ -19,5 +17,9 @@
     <string name="item_movie_description">Poster do filme</string>
     <string name="item_movie_favorite">Imagem Favorito</string>
     <string name="movie_no_favorite">Imagem não tem favoritos</string>
+    <string name="MovieTitle">Filmes</string>
+    <string name="FavoriteTitle">Favoritos</string>
+    <string name="movie_details_poster">Imagem do poster</string>
+    <string name="movie_details_favorite_image">Imagem favorito</string>
 
 </resources>

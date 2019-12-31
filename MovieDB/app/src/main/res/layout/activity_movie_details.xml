@@ -21,12 +21,15 @@
             android:id="@+id/posterDetails"
             android:layout_width="250dp"
             android:layout_height="250dp"
+            android:contentDescription="@string/movie_details_poster"
             app:srcCompat="@drawable/not_found" />
 
         <ImageView
             android:id="@+id/favoriteImageView"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:contentDescription="@string/movie_details_favorite_image"
             android:src="@drawable/unfavorite"
             tools:ignore="VectorDrawableCompat" />
 
@@ -44,7 +47,7 @@
             android:id="@+id/movieDetailsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/details_text_margin"
+            android:layout_marginStart="@dimen/details_text_margin"
             android:textColor="@color/black"
             tools:text="" />
 
@@ -60,7 +63,7 @@
             android:id="@+id/movieDetailsOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/details_text_margin"
+            android:layout_marginStart="@dimen/details_text_margin"
             android:textColor="@color/black"
             tools:text="" />
 
@@ -76,7 +79,7 @@
             android:id="@+id/movieDetailsScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/details_text_margin"
+            android:layout_marginStart="@dimen/details_text_margin"
             android:textColor="@color/black"
             tools:text="" />
 
@@ -86,17 +89,15 @@
             android:text="@string/movie_details_genre_label"
             android:textColor="@color/black"
             android:textSize="@dimen/t5"
-            android:textStyle="bold" />/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/movieDetailsGenres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/details_text_margin"
+            android:layout_marginStart="@dimen/details_text_margin"
             android:textColor="@color/black"
             tools:text="" />
 
     </LinearLayout>
-
-
 </ScrollView>

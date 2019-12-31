@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.moviedb.BuildConfig.URL_POSTER
 import com.example.moviedb.R
 import com.example.moviedb.presentation.repository.DataRepository
 import com.squareup.picasso.Picasso
@@ -32,7 +33,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
 
         Picasso.get()
-            .load("http://image.tmdb.org/t/p/w780" + intent.getStringExtra(EXTRA_POSTERPATH))
+            .load(URL_POSTER + intent.getStringExtra(EXTRA_POSTERPATH))
             .into(posterDetails)
 
         if (DataRepository.isFavorite(id))

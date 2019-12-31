@@ -1,6 +1,7 @@
 package com.example.moviedb.presentation.movies
 
 import android.content.Context
+import com.example.moviedb.BuildConfig.URL_POSTER
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,7 @@ class MoviesAdapter(
 
     class MoviesViewHolder(
         view: View,
-        pContext : Context,
+        private val pContext: Context,
         private val onItemClickListener: ((movie: Movie) -> Unit)
     ) : RecyclerView.ViewHolder(view) {
 
@@ -39,10 +40,9 @@ class MoviesAdapter(
         private val poster = view.posterImage
         private  val favorite = view.favoriteRecyclerView
 
-        private val pContext = pContext;
         fun bindView(movie: Movie) {
 
-            Picasso.get().load("http://image.tmdb.org/t/p/w780" + movie.posterPath).into(poster)
+            Picasso.get().load(URL_POSTER + movie.posterPath).into(poster)
 
             title.text = movie.title
             year.text = movie.getYear()
@@ -62,9 +62,6 @@ class MoviesAdapter(
                 else
                     favorite.setImageResource(R.drawable.unfavorite)
             }
-
-
-
         }
     }
 }

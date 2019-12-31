@@ -3,7 +3,6 @@ package com.example.moviedb.data
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 object Api {
 
     private fun initRetrofit() : Retrofit {
@@ -11,8 +10,6 @@ object Api {
             .baseUrl("https://api.themoviedb.org/3/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
-
     }
     val service : MovieDBServices = initRetrofit().create(MovieDBServices::class.java)
 

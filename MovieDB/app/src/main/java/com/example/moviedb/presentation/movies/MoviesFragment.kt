@@ -1,7 +1,6 @@
 package com.example.moviedb.presentation.movies
 
 import android.annotation.SuppressLint
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
@@ -12,23 +11,17 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moviedb.R
 import com.example.moviedb.presentation.details.MovieDetailsActivity
-import com.example.moviedb.presentation.repository.DataRepository
 import kotlinx.android.synthetic.main.fragment_movies.*
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MoviesFragment : Fragment() {
 
     private lateinit var mHandler: Handler
     private lateinit var mRunnable: Runnable
-    private var PRIVATE_MODE = 0
-    private val PREF_NAME = "movies_list"
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
 
         val viewModel: MoviesViewModel =
             ViewModelProviders.of(this).get(MoviesViewModel::class.java)
@@ -58,8 +51,6 @@ class MoviesFragment : Fragment() {
             }
         })
 
-
-
         return inflater.inflate(R.layout.fragment_movies, container, false)
     }
 
@@ -67,8 +58,6 @@ class MoviesFragment : Fragment() {
 
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
-
     }
 
     override fun onStart() {

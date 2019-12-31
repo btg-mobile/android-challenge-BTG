@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedb.R
@@ -24,16 +25,11 @@ class FavoritesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View? = inflater.inflate(R.layout.fragment_movies, container, false)
 
-
-        return inflater.inflate(R.layout.fragment_movies, container, false)
-    }
 
     override fun onStart() {
         super.onStart()
-
-
 
         movies = DataRepository.getFavoriteMovies()
 
@@ -59,9 +55,7 @@ class FavoritesFragment : Fragment() {
         if(menuVisible){
             movies = DataRepository.getFavoriteMovies()
             updateView()
-
         }
-
     }
 
     private fun updateView() {
@@ -69,10 +63,9 @@ class FavoritesFragment : Fragment() {
         if (movies.isNotEmpty()) {
             with(recyclerMovies) {
                 layoutManager =
-                    LinearLayoutManager(
+                    GridLayoutManager(
                         context,
-                        RecyclerView.VERTICAL,
-                        false
+                        2
                     )
                 setHasFixedSize(true)
                 adapter = MoviesAdapter(movies) { movie ->
@@ -138,6 +131,4 @@ class FavoritesFragment : Fragment() {
 
         return super.onCreateOptionsMenu(menu, inflater)
     }
-
-
 }

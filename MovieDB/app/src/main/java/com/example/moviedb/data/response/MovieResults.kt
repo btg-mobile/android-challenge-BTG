@@ -3,7 +3,6 @@ package com.example.moviedb.data.response
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-
 data class MovieResults (
 
     @SerializedName("id")
@@ -22,6 +21,4 @@ data class MovieResults (
     @Expose(deserialize = false) // deserialize is this field is not required
     @SerializedName("poster_path")
     val posterPath: String = ""
-
-
 )
