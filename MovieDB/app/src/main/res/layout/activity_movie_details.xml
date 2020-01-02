@@ -7,7 +7,6 @@
     android:layout_margin="16dp"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:scrollbars="none"
     tools:context=".presentation.details.MovieDetailsActivity">
 
     <LinearLayout

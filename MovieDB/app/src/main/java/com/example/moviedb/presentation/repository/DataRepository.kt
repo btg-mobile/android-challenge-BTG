@@ -2,7 +2,9 @@ package com.example.moviedb.presentation.repository
 
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.example.moviedb.data.model.Movie
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -10,28 +12,41 @@ import com.google.gson.reflect.TypeToken
 
 object DataRepository {
 
-    private var moviesLiveData: MutableLiveData<List<Movie>> = MutableLiveData()
+    private var moviesLiveData: MutableList<Movie> = mutableListOf()
+    private var popularLiveData: MutableLiveData<List<Movie>> = MutableLiveData()
+    private var favoriteLiveData: MutableLiveData<List<Movie>> = MutableLiveData()
     private var favoriteMoviesIds: MutableList<Int> = mutableListOf()
 
-    fun getMoviesData(): MutableLiveData<List<Movie>> {
-        return moviesLiveData
+    fun restorePopularData() {
+        popularLiveData.value = moviesLiveData
+    }
+
+    fun createPopularObserver(owner: LifecycleOwner, observer: Observer<List<Movie>>) {
+        popularLiveData.observe(owner, observer)
+    }
+
+    fun createFavoriteObserver(owner: LifecycleOwner, observer: Observer<List<Movie>>) {
+        favoriteLiveData.observe(owner, observer)
     }
 
     fun setMoviesData(moviesList: MutableList<Movie>) {
-        this.moviesLiveData.value = moviesList
+
+        moviesLiveData.addAll(moviesList)
+
+        restorePopularData()
     }
 
     fun toggleFavoriteMovie(id: Int?, context: Context?): Boolean {
 
-        return if (favoriteMoviesIds.any { e -> e == id }) {
+        if (favoriteMoviesIds.any { e -> e == id }) {
             favoriteMoviesIds.remove(id!!)
-            saveData(context )
-            false
+            saveData(context)
+            return false
         } else {
 
             favoriteMoviesIds.add(id!!)
-            saveData(context )
-            true
+            saveData(context)
+            return true
         }
     }
 
@@ -43,7 +58,7 @@ object DataRepository {
             val editor = sharedPreferences.edit()
             val gson = Gson()
             val json = gson.toJson(favoriteMoviesIds)
-            json?.let{
+            json?.let {
                 editor?.putString("favorite list", json)
                 editor?.apply()
             }
@@ -57,55 +72,49 @@ object DataRepository {
         val sharedPreferences = context?.getSharedPreferences("movies_list", 0)
 
         sharedPreferences?.let {
-            val gson  = Gson()
+            val gson = Gson()
             val json = sharedPreferences.getString("favorite list", null)
             val type = object : TypeToken<MutableList<Int>>() {}.type
-            json?.let{
+            json?.let {
                 favoriteMoviesIds = gson.fromJson(json, type)
             }
 
         }
+    }
 
+    @SuppressLint("DefaultLocale")
+    fun searchMovieByTitle(title: String) {
+        popularLiveData.value =
+            moviesLiveData?.filter { it.title.toLowerCase().contains(title) }
 
     }
 
-    fun getFavoriteMovies(): MutableList<Movie> {
-        val moviesList: MutableList<Movie> = mutableListOf()
+    fun restoreFavoriteList() {
 
-        moviesLiveData.value?.let { movies ->
-
-            for (movie in movies) {
-                if (favoriteMoviesIds.any { e -> e == movie.id })
-                    moviesList.add(movie)
+        favoriteLiveData.value =
+            moviesLiveData.filter { movie ->
+                isFavorite(movie.id)
             }
-        }
-
-        return moviesList
     }
+
+    fun isFavoriteEmpty(): Boolean = favoriteLiveData.value.isNullOrEmpty()
 
     fun isFavorite(id: Int?): Boolean = favoriteMoviesIds.any { e -> e == id }
 
     @SuppressLint("DefaultLocale")
-    fun searchFavoriteMoviesByYearOrTitle(query: String): MutableList<Movie> {
-        val moviesList: MutableList<Movie> = mutableListOf()
+    fun searchFavoriteMoviesByYearOrTitle(query: String) {
 
-        moviesLiveData.value?.let { movies ->
+        val value = moviesLiveData.filter { movie ->
+            isFavorite(movie.id) && (movie.title.toLowerCase().contains(query) ||
+                    movie.getYear().toLowerCase().contains(query))
 
-            for (movie in movies) {
-                if (
-                    favoriteMoviesIds.any { e -> e == movie.id } &&
-                    (movie.title.toLowerCase().contains(query) ||
-                            (movie.getYear().toLowerCase().contains(query))))
-                    moviesList.add(movie)
-            }
         }
 
-        return moviesList
+        favoriteLiveData.value = value
+
 
     }
-
 }
-
 
 
 

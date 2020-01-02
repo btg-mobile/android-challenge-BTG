@@ -9,24 +9,29 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedb.R
+import com.example.moviedb.data.model.Movie
 import com.example.moviedb.presentation.details.MovieDetailsActivity
+import com.example.moviedb.presentation.repository.DataRepository
 import kotlinx.android.synthetic.main.fragment_movies.*
 
 class MoviesFragment : Fragment() {
 
     private lateinit var mHandler: Handler
     private lateinit var mRunnable: Runnable
+    private var visibleItemCount: Int = 0
+    private var pastVisibleItemCount: Int = 0
+    private var totalItemCount : Int = 0
+    private var pagId :Int = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val viewModel: MoviesViewModel =
-            ViewModelProviders.of(this).get(MoviesViewModel::class.java)
-
-        viewModel.moviesData.observe(this, Observer {
+        val observer = Observer<List<Movie>> {
             it?.let { movies ->
                 with(recyclerMovies) {
                     layoutManager =
@@ -34,6 +39,7 @@ class MoviesFragment : Fragment() {
                             context,
                             2
                         )
+                    scrollToPosition((layoutManager as LinearLayoutManager)?.findLastVisibleItemPosition())
                     setHasFixedSize(true)
                     adapter = MoviesAdapter(movies) { movie ->
                         val intent = MovieDetailsActivity.getStartIntent(
@@ -49,7 +55,9 @@ class MoviesFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
+
+        DataRepository.createPopularObserver(this, observer)
 
         return inflater.inflate(R.layout.fragment_movies, container, false)
     }
@@ -78,21 +86,41 @@ class MoviesFragment : Fragment() {
         }
     }
 
+    override fun setMenuVisibility(menuVisible: Boolean) {
+        super.setMenuVisibility(menuVisible)
+
+        if (menuVisible)
+            DataRepository.restorePopularData()
+
+    }
+
     private fun updateView() {
+
+        DataRepository.restorePopularData()
+
         val viewModel: MoviesViewModel =
             ViewModelProviders.of(this).get(MoviesViewModel::class.java)
 
-        viewModel.getGenres()
-        viewModel.getMovies()
+        recyclerMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if(dy > 0) {
+                    visibleItemCount = recyclerView.layoutManager?.childCount!!
+                    totalItemCount = recyclerView.layoutManager?.itemCount!!
+                    pastVisibleItemCount = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                        if ((visibleItemCount + pastVisibleItemCount) >= totalItemCount) {
+                            pagId++
+                            viewModel.getMovies(pagId)
+                        }
+
+                }
+            }
+        })
 
         mHandler.post(mRunnable)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-
-        val viewModel: MoviesViewModel =
-            ViewModelProviders.of(this).get(MoviesViewModel::class.java)
-
         inflater.inflate(R.menu.main_search, menu)
         val searchItem = menu.findItem(R.id.movie_search)
 
@@ -104,9 +132,9 @@ class MoviesFragment : Fragment() {
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText!!.isNotEmpty()) {
                         val search = newText.toLowerCase()
-                        viewModel.searchMovieByTitle(search)
+                        DataRepository.searchMovieByTitle(search)
                     } else {
-                        viewModel.searchMovieByTitle("")
+                        DataRepository.restorePopularData()
                     }
 
                     return true

@@ -6,9 +6,8 @@ import android.os.Handler
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.moviedb.R
 import com.example.moviedb.data.model.Movie
 import com.example.moviedb.presentation.details.MovieDetailsActivity
@@ -20,18 +19,44 @@ class FavoritesFragment : Fragment() {
 
     private lateinit var mHandler: Handler
     private lateinit var mRunnable: Runnable
-    private var movies: MutableList<Movie> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_movies, container, false)
+    ): View? {
 
+        val observer = Observer<List<Movie>> {
+            it?.let { movies ->
+                with(recyclerMovies) {
+                    layoutManager =
+                        GridLayoutManager(
+                            context,
+                            2
+                        )
+                    setHasFixedSize(true)
+                    adapter = MoviesAdapter(movies) { movie ->
+                        val intent = MovieDetailsActivity.getStartIntent(
+                            context,
+                            movie.id,
+                            movie.title,
+                            movie.overview,
+                            movie.posterPath,
+                            movie.voteAverage,
+                            movie.genres
+                        )
+                        this.context.startActivity(intent)
+                    }
+                }
+            }
+        }
+
+        DataRepository.createFavoriteObserver(this, observer)
+
+        return inflater.inflate(R.layout.fragment_movies, container, false)
+    }
 
     override fun onStart() {
         super.onStart()
-
-        movies = DataRepository.getFavoriteMovies()
 
         mHandler = Handler()
         swiperMovies.isRefreshing = true
@@ -41,7 +66,6 @@ class FavoritesFragment : Fragment() {
         updateView()
 
         swiperMovies.setOnRefreshListener {
-            movies = DataRepository.getFavoriteMovies()
             updateView()
             mRunnable = Runnable {
                 swiperMovies.isRefreshing = false
@@ -52,44 +76,22 @@ class FavoritesFragment : Fragment() {
     override fun setMenuVisibility(menuVisible: Boolean) {
         super.setMenuVisibility(menuVisible)
 
-        if(menuVisible){
-            movies = DataRepository.getFavoriteMovies()
+        if (menuVisible) {
             updateView()
         }
     }
 
     private fun updateView() {
 
-        if (movies.isNotEmpty()) {
-            with(recyclerMovies) {
-                layoutManager =
-                    GridLayoutManager(
-                        context,
-                        2
-                    )
-                setHasFixedSize(true)
-                adapter = MoviesAdapter(movies) { movie ->
-                    val intent = MovieDetailsActivity.getStartIntent(
-                        context,
-                        movie.id,
-                        movie.title,
-                        movie.overview,
-                        movie.posterPath,
-                        movie.voteAverage,
-                        movie.genres
-                    )
-                    this.context.startActivity(intent)
-                }
-            }
-        }
+        DataRepository.restoreFavoriteList()
 
-        if (movies.isEmpty()) {
+        if (!DataRepository.isFavoriteEmpty()) {
+            no_favorite.visibility = View.INVISIBLE
+            swiperMovies.visibility = View.VISIBLE
+        } else {
             no_favorite.visibility = View.VISIBLE
             swiperMovies.visibility = View.INVISIBLE
 
-        } else {
-            no_favorite.visibility = View.INVISIBLE
-            swiperMovies.visibility = View.VISIBLE
         }
         mHandler.post(mRunnable)
 
@@ -113,15 +115,13 @@ class FavoritesFragment : Fragment() {
                 override fun onQueryTextSubmit(query: String?): Boolean = true
                 @SuppressLint("DefaultLocale")
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    movies = if (newText!!.isNotEmpty()) {
+                    if (newText!!.isNotEmpty()) {
                         val search = newText.toLowerCase()
                         DataRepository.searchFavoriteMoviesByYearOrTitle(search)
 
                     } else {
-                        DataRepository.getFavoriteMovies()
+                        DataRepository.restoreFavoriteList()!!
                     }
-
-                    updateView()
 
                     return true
                 }
