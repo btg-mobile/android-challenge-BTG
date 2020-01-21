@@ -1,2 +1,2 @@
-include ':app', ':view'
+include ':app', ':view', ':commons_android'
 rootProject.name='challenge-btg'
