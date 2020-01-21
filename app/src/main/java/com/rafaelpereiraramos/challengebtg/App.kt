@@ -1,8 +1,7 @@
 package com.rafaelpereiraramos.challengebtg
 
-class App {
+import android.app.Application
 
-    companion object {
-        const val API_KEY = "628565fdc0f013d6d3158afaba4ac454"
-    }
+class App : Application() {
+
 }
