@@ -38,4 +38,7 @@ dependencies {
     api 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
     api 'com.google.android.material:material:1.2.0-alpha03'
     api 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc03'
+
+    api 'org.koin:koin-android:2.0.1'
+    api 'org.koin:koin-android-viewmodel:2.0.1'
 }
