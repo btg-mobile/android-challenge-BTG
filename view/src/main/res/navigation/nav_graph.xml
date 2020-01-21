@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/search_list">
+
+    <fragment
+        android:id="@+id/search_list"
+        android:name="com.rafaelpereiraramos.challengebtg.view.search.SearchFragment"
+        android:label="Search">
+
+    </fragment>
+
+</navigation>
