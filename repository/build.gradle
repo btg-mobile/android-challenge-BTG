@@ -17,6 +17,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "API_URL", "https://api.themoviedb.org/3/")
+            buildConfigField("String", "API_KEY", "628565fdc0f013d6d3158afaba4ac454")
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -34,6 +38,7 @@ android {
 }
 
 dependencies {
+    implementation project(":commons_android")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.1.0'
@@ -43,4 +48,8 @@ dependencies {
 
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    implementation 'androidx.room:room-runtime:2.2.3'
+    implementation "androidx.paging:paging-runtime-ktx:2.1.1"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3'
 }

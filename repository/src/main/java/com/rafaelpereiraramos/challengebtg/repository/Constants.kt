@@ -1,4 +1,3 @@
 package com.rafaelpereiraramos.challengebtg.repository
 
-interface TmdbService {
-}
+const val DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS'Z'"
