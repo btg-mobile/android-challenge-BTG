@@ -7,4 +7,6 @@ import kotlinx.coroutines.CoroutineScope
 interface AppRepository {
 
     fun getPopularMovies(scope: CoroutineScope): ListingResource<Movie>
+
+    fun getMovieDetails(id: Int, scope: CoroutineScope): Resource<Movie>
 }

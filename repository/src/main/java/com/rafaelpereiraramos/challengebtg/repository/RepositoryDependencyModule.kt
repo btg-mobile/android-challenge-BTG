@@ -1,9 +1,13 @@
 package com.rafaelpereiraramos.challengebtg.repository
 
+import androidx.room.Room
 import com.google.gson.GsonBuilder
 import com.rafaelpereiraramos.challengebtg.commonsandroid.CommonsDependencyModule
 import com.rafaelpereiraramos.challengebtg.repository.api.TmdbService
+import com.rafaelpereiraramos.challengebtg.repository.db.AppDatabase
+import com.rafaelpereiraramos.challengebtg.repository.db.dao.MovieDao
 import okhttp3.OkHttpClient
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -33,8 +37,20 @@ class RepositoryDependencyModule {
                     .create(TmdbService::class.java)
             }
 
+            single {
+                Room.databaseBuilder(
+                    androidApplication(),
+                    AppDatabase::class.java,
+                    "challenge-btg"
+                ).build()
+            }
+
+            single {
+                get<AppDatabase>().movieDao()
+            }
+
             single<AppRepository> {
-                AppRepositoryImpl(get(), get())
+                AppRepositoryImpl(get(), get(), get())
             }
         }.plus(CommonsDependencyModule.commonsNetworkDependency)
     }
