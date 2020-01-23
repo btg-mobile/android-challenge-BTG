@@ -8,6 +8,23 @@
         android:name="com.rafaelpereiraramos.challengebtg.view.search.SearchFragment"
         android:label="Search">
 
+        <action
+            android:id="@+id/action_to_details"
+            app:destination="@id/details_movie"
+
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/details_movie"
+        android:name="com.rafaelpereiraramos.challengebtg.view.detail.DetailFragment"
+        android:label="Details">
+
     </fragment>
 
 </navigation>

@@ -37,7 +37,9 @@ class SearchResultFragment : Fragment() {
 
         bindLiveData()
 
-        viewModel.loadPopularMovies()
+        if (savedInstanceState == null) {
+            viewModel.loadPopularMovies()
+        }
     }
 
     private fun bindLiveData() {
