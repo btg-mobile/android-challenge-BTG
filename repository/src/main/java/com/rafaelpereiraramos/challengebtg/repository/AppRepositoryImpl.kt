@@ -15,13 +15,13 @@ class AppRepositoryImpl(
 ) : AppRepository {
 
     override fun getPopularMovies(scope: CoroutineScope): ListingResource<Movie> {
-        val repoFactory = PopularMovieDataSourceFactory(connectivityHelper, service, scope)
+        val movieFactory = PopularMovieDataSourceFactory(connectivityHelper, service, scope)
 
-        val pagedLiveData = repoFactory.toLiveData(pageSize = 30)
+        val pagedLiveData = movieFactory.toLiveData(pageSize = 30)
 
         return ListingResource(
             paged = pagedLiveData,
-            networkState = repoFactory.dataSource.switchMap { it.networkState }
+            networkState = movieFactory.dataSource.switchMap { it.networkState }
         )
     }
 }

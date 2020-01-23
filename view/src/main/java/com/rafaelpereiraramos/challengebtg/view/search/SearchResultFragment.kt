@@ -1,6 +1,41 @@
 package com.rafaelpereiraramos.challengebtg.view.search
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import com.rafaelpereiraramos.challengebtg.view.R
+import kotlinx.android.synthetic.main.search_result_fragment.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class SearchResultFragment : Fragment() {
+
+    private val viewModel by sharedViewModel<SearchViewModel>()
+    private val adapter = SearchResultAdapter()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.search_result_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        container_list.adapter = adapter
+
+        bindLiveData()
+
+        viewModel.loadPopularMovies()
+    }
+
+    private fun bindLiveData() {
+        viewModel.pagedMovies.observe(this, Observer {
+            adapter.submitList(it)
+        })
+    }
 }
