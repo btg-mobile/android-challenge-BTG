@@ -6,12 +6,16 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.rafaelpereiraramos.challengebtg.repository.model.Movie
 import com.rafaelpereiraramos.challengebtg.view.R
+import com.rafaelpereiraramos.challengebtg.view.utils.GlideRequests
 
-class SearchResultAdapter : PagedListAdapter<Movie, MovieCardViewHolder>(DIFF_STRATEGY) {
+class SearchResultAdapter(
+    private val glide: GlideRequests
+) : PagedListAdapter<Movie, MovieCardViewHolder>(DIFF_STRATEGY) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCardViewHolder {
         return MovieCardViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.card_movie_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.card_movie_item, parent, false),
+            glide
         )
     }
 
