@@ -3,4 +3,6 @@
 
     <string name="search_fragment_result_page">Populares</string>
     <string name="search_fragment_favourites">Favoritos</string>
+
+    <string name="detail_fragment_vote_average">Nota: %s/10</string>
 </resources>

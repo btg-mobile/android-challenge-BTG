@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.rafaelpereiraramos.challengebtg.repository.model.Movie
+import com.rafaelpereiraramos.challengebtg.repository.model.MovieGenre
 
 @Dao
 interface MovieDao {
@@ -14,6 +15,9 @@ interface MovieDao {
 
     @Query("SELECT * FROM Movie WHERE id = :id")
     fun getMovie(id: Int): LiveData<Movie?>
+
+    @Query("SELECT * FROM MovieGenre WHERE movieId = :id")
+    fun getAllMovieGenre(id: Int): LiveData<List<MovieGenre>>
 
     //fun getAllFavoutiresMovies(): LiveData<List<Movie>>
 }

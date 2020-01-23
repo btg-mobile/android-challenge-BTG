@@ -12,6 +12,9 @@ class DetailViewModel(
 
     val movie = movieResult.switchMap { it.data }
     val networkState = movieResult.switchMap { it.networkState }
+    val genres = movie.switchMap {
+        appRepository.getGenres(it?.id!!)
+    }
 
     fun getMovieDetails(id: Int) {
         this.id.value = id

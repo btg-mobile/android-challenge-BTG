@@ -49,8 +49,16 @@ class RepositoryDependencyModule {
                 get<AppDatabase>().movieDao()
             }
 
+            single {
+                get<AppDatabase>().genreDao()
+            }
+
+            single {
+                get<AppDatabase>().movieGenreDao()
+            }
+
             single<AppRepository> {
-                AppRepositoryImpl(get(), get(), get())
+                AppRepositoryImpl(get(), get(), get(), get(), get())
             }
         }.plus(CommonsDependencyModule.commonsNetworkDependency)
     }
