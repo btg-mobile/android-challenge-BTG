@@ -26,6 +26,9 @@ class MovieCardViewHolder(itemView: View, private val glide: GlideRequests) : Re
             .error(android.R.drawable.stat_notify_error)
             .into(cover)
 
-        itemView.setOnClickListener { Navigation.findNavController(itemView).navigate(R.id.action_to_details) }
+        itemView.setOnClickListener {
+            val action = SearchFragmentDirections.actionToDetails(movie.id)
+            Navigation.findNavController(itemView).navigate(action)
+        }
     }
 }

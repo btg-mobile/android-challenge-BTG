@@ -15,5 +15,5 @@ interface MovieDao {
     @Query("SELECT * FROM Movie WHERE id = :id")
     fun getMovie(id: Int): LiveData<Movie?>
 
-    fun getAllFavoutiresMovies(): LiveData<List<Movie>>
+    //fun getAllFavoutiresMovies(): LiveData<List<Movie>>
 }

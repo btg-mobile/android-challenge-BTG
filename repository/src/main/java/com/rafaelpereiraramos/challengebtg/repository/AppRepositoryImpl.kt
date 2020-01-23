@@ -28,7 +28,7 @@ class AppRepositoryImpl(
         )
     }
 
-    override fun getMovieDetails(id: Int, scope: CoroutineScope): Resource<Movie> =
+    override fun getMovieDetails(id: Int, scope: CoroutineScope): Resource<Movie?> =
         object : FetchRepositoryStrategy<Movie, Movie>(connectivityHelper, scope) {
             override fun loadFromDB(): LiveData<Movie?> = movieDao.getMovie(id)
 

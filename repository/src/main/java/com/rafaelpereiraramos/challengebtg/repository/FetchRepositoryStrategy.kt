@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import com.rafaelpereiraramos.challengebtg.commonsandroid.ConnectivityHelper
 import com.rafaelpereiraramos.challengebtg.repository.api.NetworkState
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -19,16 +20,18 @@ abstract class FetchRepositoryStrategy<ResultType, RequestType>(
             val mediatorHelper = MediatorLiveData<ResultType>()
             val dbResult = loadFromDB()
 
+            //forcing to trigger it
+            mediatorHelper.observeForever {  }
             mediatorHelper.addSource(dbResult) {
                 if (shouldFetch(it)) {
-                    scope.launch {
+                    scope.launch(Dispatchers.IO) {
                         val response = createCall()
 
                         if (response.isSuccessful) {
                             val resultType = processResponse(response)!!
 
                             saveCallResult(resultType)
-                            postData(resultType)
+                            //postData(resultType) apparently just saving the result trigger the change on view
                         }
                     }
                 } else {
