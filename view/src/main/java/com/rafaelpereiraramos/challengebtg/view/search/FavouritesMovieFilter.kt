@@ -1,6 +1,7 @@
 package com.rafaelpereiraramos.challengebtg.view.search
 
 import android.widget.Filter
+import com.rafaelpereiraramos.challengebtg.commonsandroid.DateUtils
 import com.rafaelpereiraramos.challengebtg.repository.model.Movie
 
 class FavouritesMovieFilter(
@@ -42,7 +43,7 @@ class FavouritesMovieFilter(
     private fun isMatch(movie: Movie, arguments: List<String>): Boolean {
         for (search in arguments) {
             if (!movie.title?.toLowerCase()?.contains(search)!! &&
-                !movie.releaseDate?.toLowerCase()?.contains(search)!!) {
+                !DateUtils.getMovieYear(movie.releaseDate!!).toString().contains(search)) {
                 return false
             }
         }
