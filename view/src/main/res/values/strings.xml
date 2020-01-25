@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">view</string>
 
-    <string name="search_fragment_result_page">Populares</string>
+    <string name="search_fragment_result_page">Filmes</string>
     <string name="search_fragment_favourites">Favoritos</string>
 
     <string name="detail_fragment_vote_average">Nota: %s/10</string>
