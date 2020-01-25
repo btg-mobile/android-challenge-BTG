@@ -22,4 +22,12 @@ interface TmdbService {
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = "pt-BR"
     ): Response<Movie>
+
+    @GET("search/movie")
+    suspend fun searchMovie(
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("query") query: String,
+        @Query("page") page: Int = 1,
+        @Query("language") language: String = "pt-BR"
+    ): Response<MovieSearchResult>
 }

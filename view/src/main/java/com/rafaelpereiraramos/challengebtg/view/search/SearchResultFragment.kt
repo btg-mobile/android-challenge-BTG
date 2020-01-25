@@ -37,13 +37,17 @@ class SearchResultFragment : Fragment() {
 
         bindLiveData()
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && !viewModel.isQueried()) {
             viewModel.loadPopularMovies()
         }
     }
 
     private fun bindLiveData() {
-        viewModel.pagedMovies.observe(this, Observer {
+        viewModel.popularMovies.observe(this, Observer {
+            adapter.submitList(it)
+        })
+
+        viewModel.searchedMovies.observe(this, Observer {
             adapter.submitList(it)
         })
     }

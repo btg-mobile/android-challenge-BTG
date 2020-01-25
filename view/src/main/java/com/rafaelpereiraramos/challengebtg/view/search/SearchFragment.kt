@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.rafaelpereiraramos.challengebtg.commonsandroid.ViewUtils
 import com.rafaelpereiraramos.challengebtg.view.R
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -35,7 +36,9 @@ class SearchFragment : Fragment() {
     private fun setEvents() {
         input_search.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                viewModel.search(input_search.text.toString(), adapter.pages[pager.currentItem])
+                val query = input_search.text.toString()
+                if (query.isNotEmpty()) viewModel.search(query, adapter.pages[pager.currentItem])
+                ViewUtils.hideSoftKeyboard(activity)
                 true
             } else {
                 false

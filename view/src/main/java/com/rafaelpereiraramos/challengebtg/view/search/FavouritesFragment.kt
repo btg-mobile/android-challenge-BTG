@@ -39,12 +39,10 @@ class FavouritesFragment : Fragment() {
         container_list.adapter = adapter
 
         bindLiveData()
-    }
 
-    override fun onResume() {
-        super.onResume()
-
-        viewModel.refreshFavourites()
+        if (savedInstanceState == null) {
+            viewModel.refreshFavourites()
+        }
     }
 
     private fun bindLiveData() {

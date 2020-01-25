@@ -13,6 +13,7 @@ import com.rafaelpereiraramos.challengebtg.repository.model.Genre
 import com.rafaelpereiraramos.challengebtg.repository.model.Movie
 import com.rafaelpereiraramos.challengebtg.repository.model.MovieGenre
 import com.rafaelpereiraramos.challengebtg.repository.paging.ListingResource
+import com.rafaelpereiraramos.challengebtg.repository.paging.MovieSearchResultDataSourceFactory
 import com.rafaelpereiraramos.challengebtg.repository.paging.PopularMovieDataSourceFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -65,4 +66,15 @@ class AppRepositoryImpl(
     }
 
     override fun getFavourites(): LiveData<List<Movie>> = movieDao.getMoviesByFavourite()
+
+    override fun searchMovies(query: String, scope: CoroutineScope): ListingResource<Movie> {
+        val movieFactory = MovieSearchResultDataSourceFactory(query, connectivityHelper, service, scope)
+
+        val pagedLiveData = movieFactory.toLiveData(pageSize = 30)
+
+        return ListingResource(
+            paged = pagedLiveData,
+            networkState = movieFactory.dataSource.switchMap { it.networkState }
+        )
+    }
 }

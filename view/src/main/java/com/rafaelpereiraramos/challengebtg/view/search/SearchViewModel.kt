@@ -14,7 +14,14 @@ class SearchViewModel(
     private val _query = MutableLiveData<String>()
 
     private val popularResponse = MutableLiveData<ListingResource<Movie>>()
-    val pagedMovies: LiveData<PagedList<Movie>> = popularResponse.switchMap {
+    val popularMovies: LiveData<PagedList<Movie>> = popularResponse.switchMap {
+        it.paged
+    }
+
+    private val searchResponse = _query.map {
+        repository.searchMovies(it, viewModelScope)
+    }
+    val searchedMovies = searchResponse.switchMap {
         it.paged
     }
 
@@ -43,4 +50,6 @@ class SearchViewModel(
             _filterFavourites.value = query
         }
     }
+
+    fun isQueried(): Boolean = _query.value != null
 }

@@ -17,4 +17,6 @@ interface AppRepository {
     fun updateFavourite(id: Int, favourite: Boolean, scope: CoroutineScope)
 
     fun getFavourites(): LiveData<List<Movie>>
+
+    fun searchMovies(query: String, scope: CoroutineScope): ListingResource<Movie>
 }
