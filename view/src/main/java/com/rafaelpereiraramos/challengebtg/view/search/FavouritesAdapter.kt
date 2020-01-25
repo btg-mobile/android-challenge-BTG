@@ -14,9 +14,7 @@ class FavouritesAdapter(
 ) : RecyclerView.Adapter<MovieCardViewHolder>(), Filterable {
     private val movies = mutableListOf<Movie>()
     private val filteredMovies = mutableListOf<Movie>()
-    private val filter = FavouritesMovieFilter(movies) {
-        applyFilter(it)
-    }
+    private val filter = FavouritesMovieFilter(movies, ::applyFilter)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCardViewHolder {
         return MovieCardViewHolder(
