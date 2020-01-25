@@ -37,7 +37,7 @@ class SearchFragment : Fragment() {
         input_search.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val query = input_search.text.toString()
-                if (query.isNotEmpty()) viewModel.search(query, adapter.pages[pager.currentItem])
+                viewModel.search(query, adapter.pages[pager.currentItem])
                 ViewUtils.hideSoftKeyboard(activity)
                 true
             } else {

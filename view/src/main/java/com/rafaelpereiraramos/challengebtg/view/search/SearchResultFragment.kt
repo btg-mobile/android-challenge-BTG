@@ -43,11 +43,7 @@ class SearchResultFragment : Fragment() {
     }
 
     private fun bindLiveData() {
-        viewModel.popularMovies.observe(this, Observer {
-            adapter.submitList(it)
-        })
-
-        viewModel.searchedMovies.observe(this, Observer {
+        viewModel.movies.observe(this, Observer {
             adapter.submitList(it)
         })
     }

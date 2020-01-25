@@ -11,17 +11,13 @@ class SearchViewModel(
     private val repository: AppRepository
 ) : ViewModel() {
 
-    private val _query = MutableLiveData<String>()
-
-    private val popularResponse = MutableLiveData<ListingResource<Movie>>()
-    val popularMovies: LiveData<PagedList<Movie>> = popularResponse.switchMap {
-        it.paged
-    }
+    private val _query = MutableLiveData<String?>()
 
     private val searchResponse = _query.map {
-        repository.searchMovies(it, viewModelScope)
+        if (it != null) repository.searchMovies(it, viewModelScope)
+        else repository.getPopularMovies(viewModelScope)
     }
-    val searchedMovies = searchResponse.switchMap {
+    val movies = searchResponse.switchMap {
         it.paged
     }
 
@@ -32,7 +28,7 @@ class SearchViewModel(
     val filterFavourites = _filterFavourites as LiveData<String>
 
     fun loadPopularMovies() {
-        popularResponse.value = repository.getPopularMovies(viewModelScope)
+        _query.value = null
     }
 
     fun refreshFavourites() {
@@ -45,7 +41,7 @@ class SearchViewModel(
 
     fun search(query: String, currentPage: Fragment) {
         if (currentPage is SearchResultFragment) {
-            _query.value = query
+            _query.value = if (query.isEmpty()) null else query
         } else {
             _filterFavourites.value = query
         }
