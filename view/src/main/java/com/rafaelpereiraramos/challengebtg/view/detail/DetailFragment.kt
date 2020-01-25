@@ -34,16 +34,23 @@ class DetailFragment : Fragment() {
         setEvents()
     }
 
-    private fun setEvents() {
-        action_add_favourite.setOnClickListener {
-
-        }
-    }
-
     override fun onResume() {
         super.onResume()
 
         viewModel.getMovieDetails(args.id)
+    }
+
+    private var favourite = false
+    private fun setEvents() {
+        action_add_favourite.setOnClickListener {
+            toggleFavourite()
+            viewModel.changeFavouriteState(args.id, favourite)
+
+        }
+    }
+
+    private fun toggleFavourite() {
+        favourite = !favourite
     }
 
     private fun bindLiveData() {
@@ -55,6 +62,9 @@ class DetailFragment : Fragment() {
                 action_add_favourite.text = if (it.favourite) getString(R.string.detail_fragment_remove_favourites)
                                             else getString(R.string.detail_fragment_add_favourites)
 
+                favourite = it.favourite
+                action_add_favourite.isEnabled = true
+
                 GlideApp.with(this)
                     .load("https://image.tmdb.org/t/p/w154/${it.coverUrl}")
                     .error(android.R.drawable.stat_notify_error)
@@ -63,6 +73,7 @@ class DetailFragment : Fragment() {
         })
 
         viewModel.genres.observe(this, Observer {
+            container_genre.removeAllViews()
             it.forEach {genre ->
                 container_genre.addView(
                     TextView(context).apply {

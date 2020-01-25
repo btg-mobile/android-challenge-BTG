@@ -15,6 +15,8 @@ import com.rafaelpereiraramos.challengebtg.repository.model.MovieGenre
 import com.rafaelpereiraramos.challengebtg.repository.paging.ListingResource
 import com.rafaelpereiraramos.challengebtg.repository.paging.PopularMovieDataSourceFactory
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class AppRepositoryImpl(
@@ -57,4 +59,10 @@ class AppRepositoryImpl(
             genreDao.getGenres(it.map { genre -> genre.genreId.toString() })
         }
     }
+
+    override fun updateFavourite(id: Int, favourite: Boolean, scope: CoroutineScope) {
+        scope.launch(Dispatchers.IO) { movieDao.updateFavourite(id, favourite) }
+    }
+
+    override fun getFavourites(): LiveData<List<Movie>> = movieDao.getMoviesByFavourite()
 }

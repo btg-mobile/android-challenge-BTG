@@ -19,4 +19,8 @@ class DetailViewModel(
     fun getMovieDetails(id: Int) {
         this.id.value = id
     }
+
+    fun changeFavouriteState(id: Int, state: Boolean) {
+        appRepository.updateFavourite(id, state, viewModelScope)
+    }
 }

@@ -13,4 +13,8 @@ interface AppRepository {
     fun getMovieDetails(id: Int, scope: CoroutineScope): Resource<Movie?>
 
     fun getGenres(movieId: Int): LiveData<List<Genre>>
+
+    fun updateFavourite(id: Int, favourite: Boolean, scope: CoroutineScope)
+
+    fun getFavourites(): LiveData<List<Movie>>
 }

@@ -19,5 +19,9 @@ interface MovieDao {
     @Query("SELECT * FROM MovieGenre WHERE movieId = :id")
     fun getAllMovieGenre(id: Int): LiveData<List<MovieGenre>>
 
-    //fun getAllFavoutiresMovies(): LiveData<List<Movie>>
+    @Query("UPDATE Movie SET favourite = :favourite WHERE id = :id")
+    fun updateFavourite(id: Int, favourite: Boolean)
+
+    @Query("SELECT * FROM Movie WHERE favourite = :favourite")
+    fun getMoviesByFavourite(favourite: Boolean = true): LiveData<List<Movie>>
 }

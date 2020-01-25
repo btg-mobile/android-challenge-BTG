@@ -15,7 +15,18 @@ class SearchViewModel(
         it.paged
     }
 
+    private val _favourites = MediatorLiveData<List<Movie>>()
+    val favourites = _favourites as LiveData<List<Movie>>
+
     fun loadPopularMovies() {
         popularResponse.value = repository.getPopularMovies(viewModelScope)
+    }
+
+    fun refreshFavourites() {
+        val favourites = repository.getFavourites()
+        _favourites.addSource(favourites) {
+            _favourites.removeSource(favourites)
+            _favourites.value = it
+        }
     }
 }
