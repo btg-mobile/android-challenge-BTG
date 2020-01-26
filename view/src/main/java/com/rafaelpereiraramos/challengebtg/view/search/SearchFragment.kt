@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.rafaelpereiraramos.challengebtg.commonsandroid.ViewUtils
+import com.rafaelpereiraramos.challengebtg.repository.api.Status
 import com.rafaelpereiraramos.challengebtg.view.R
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -31,6 +33,30 @@ class SearchFragment : Fragment() {
 
         initPager()
         setEvents()
+        bindLiveData()
+    }
+
+    private fun bindLiveData() {
+        viewModel.networkState.observe(this, Observer {
+            when(it.status) {
+                Status.RUNNING -> showLoading()
+                Status.SUCCESS -> dismissLoading()
+            }
+        })
+
+        viewModel.favourites.observe(this, Observer {
+            dismissLoading()
+        })
+    }
+
+    private fun dismissLoading() {
+        block_loading.visibility = View.GONE
+        swipe_refresh.isRefreshing = false
+    }
+
+    private fun showLoading() {
+        block_loading.visibility = View.VISIBLE
+        swipe_refresh.isRefreshing = true
     }
 
     private fun setEvents() {
@@ -43,6 +69,10 @@ class SearchFragment : Fragment() {
             } else {
                 false
             }
+        }
+
+        swipe_refresh.setOnRefreshListener {
+            viewModel.refresh(adapter.pages[pager.currentItem])
         }
     }
 

@@ -20,6 +20,9 @@ class SearchViewModel(
     val movies = searchResponse.switchMap {
         it.paged
     }
+    val networkState = searchResponse.switchMap {
+        it.networkState
+    }
 
     private val _favourites = MediatorLiveData<List<Movie>>()
     val favourites = _favourites as LiveData<List<Movie>>
@@ -29,6 +32,14 @@ class SearchViewModel(
 
     fun loadPopularMovies() {
         _query.value = null
+    }
+
+    fun refresh(currentPage: Fragment) {
+        if (currentPage is SearchResultFragment) {
+            refreshSearch()
+        } else {
+            refreshFavourites()
+        }
     }
 
     fun refreshFavourites() {

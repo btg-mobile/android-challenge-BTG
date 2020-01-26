@@ -9,6 +9,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.rafaelpereiraramos.challengebtg.repository.api.Status
 import com.rafaelpereiraramos.challengebtg.view.R
 import com.rafaelpereiraramos.challengebtg.view.utils.GlideApp
 import kotlinx.android.synthetic.main.fragment_favourites.*
@@ -39,15 +40,8 @@ class FavouritesFragment : Fragment() {
         container_list.adapter = adapter
 
         bindLiveData()
-        setEvents()
 
         if (savedInstanceState == null) {
-            viewModel.refreshFavourites()
-        }
-    }
-
-    private fun setEvents() {
-        swipe_refresh.setOnRefreshListener {
             viewModel.refreshFavourites()
         }
     }
