@@ -39,8 +39,15 @@ class FavouritesFragment : Fragment() {
         container_list.adapter = adapter
 
         bindLiveData()
+        setEvents()
 
         if (savedInstanceState == null) {
+            viewModel.refreshFavourites()
+        }
+    }
+
+    private fun setEvents() {
+        swipe_refresh.setOnRefreshListener {
             viewModel.refreshFavourites()
         }
     }

@@ -39,6 +39,10 @@ class SearchViewModel(
         }
     }
 
+    fun refreshSearch() {
+        _query.value = _query.value
+    }
+
     fun search(query: String, currentPage: Fragment) {
         if (currentPage is SearchResultFragment) {
             _query.value = if (query.isEmpty()) null else query

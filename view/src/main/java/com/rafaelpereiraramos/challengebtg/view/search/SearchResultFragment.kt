@@ -36,9 +36,16 @@ class SearchResultFragment : Fragment() {
         container_list.adapter = adapter
 
         bindLiveData()
+        setEvents()
 
         if (savedInstanceState == null && !viewModel.isQueried()) {
             viewModel.loadPopularMovies()
+        }
+    }
+
+    private fun setEvents() {
+        swipe_refresh.setOnRefreshListener {
+            viewModel.refreshSearch()
         }
     }
 
