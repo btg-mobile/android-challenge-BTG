@@ -45,7 +45,6 @@ class DetailFragment : Fragment() {
         action_add_favourite.setOnClickListener {
             toggleFavourite()
             viewModel.changeFavouriteState(args.id, favourite)
-
         }
     }
 
