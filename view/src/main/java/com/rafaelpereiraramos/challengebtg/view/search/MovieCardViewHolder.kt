@@ -1,0 +1,37 @@
+package com.rafaelpereiraramos.challengebtg.view.search
+
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
+import com.rafaelpereiraramos.challengebtg.commonsandroid.DateUtils
+import com.rafaelpereiraramos.challengebtg.repository.model.Movie
+import com.rafaelpereiraramos.challengebtg.view.R
+import com.rafaelpereiraramos.challengebtg.view.utils.GlideRequests
+import kotlinx.android.synthetic.main.card_movie_item.view.*
+
+class MovieCardViewHolder(itemView: View, private val glide: GlideRequests) : RecyclerView.ViewHolder(itemView) {
+
+    private val title: TextView = itemView.prompt_title
+    private val cover: ImageView = itemView.prompt_img_cover
+    private val year: TextView = itemView.prompt_year
+
+    fun bindMovie(movie: Movie?) {
+        if (movie == null)
+            return
+
+        title.text = movie.title
+        year.text = DateUtils.getMovieYear(movie.releaseDate ?: "").toString()
+
+        glide
+            .load("https://image.tmdb.org/t/p/w154/${movie.coverUrl}")
+            .error(android.R.drawable.stat_notify_error)
+            .into(cover)
+
+        itemView.setOnClickListener {
+            val action = SearchFragmentDirections.actionToDetails(movie.id)
+            Navigation.findNavController(itemView).navigate(action)
+        }
+    }
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="search_background">#EBECEE</color>
+
+    <!-- Alpha Colors 50% Opacity-->
+    <color name="black_alpha50">#7F000000</color>
+</resources>

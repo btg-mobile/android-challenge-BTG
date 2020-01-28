@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/search_list">
+
+    <fragment
+        android:id="@+id/search_list"
+        android:name="com.rafaelpereiraramos.challengebtg.view.search.SearchFragment"
+        android:label="Search">
+
+        <action
+            android:id="@+id/action_to_details"
+            app:destination="@id/details_movie"
+
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/details_movie"
+        android:name="com.rafaelpereiraramos.challengebtg.view.detail.DetailFragment"
+        android:label="Details">
+
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>

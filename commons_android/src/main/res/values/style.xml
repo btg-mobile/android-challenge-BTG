@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.DetailCard" parent="Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.Cut</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MaterialCardView.Cut" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">18dp</item>
+        <item name="cornerSizeTopLeft">18dp</item>
+        <item name="cornerSizeBottomRight">18dp</item>
+        <item name="cornerSizeBottomLeft">18dp</item>
+    </style>
+
+    <style name="AppTheme.Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+
+    </style>
+
+    <style name="AppTheme.Toolbar.Compat.Icon" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="tint">@color/onPrimary</item>
+    </style>
+
+</resources>
