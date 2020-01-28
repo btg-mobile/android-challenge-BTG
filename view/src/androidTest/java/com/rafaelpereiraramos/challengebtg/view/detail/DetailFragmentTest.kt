@@ -13,24 +13,45 @@ class DetailFragmentTest {
 
     private lateinit var viewModel: DetailViewModel
 
-    @Test fun whenLoadMovieFavouriteButtonShouldChangeTextAccordingToFavouriteState() {
+    @Test fun whenLoadMovieFavouriteStateTrueShouldButtonTextBeIsToRemove() {
         val movie = MutableLiveData<Movie>()
         arrange {
-            viewModel = mockkClass(DetailViewModel::class)
+            viewModel = mockkClass(DetailViewModel::class, relaxed = true)
             every { viewModel.movie } returns movie
             mockViewModel(viewModel)
             launch()
         }
 
         act {
-            movie.value = Movie(
+            movie.postValue(Movie(
                 id = 0,
                 favourite = true
-            )
+            ))
         }
 
         assert {
             checkIfFavouriteButtonLabelIsToRemove()
+        }
+    }
+
+    @Test fun whenLoadMovieFavouriteStateFalseShouldButtonTextBeIsToAdd() {
+        val movie = MutableLiveData<Movie>()
+        arrange {
+            viewModel = mockkClass(DetailViewModel::class, relaxed = true)
+            every { viewModel.movie } returns movie
+            mockViewModel(viewModel)
+            launch()
+        }
+
+        act {
+            movie.postValue(Movie(
+                id = 0,
+                favourite = false
+            ))
+        }
+
+        assert {
+            checkIfFavouriteButtonLabelIsToAdd()
         }
     }
 }

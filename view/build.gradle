@@ -14,7 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.rafaelpereiraramos.challengebtg.view.ViewUiTestRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -53,7 +53,11 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:4.3'
     testImplementation 'io.mockk:mockk:1.9'
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
     androidTestImplementation 'androidx.fragment:fragment-testing:1.2.0-rc04'
