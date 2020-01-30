@@ -1,4 +1,9 @@
 package br.com.questv.themoviebtg.ui.main.favorites
 
-class FavoritesPresenter {
+class FavoritesPresenter(val favoritesView: FavoritesView) {
+    private val favoritesInteractor = FavoritesInteractor()
+
+
+
+
 }
