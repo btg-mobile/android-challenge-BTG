@@ -12,7 +12,7 @@ class GenresAdapter(private val genres: List<GenreModel>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenresViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = inflateView(parent, layoutInflater)
-        return GenresViewHolder(view)
+        return GenresViewHolder(view!!)
     }
 
     private fun inflateView(viewGroup: ViewGroup, layoutInflater: LayoutInflater?) =
