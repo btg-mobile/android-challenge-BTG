@@ -1,21 +1,29 @@
 package br.com.questv.themoviebtg.movies.behavior
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import br.com.questv.themoviebtg.movies.model.GenreModel
+import br.com.questv.themoviebtg.R
+import br.com.questv.themoviebtg.movies.model.MovieModel
 
-class MoviesAdapter(genreModel: GenreModel) : RecyclerView.Adapter<MoviesViewHolder>() {
+class MoviesAdapter(private val movieModelList: List<MovieModel>) :
+    RecyclerView.Adapter<MoviesViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val inflater = LayoutInflater.from(parent.context)
+        val view = this.inflateView(inflater, parent)
+        return MoviesViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    private fun inflateView(inflater: LayoutInflater, viewGroup: ViewGroup) =
+        inflater.inflate(R.layout.rv_item_movie, viewGroup, false)
+
+
+    override fun getItemCount() = movieModelList.size
+
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        holder.bind(this.movieModelList[position])
     }
 }

@@ -1,4 +1,4 @@
-package br.com.questv.themoviebtg.movies.model
+package br.com.questv.themoviebtg.genres.model
 
 class GenreModel(
     val id: String,

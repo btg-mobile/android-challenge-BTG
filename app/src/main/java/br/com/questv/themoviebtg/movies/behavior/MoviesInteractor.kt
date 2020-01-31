@@ -1,21 +1,22 @@
 package br.com.questv.themoviebtg.movies.behavior
 
-import br.com.questv.themoviebtg.movies.model.GenreModel
+import br.com.questv.themoviebtg.movies.model.MovieModel
 import java.lang.Exception
 
 class MoviesInteractor {
-    interface GenreFetchListener {
-        fun onGenreFetchedSuccess(genreModelList: List<GenreModel>)
-        fun onGenreFetchedFail(exception: Exception)
+    interface FetchMoviesByGenreListener {
+        fun onMovieByGenreFetchedSuccess(movieModelList: List<MovieModel>)
+        fun onMovieByGenreFetchedFail(exception: Exception)
     }
 
-
-    fun fetchAllGenres(listener: GenreFetchListener) {
-        listener.onGenreFetchedSuccess(listOf(
-            GenreModel("1", "Action"),
-            GenreModel("2", "Drama"),
-            GenreModel("3", "Horror")
-            ))
+    fun fetchMoviesByGenre(genre: String, listener: FetchMoviesByGenreListener) {
+        listener.onMovieByGenreFetchedSuccess(
+            listOf(
+                MovieModel("1", "Movie1"),
+                MovieModel("2", "Movie2"),
+                MovieModel("3", "Movie3")
+            )
+        )
 
     }
 }

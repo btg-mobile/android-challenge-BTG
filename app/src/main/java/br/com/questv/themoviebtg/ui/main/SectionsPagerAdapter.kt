@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import br.com.questv.themoviebtg.R
 import br.com.questv.themoviebtg.ui.favorites.FavoritesFragment
-import br.com.questv.themoviebtg.movies.ui.MoviesFragment
+import br.com.questv.themoviebtg.genres.ui.GenresFragment
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_text_1,
@@ -19,7 +19,7 @@ private val TAB_TITLES = arrayOf(
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm) {
 
-    private val fragmentList = listOf(MoviesFragment(), FavoritesFragment())
+    private val fragmentList = listOf(GenresFragment(), FavoritesFragment())
 
     override fun getItem(position: Int) = fragmentList[position]
 

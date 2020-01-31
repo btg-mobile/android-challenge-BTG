@@ -1,10 +1,10 @@
-package br.com.questv.themoviebtg.movies.behavior
+package br.com.questv.themoviebtg.genres.behavior
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.questv.themoviebtg.R
-import br.com.questv.themoviebtg.movies.model.GenreModel
+import br.com.questv.themoviebtg.genres.model.GenreModel
 
 class GenresAdapter(private val genres: List<GenreModel>) :
     RecyclerView.Adapter<GenresViewHolder>() {

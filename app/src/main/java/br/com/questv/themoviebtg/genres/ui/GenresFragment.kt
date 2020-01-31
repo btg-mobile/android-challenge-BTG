@@ -1,4 +1,4 @@
-package br.com.questv.themoviebtg.movies.ui
+package br.com.questv.themoviebtg.genres.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.questv.themoviebtg.R
-import br.com.questv.themoviebtg.movies.behavior.GenresAdapter
-import br.com.questv.themoviebtg.movies.behavior.MoviesPresenter
+import br.com.questv.themoviebtg.genres.behavior.GenresAdapter
+import br.com.questv.themoviebtg.genres.behavior.GenresPresenter
 import kotlinx.android.synthetic.main.fragment_movies.*
 
-class MoviesFragment : Fragment(),
-    MoviesView {
+class GenresFragment : Fragment(),
+    GenresView {
     private lateinit var recyclerView: RecyclerView
-    private val presenter = MoviesPresenter(this)
+    private val presenter = GenresPresenter(this)
 
 
     override fun onCreateView(
