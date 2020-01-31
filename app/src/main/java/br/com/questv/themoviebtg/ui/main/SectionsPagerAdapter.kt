@@ -1,12 +1,11 @@
 package br.com.questv.themoviebtg.ui.main
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import br.com.questv.themoviebtg.R
-import br.com.questv.themoviebtg.ui.main.favorites.FavoritesFragment
-import br.com.questv.themoviebtg.ui.main.movies.MoviesFragment
+import br.com.questv.themoviebtg.ui.favorites.FavoritesFragment
+import br.com.questv.themoviebtg.movies.ui.MoviesFragment
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_text_1,

@@ -1,13 +1,16 @@
-package br.com.questv.themoviebtg.ui.main.movies
+package br.com.questv.themoviebtg.movies.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import br.com.questv.themoviebtg.R
+import br.com.questv.themoviebtg.movies.behavior.MoviesPresenter
 
-class MoviesFragment : Fragment(), MoviesView {
-    private val presenter = MoviesPresenter(this)
+class MoviesFragment : Fragment(),
+    MoviesView {
+    private val presenter =
+        MoviesPresenter(this)
 
 
     override fun onCreateView(

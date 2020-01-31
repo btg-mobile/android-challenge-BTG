@@ -1,4 +1,4 @@
-package br.com.questv.themoviebtg.ui.main.favorites
+package br.com.questv.themoviebtg.ui.favorites
 
 import android.os.Bundle
 import android.view.LayoutInflater
