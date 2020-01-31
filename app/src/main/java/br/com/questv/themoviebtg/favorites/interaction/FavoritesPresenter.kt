@@ -15,7 +15,7 @@ class FavoritesPresenter(private val favoritesView: FavoritesView) :
 
 
     override fun onFavoritesFetchSuccess(favoritesModelList: List<MovieModel>) {
-        this.favoritesView.initRecyclerView(FavoritesAdapter(favoritesModelList))
+        this.favoritesView.initGridView(FavoritesAdapter(favoritesModelList))
         this.favoritesView.hideProgress()
     }
 

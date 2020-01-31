@@ -3,28 +3,31 @@ package br.com.questv.themoviebtg.favorites.recycler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.BaseAdapter
+import android.widget.TextView
 import br.com.questv.themoviebtg.R
 import br.com.questv.themoviebtg.movies.model.MovieModel
 
 
-class FavoritesAdapter(private val favoritesList: List<MovieModel>) :
-    RecyclerView.Adapter<FavoritesViewHolder>() {
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val view = inflateView(inflater, parent)
-        return FavoritesViewHolder(view)
-    }
+class FavoritesAdapter(private val favoritesList: List<MovieModel>) : BaseAdapter() {
 
     private fun inflateView(inflater: LayoutInflater, viewGroup: ViewGroup): View {
-        return inflater.inflate(R.layout.rv_item_favorite, viewGroup, false)
+        return inflater.inflate(R.layout.gv_item_favorite, viewGroup, false)
     }
 
-    override fun getItemCount() = this.favoritesList.size
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val inflater = LayoutInflater.from(parent!!.context)
+        val view = this.inflateView(inflater, parent)
 
-    override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
-        holder.bind(this.favoritesList[position])
+        val textView = view.findViewById<TextView>(R.id.tv_favorite)
+        textView.text = "Tests"
+
+        return view
     }
+
+    override fun getItem(position: Int) = this.favoritesList[position]
+
+    override fun getItemId(position: Int) = this.favoritesList[position].longId
+
+    override fun getCount() = this.favoritesList.size
 }
