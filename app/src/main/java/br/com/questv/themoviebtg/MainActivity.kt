@@ -1,14 +1,12 @@
 package br.com.questv.themoviebtg
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
+import br.com.questv.themoviebtg.ui.main.SectionsPagerAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-import br.com.questv.themoviebtg.ui.main.SectionsPagerAdapter
 
 class MainActivity : AppCompatActivity() {
 
