@@ -1,0 +1,2 @@
+rootProject.name = "BTGChallenge"
+include "app"

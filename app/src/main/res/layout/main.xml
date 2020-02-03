@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/filter"
+		android:layout_alignParentTop="true"
+		android:hint="Filter by Title" />
+
+	<androidx.viewpager.widget.ViewPager
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/viewpager"
+		android:layout_below="@id/filter"
+		android:layout_height="match_parent"
+		android:layout_width="match_parent">
+
+		<com.google.android.material.tabs.TabLayout
+			android:id="@+id/tablayout"
+			style="@style/Widget.MaterialComponents.TabLayout"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent" />
+
+
+	</androidx.viewpager.widget.ViewPager>
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:id="@+id/progressbar"
+			android:gravity="center"
+			android:visibility="gone"
+			android:background="#cc0000ff"
+			android:backgroundTintMode="multiply"
+			android:backgroundTint="#cc00ff00"
+		>
+			<ProgressBar
+				android:layout_weight="3"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+			/>
+
+		</RelativeLayout>
+
+</RelativeLayout>
