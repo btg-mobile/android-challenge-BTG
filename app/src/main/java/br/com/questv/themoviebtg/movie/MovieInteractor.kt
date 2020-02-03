@@ -8,10 +8,9 @@ class MovieInteractor {
     }
 
 
-    fun fetchMovieById(movieId: String, listener: FetchMovieListener) {
+    fun fetchMovie(movieId: String, listener: FetchMovieListener) {
 
-
-
+        listener.onFetchMovieSuccess()
 
 
     }

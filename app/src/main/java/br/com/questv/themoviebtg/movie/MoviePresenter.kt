@@ -4,13 +4,14 @@ class MoviePresenter(private val movieView: MovieView) : MovieInteractor.FetchMo
 
     private val interactor = MovieInteractor()
 
-    fun fetchMovieById(movieId: String) {
-        this.interactor.fetchMovieById(movieId, this)
+    fun fetchMovie(movieId: String) {
+        this.movieView.showProgress()
+        this.interactor.fetchMovie(movieId, this)
 
     }
 
     override fun onFetchMovieSuccess() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.movieView.hideProgress()
     }
 
     override fun onFetchMovieFail() {
