@@ -8,7 +8,7 @@ import android.widget.GridView
 import androidx.fragment.app.Fragment
 import br.com.themoviebtg.R
 import br.com.themoviebtg.favorites.interaction.FavoritesPresenter
-import br.com.themoviebtg.favorites.recycler.FavoritesAdapter
+import br.com.themoviebtg.favorites.grid.FavoritesAdapter
 import kotlinx.android.synthetic.main.fragment_favorites.*
 
 class FavoritesFragment : Fragment(),

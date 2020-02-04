@@ -1,6 +1,6 @@
 package br.com.themoviebtg.favorites.ui
 
-import br.com.themoviebtg.favorites.recycler.FavoritesAdapter
+import br.com.themoviebtg.favorites.grid.FavoritesAdapter
 
 interface FavoritesView {
     fun showProgress()

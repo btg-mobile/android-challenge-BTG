@@ -1,4 +1,4 @@
-package br.com.themoviebtg.favorites.recycler
+package br.com.themoviebtg.favorites.grid
 
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +19,7 @@ class FavoritesAdapter(private val favoritesList: List<MovieModel>) : BaseAdapte
         val inflater = LayoutInflater.from(parent!!.context)
         val view = this.inflateView(inflater, parent)
 
-        val textView = view.findViewById<TextView>(R.id.tv_movie_item_title)
+        val textView = view.findViewById<TextView>(R.id.tv_favorite_item_title)
         textView.text = "Tests"
 
         return view

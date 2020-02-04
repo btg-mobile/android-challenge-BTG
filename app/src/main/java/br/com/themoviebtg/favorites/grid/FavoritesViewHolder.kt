@@ -1,4 +1,4 @@
-package br.com.themoviebtg.favorites.recycler
+package br.com.themoviebtg.favorites.grid
 
 import android.view.View
 import android.widget.TextView

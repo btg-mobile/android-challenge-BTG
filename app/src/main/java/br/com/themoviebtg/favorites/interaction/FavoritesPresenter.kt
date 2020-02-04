@@ -1,6 +1,6 @@
 package br.com.themoviebtg.favorites.interaction
 
-import br.com.themoviebtg.favorites.recycler.FavoritesAdapter
+import br.com.themoviebtg.favorites.grid.FavoritesAdapter
 import br.com.themoviebtg.favorites.ui.FavoritesView
 import br.com.themoviebtg.movies.model.MovieModel
 
