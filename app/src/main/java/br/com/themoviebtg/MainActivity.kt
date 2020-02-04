@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import br.com.themoviebtg.main.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayout
+import com.nostra13.universalimageloader.core.ImageLoader
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,5 +18,7 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this))
+
     }
 }

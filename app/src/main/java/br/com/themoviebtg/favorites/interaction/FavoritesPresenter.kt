@@ -1,7 +1,7 @@
 package br.com.themoviebtg.favorites.interaction
 
-import br.com.themoviebtg.favorites.grid.FavoritesAdapter
 import br.com.themoviebtg.favorites.ui.FavoritesView
+import br.com.themoviebtg.movies.behavior.MoviesAdapter
 import br.com.themoviebtg.movies.model.MovieModel
 
 class FavoritesPresenter(private val favoritesView: FavoritesView) :
@@ -17,7 +17,7 @@ class FavoritesPresenter(private val favoritesView: FavoritesView) :
 
     override fun onFavoritesFetchSuccess(favoritesModelList: List<MovieModel>) {
         this.favoritesView.initGridView(
-            FavoritesAdapter(
+            MoviesAdapter(
                 favoritesModelList
             )
         )

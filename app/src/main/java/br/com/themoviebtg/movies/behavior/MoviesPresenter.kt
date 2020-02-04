@@ -1,21 +1,20 @@
 package br.com.themoviebtg.movies.behavior
 
 import br.com.themoviebtg.movies.model.MovieModel
-import java.lang.Exception
 
 class MoviesPresenter(private val moviesView: MoviesView) :
     MoviesInteractor.FetchMoviesByGenreListener {
     private val moviesInteractor =
         MoviesInteractor()
 
-    fun fetchMoviesByGenre(genre: String) {
+    fun fetchPopularMovies() {
         this.moviesView.showProgress()
-        this.moviesInteractor.fetchMoviesByGenre(genre, this)
+        this.moviesInteractor.fetchPopularMovies( this)
 
     }
 
     override fun onMovieByGenreFetchedSuccess(movieModelList: List<MovieModel>) {
-        this.moviesView.initRecyclerView(movieModelList)
+        this.moviesView.initGridView(MoviesAdapter(movieModelList))
         this.moviesView.hideProgress()
 
     }

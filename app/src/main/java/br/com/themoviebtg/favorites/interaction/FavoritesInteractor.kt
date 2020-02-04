@@ -12,14 +12,6 @@ class FavoritesInteractor {
 
     fun fetchFavorites(listener: FavoritesFetchListener) {
         val favorites = mutableListOf<MovieModel>()
-        for (i in 1..100) {
-            favorites.add(
-                MovieModel(
-                    i.toString(),
-                    "movieFavorite${i}"
-                )
-            )
-        }
 
         listener.onFavoritesFetchSuccess(favorites)
     }

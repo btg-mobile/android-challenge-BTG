@@ -1,29 +1,56 @@
 package br.com.themoviebtg.movies.behavior
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import br.com.themoviebtg.R
 import br.com.themoviebtg.movies.model.MovieModel
+import com.nostra13.universalimageloader.core.ImageLoader
+
 
 class MoviesAdapter(private val movieModelList: List<MovieModel>) :
-    RecyclerView.Adapter<MoviesViewHolder>() {
+    BaseAdapter() {
+
+    private val theMovieDbImagesUrl = "http://image.tmdb.org/t/p/w300/"
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
+    private fun inflateView(inflater: LayoutInflater, viewGroup: ViewGroup): View {
+        return inflater.inflate(R.layout.gv_item_movie, viewGroup, false)
+    }
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val inflater = LayoutInflater.from(parent!!.context)
         val view = this.inflateView(inflater, parent)
-        return MoviesViewHolder(view)
+
+        val movieTitle = view.findViewById<TextView>(R.id.tv_movie_item_title)
+        val movieImage = view.findViewById<ImageView>(R.id.iv_movie_item_cover)
+        val movieModel = this.movieModelList[position]
+
+        movieTitle.text = movieModel.original_title
+
+        initMoviePoster(movieModel, movieImage)
+        return view
     }
 
-    private fun inflateView(inflater: LayoutInflater, viewGroup: ViewGroup) =
-        inflater.inflate(R.layout.rv_item_movie, viewGroup, false)
+    private fun initMoviePoster(
+        movieModel: MovieModel,
+        movieImage: ImageView
+    ) {
+        val imageLoader = ImageLoader.getInstance()
+        val imageUrl = "${theMovieDbImagesUrl}${movieModel.poster_path}"
 
-
-    override fun getItemCount() = movieModelList.size
-
-
-    override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-        holder.bind(this.movieModelList[position])
+        imageLoader.displayImage(imageUrl, movieImage)
+        movieImage.scaleType = ImageView.ScaleType.CENTER_CROP
     }
+
+    override fun getItem(position: Int) = this.movieModelList[position]
+
+    override fun getItemId(position: Int) = this.movieModelList[position].longId
+
+    override fun getCount() = this.movieModelList.size
+
+
 }
