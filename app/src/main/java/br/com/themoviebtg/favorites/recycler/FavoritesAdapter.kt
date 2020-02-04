@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import br.com.questv.themoviebtg.R
+import br.com.themoviebtg.R
 import br.com.themoviebtg.movies.model.MovieModel
 
 

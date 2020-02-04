@@ -3,7 +3,6 @@ package br.com.themoviebtg
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
-import br.com.questv.themoviebtg.R
 import br.com.themoviebtg.main.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayout
 

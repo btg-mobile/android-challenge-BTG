@@ -5,7 +5,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.com.questv.themoviebtg.R
+import br.com.themoviebtg.R
 import br.com.themoviebtg.genres.model.GenreModel
 import br.com.themoviebtg.movies.behavior.MoviesAdapter
 import br.com.themoviebtg.movies.behavior.MoviesPresenter

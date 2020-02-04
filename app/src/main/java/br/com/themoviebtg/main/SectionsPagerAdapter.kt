@@ -3,7 +3,7 @@ package br.com.themoviebtg.main
 import android.content.Context
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import br.com.questv.themoviebtg.R
+import br.com.themoviebtg.R
 import br.com.themoviebtg.favorites.ui.FavoritesFragment
 import br.com.themoviebtg.genres.ui.GenresFragment
 

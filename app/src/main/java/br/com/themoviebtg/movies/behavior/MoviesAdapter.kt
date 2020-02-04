@@ -3,7 +3,7 @@ package br.com.themoviebtg.movies.behavior
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import br.com.questv.themoviebtg.R
+import br.com.themoviebtg.R
 import br.com.themoviebtg.movies.model.MovieModel
 
 class MoviesAdapter(private val movieModelList: List<MovieModel>) :

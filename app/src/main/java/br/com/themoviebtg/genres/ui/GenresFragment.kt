@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.com.questv.themoviebtg.R
+import br.com.themoviebtg.R
 import br.com.themoviebtg.genres.behavior.GenresAdapter
 import br.com.themoviebtg.genres.behavior.GenresPresenter
 import kotlinx.android.synthetic.main.fragment_movies.*

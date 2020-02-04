@@ -3,7 +3,7 @@ package br.com.themoviebtg.movie
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import br.com.questv.themoviebtg.R
+import br.com.themoviebtg.R
 import kotlinx.android.synthetic.main.activity_movie.*
 
 class MovieActivity : AppCompatActivity(), MovieView {
