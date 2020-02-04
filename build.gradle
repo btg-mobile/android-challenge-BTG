@@ -1,0 +1,51 @@
+buildscript
+{
+	repositories
+	{
+		google()
+		jcenter()
+	}
+	dependencies
+	{	
+		classpath "com.android.tools.build:gradle:3.5.0"
+	}
+
+}
+
+allprojects
+{
+	repositories
+	{
+		google()
+		jcenter()
+	}
+
+}
+
+subprojects
+{
+	task ("showSourceSets")
+	{
+		doFirst
+		{
+			sourceSets.each 
+			{
+				it.allJava.each {
+					println it
+				}
+				println "compileClasspath"
+				it.compileClasspath.each
+				{
+					println it
+				}
+			} 
+		}
+	}
+}
+
+task ("clean", type: Delete)
+{
+	delete "build"
+}
+
+

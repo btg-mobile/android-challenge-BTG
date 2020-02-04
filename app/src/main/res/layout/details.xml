@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ScrollView
+
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+	<LinearLayout
+		android:orientation="vertical"
+		android:padding="15dp"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<ImageView
+			android:id="@+id/poster"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+		</ImageView>
+
+		
+		<Button
+			android:id="@+id/make_favourite"
+			android:layout_width="match_parent"
+			android:text="Favourite this!"
+			android:layout_height="wrap_content">
+		</Button>
+
+		<TextView
+			android:id="@+id/title"
+			android:textSize="20sp"
+			android:gravity="center"
+			android:textColor="#0000df"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+		
+		<TextView
+			android:id="@+id/review"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+		
+		<TextView
+			android:id="@+id/score"
+			android:padding="15dp"
+			android:textColor="#0000df"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+
+	</LinearLayout>
+
+</ScrollView>
