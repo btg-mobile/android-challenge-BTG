@@ -11,7 +11,7 @@ class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val tvMovie = this.itemView.findViewById<TextView>(R.id.tv_movie_item_title)
 
     fun bind(movieModel: MovieModel) {
-        this.tvMovie.text = movieModel.name
+        this.tvMovie.text = movieModel.original_title
 
     }
 }

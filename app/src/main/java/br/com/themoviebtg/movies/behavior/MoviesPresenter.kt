@@ -20,7 +20,7 @@ class MoviesPresenter(private val moviesView: MoviesView) :
 
     }
 
-    override fun onMovieByGenreFetchedFail(exception: Exception) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onMovieByGenreFetchedFail(errorMessage: String) {
+        moviesView.showErrorMessage(errorMessage)
     }
 }

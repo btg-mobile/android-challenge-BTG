@@ -11,7 +11,7 @@ class FavoritesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     fun bind(movieModel: MovieModel) {
         val textView = this.itemView.findViewById<TextView>(R.id.tv_movie_item_title)
-        textView.text = movieModel.name
+        textView.text = movieModel.original_title
     }
 
 }

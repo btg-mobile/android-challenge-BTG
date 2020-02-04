@@ -6,4 +6,5 @@ interface MoviesView {
     fun showProgress()
     fun hideProgress()
     fun initRecyclerView(movieModelList: List<MovieModel>)
+    fun showErrorMessage(errorMessage: String)
 }

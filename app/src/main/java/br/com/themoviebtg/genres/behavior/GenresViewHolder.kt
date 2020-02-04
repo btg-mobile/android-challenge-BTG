@@ -48,4 +48,9 @@ class GenresViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
             MoviesAdapter(movieModelList)
     }
 
+    override fun showErrorMessage(errorMessage: String) {
+        println(errorMessage)
+    }
+
+
 }
