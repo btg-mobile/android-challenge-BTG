@@ -24,12 +24,20 @@ class MoviesAdapter(private val movieModelList: List<MovieModel>) :
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val inflater = LayoutInflater.from(parent!!.context)
         val view = this.inflateView(inflater, parent)
-
-        val movieTitle = view.findViewById<TextView>(R.id.tv_movie_item_title)
-        val movieImage = view.findViewById<ImageView>(R.id.iv_movie_item_cover)
         val movieModel = this.movieModelList[position]
 
+
+        val movieTitle = view.findViewById<TextView>(R.id.tv_movie_item_title)
         movieTitle.text = movieModel.original_title
+
+        val movieYear = view.findViewById<TextView>(R.id.tv_movie_release_year)
+        val movieReleaseYear = "(${movieModel.release_date?.split("-")?.get(0) ?: "-"})"
+        movieYear.text = movieReleaseYear
+
+
+
+        val movieImage = view.findViewById<ImageView>(R.id.iv_movie_item_cover)
+
 
         initMoviePoster(movieModel, movieImage)
         return view
