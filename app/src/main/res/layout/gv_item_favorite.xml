@@ -5,13 +5,28 @@
     android:layout_height="wrap_content"
     android:background="@color/colorAccent">
 
-    <TextView
-        android:id="@+id/tv_favorite"
-        android:layout_width="60dp"
-        android:layout_height="100dp"
-        android:text="TextView"
+    <ImageView
+        android:id="@+id/iv_favorite_item_cover"
+        android:layout_width="115dp"
+        android:layout_height="170dp"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/no_cover_available" />
+
+    <TextView
+        android:id="@+id/tv_favorite_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/favorite_item_title"
+        android:textColor="@color/colorTitle"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_favorite_item_cover"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

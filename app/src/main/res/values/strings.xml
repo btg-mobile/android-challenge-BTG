@@ -8,4 +8,5 @@
     <string name="movie_promo_image">Movie Promo image</string>
     <string name="movie_gradient_background_image">Movie gradient background image</string>
     <string name="genre_item">Genre item</string>
+    <string name="favorite_item_title">Favorite Item Title</string>
 </resources>
