@@ -8,9 +8,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import android.widget.EditText;
+import android.view.View;
+import android.view.ViewGroup;
 import android.text.TextWatcher;
 import android.text.Editable;
 import androidx.fragment.app.FragmentManager;
+import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
@@ -20,6 +23,9 @@ public class Bootstrap
 	private Asset asset;
 	private Activity activity;
 	private MovieFetcher movie_fetcher;
+	private int tab_position;
+	private BTGAdapter btg_adapter;
+	public ViewPager viewpager;
 
 	EditText filter;
 
@@ -28,8 +34,7 @@ public class Bootstrap
 		this.activity = fragment_activity;
 		filter = this.activity.findViewById( R.id.filter );
 
-		asset = new Asset( "HelloABootStrapLogHere", activity );
-
+		asset = new Asset( "HelloABootstrapLogHere", activity );
 
 		asset.loader( true );
 
@@ -71,9 +76,9 @@ public class Bootstrap
 		tablayout.addTab( movies );
 		tablayout.addTab( favourites );
 
-		ViewPager viewpager = this.activity.findViewById( R.id.viewpager );
+		viewpager = this.activity.findViewById( R.id.viewpager );
 
-		BTGAdapter btg_adapter = 
+		this.btg_adapter = 
 			new BTGAdapter
 			( 
 				fragment_activity.getSupportFragmentManager() 
@@ -96,7 +101,7 @@ public class Bootstrap
 				@Override
 				public void onTabSelected( TabLayout.Tab tab )
 				{
-					int tab_position = tab.getPosition();
+					tab_position = tab.getPosition();
 					viewpager.setCurrentItem( tab_position );
 					asset.log( tab_position, "TabSelected");
 					try
@@ -105,12 +110,14 @@ public class Bootstrap
 						{
 							btg_adapter.tabcontents[ tab_position ]
 								.buildFavourites();
-							Bootstrap.this.filter.setHint("Filter by name or year");
+					//		Bootstrap.this.filter.setHint("Filter by name or year");
 						}
 						else
 						{
-							Bootstrap.this.filter.setHint("Filter by name");
+					//		Bootstrap.this.filter.setHint("Filter by name");
 						}
+
+						applyFilter();
 					}
 					catch( Exception exception )
 					{
@@ -135,6 +142,51 @@ public class Bootstrap
 
 	}
 
+	private void applyFilter()
+	{
+		TabContent current = btg_adapter.tabcontents[ this.tab_position ];
+		ViewGroup container = ((ViewGroup)((ViewGroup)current.getView()).getChildAt(0));
+		int children_length = container.getChildCount();
+		asset.log( children_length, "children_length" );
+		String filter_text = this.filter.getText().toString();
+
+		if ( filter_text.equals("") == true )
+		{
+			for ( int i = 0 ; i < children_length ; i++ )
+			{
+				View view = container.getChildAt( i );
+				view.setVisibility( View.VISIBLE );
+			}
+		}
+		else
+		{
+			for ( int i = 0 ; i < children_length ; i++ )
+			{
+				ViewGroup viewgroup = ( ViewGroup ) container.getChildAt( i );
+				TextView title = ( TextView ) viewgroup.getChildAt( 0 );  
+				String title_text = title.getText().toString();
+				if 
+				( 
+					this.asset.matched
+					( 						
+						String.format(".*%s.*", filter_text ),
+						title_text
+					) !=
+					null
+
+				)
+				{
+					viewgroup.setVisibility( View.VISIBLE );
+				}
+				else
+				{
+					viewgroup.setVisibility( View.GONE );
+				}
+			}
+
+		}
+	}
+
 	private void takeCareOfFilter( )
 	{
 
@@ -146,6 +198,7 @@ public class Bootstrap
 				public void afterTextChanged( Editable editable )
 				{
 					asset.log(editable.toString(), "afterTextChanged");
+					applyFilter();
 				}
 
 				@Override

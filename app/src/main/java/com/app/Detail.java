@@ -42,7 +42,7 @@ public class Detail extends Activity
 
 			if ( should_display_favourite_button == false )
 			{
-				make_favourite.setVisibility( View.GONE );
+				make_favourite.setText( "Unfavourite" );
 			}
 
 			make_favourite.setOnClickListener
@@ -53,6 +53,12 @@ public class Detail extends Activity
 					{
 						Intent intent = new Intent();
 						intent.putExtra("id", id );
+
+						if ( should_display_favourite_button == false )
+						{
+							intent.putExtra("unfavourite", true );
+						}
+
 						Detail.this.setResult( Activity.RESULT_OK, intent );
 						Detail.this.finish();
 					}

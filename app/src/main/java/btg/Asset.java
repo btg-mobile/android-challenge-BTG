@@ -22,6 +22,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import android.content.SharedPreferences;
+import com.app.*;
 
 
 public class Asset
@@ -138,10 +140,21 @@ public class Asset
 		return case_no_coercion;
 	}
 
-	
+	public void putStringToSharedPreference( EntryPoint activity, String key, String value )
+	{
+		SharedPreferences.Editor editor = activity.shared_preferences.edit();
+		editor.putString( key, value );
+		editor.commit();
+	}
+
+	public String getSharedPreferencesString( EntryPoint activity, String key )  
+	{
+		return activity.shared_preferences.getString( key, null );
+	}
+		
 	public String matched( String regex, String against_to )
 	{
-		Pattern pattern = Pattern.compile( regex );
+		Pattern pattern = Pattern.compile( regex, Pattern.CASE_INSENSITIVE );
 		Matcher match = pattern.matcher( against_to );
 
 		if ( match.find() )
