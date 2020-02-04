@@ -12,7 +12,8 @@ data class MovieModel(
     val backdrop_path: String,
     val voteAverage: BigDecimal?,
     val overview: String,
-    val release_date: String?
+    val release_date: String?,
+    var isFavorite: Boolean
 ) : Serializable {
     val longId = 1L
 

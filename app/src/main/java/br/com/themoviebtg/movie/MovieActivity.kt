@@ -11,13 +11,16 @@ import kotlinx.android.synthetic.main.activity_movie.*
 
 class MovieActivity : AppCompatActivity(), MovieView {
 
+    private lateinit var movieModel: MovieModel
     private val presenter = MoviePresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie)
 
-        this.presenter.initView(intent.getSerializableExtra("movie_model") as MovieModel)
+        movieModel = intent.getSerializableExtra("movie_model") as MovieModel
+        this.presenter.initView(movieModel)
+        this.initView()
     }
 
     override fun showProgress() {
@@ -44,6 +47,25 @@ class MovieActivity : AppCompatActivity(), MovieView {
 
     override fun attachMovieTitle(title: String?) {
         tv_movie_title.text = title
+    }
+
+    override fun initView() {
+        updateFavoriteImage()
+        ib_favorite_movie.setOnClickListener { swipeFavorite() }
+    }
+
+    private fun updateFavoriteImage() {
+        ib_favorite_movie.setImageResource(
+            when (this.movieModel.isFavorite) {
+                true -> R.drawable.ic_favorite_red_32dp
+                false -> R.drawable.ic_favorite_border_white_32dp
+            }
+        )
+    }
+
+    private fun swipeFavorite() {
+        movieModel.isFavorite = !(movieModel.isFavorite)
+        updateFavoriteImage()
     }
 
 

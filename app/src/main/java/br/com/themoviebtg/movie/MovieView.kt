@@ -7,4 +7,5 @@ interface MovieView {
     fun attachMovieBackground(posterUrl: String)
     fun attachMovieGenres(genres: List<String>)
     fun attachMovieTitle(title: String?)
+    fun initView()
 }
