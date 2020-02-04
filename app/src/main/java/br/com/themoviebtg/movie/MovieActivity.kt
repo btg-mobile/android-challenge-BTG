@@ -52,6 +52,8 @@ class MovieActivity : AppCompatActivity(), MovieView {
     override fun initView() {
         updateFavoriteImage()
         ib_favorite_movie.setOnClickListener { swipeFavorite() }
+        rb_movie_rating.rating = this.movieModel.vote_average / 2
+        tv_movie_vote_average.text = this.movieModel.vote_average.toString()
     }
 
     private fun updateFavoriteImage() {

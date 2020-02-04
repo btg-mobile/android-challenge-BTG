@@ -112,4 +112,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_movie_promo"
         app:layout_constraintVertical_bias="0.95" />
+
+    <TextView
+        android:id="@+id/tv_movie_vote_average"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/rb_movie_rating"
+        app:layout_constraintStart_toEndOf="@+id/rb_movie_rating"
+        app:layout_constraintTop_toTopOf="@+id/rb_movie_rating" />
+
+    <RatingBar
+        android:id="@+id/rb_movie_rating"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:max="10"
+        android:rating="3"
+        app:layout_constraintBottom_toTopOf="@+id/tv_movie_title"
+        app:layout_constraintEnd_toEndOf="@+id/tv_movie_title"
+        app:layout_constraintHorizontal_bias="0.01"
+        app:layout_constraintStart_toStartOf="@+id/tv_movie_title"
+        android:theme="@style/RatingBar"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

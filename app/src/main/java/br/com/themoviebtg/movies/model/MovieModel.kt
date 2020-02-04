@@ -12,6 +12,7 @@ data class MovieModel(
     val backdrop_path: String,
     val voteAverage: BigDecimal?,
     val overview: String,
+    val vote_average: Float,
     val release_date: String?,
     var isFavorite: Boolean
 ) : Serializable {
