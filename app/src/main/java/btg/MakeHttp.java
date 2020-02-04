@@ -34,8 +34,6 @@ public class MakeHttp extends AsyncTask<JSONObject, Void, JSONObject>
 	public String url_string;
 	private boolean post_json_parse = true;
 
-
-
 	public MakeHttp( String url_string, Callback callback )
 	{
 		this.callback = callback;

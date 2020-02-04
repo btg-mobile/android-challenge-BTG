@@ -17,6 +17,7 @@ import org.json.JSONTokener;
 import android.widget.ScrollView;
 import android.graphics.BitmapFactory;
 import android.content.Intent;
+import android.os.AsyncTask;
 
 
 public class TabContent extends Fragment
@@ -170,12 +171,11 @@ public class TabContent extends Fragment
 
 					}
 				}
-				
 			);
 
 		http.postJSONParse( false );
 
-		http.execute( new JSONObject() );
+		http.executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR,  new JSONObject() );
 	}
 
 	public static String buildImageUrl( String name )
