@@ -7,4 +7,5 @@
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eu cursus leo. Duis ac porttitor enim, sed pellentesque risus. Proin non nibh massa. Integer ut varius diam. Nullam vel dolor ut orci viverra pulvinar suscipit porttitor leo. Mauris suscipit orci sed arcu commodo lacinia. Ut eget neque ut elit congue tristique eu vitae massa. Integer suscipit orci sed tortor varius placerat. Pellentesque facilisis imperdiet ullamcorper. Cras rutrum sit amet mi ut eleifend. Quisque tincidunt dui vel mauris eleifend, eu hendrerit dui tempus.</string>
     <string name="movie_promo_image">Movie Promo image</string>
     <string name="movie_gradient_background_image">Movie gradient background image</string>
+    <string name="genre_item">Genre item</string>
 </resources>
