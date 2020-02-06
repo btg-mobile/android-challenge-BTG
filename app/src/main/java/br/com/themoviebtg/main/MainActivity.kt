@@ -1,7 +1,11 @@
 package br.com.themoviebtg.main
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
 import br.com.themoviebtg.R
@@ -18,16 +22,16 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setContentView(R.layout.activity_main)
 
         this.presenter.setupTabView()
 
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this))
+        setupToolBar()
 
     }
 
-    override fun setupToolBar() {
-//        setSupportActionBar(tb_main_bar)
+    private fun setupToolBar() {
+        setSupportActionBar(tb_main_bar)
     }
 
     override fun getTabContext() = this
@@ -62,5 +66,13 @@ class MainActivity : AppCompatActivity(), MainView {
         tl_tabs_swiper.getTabAt(position)?.customView = tabAdapter.getSelectedTabItemView(position)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu)
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        (menu.findItem(R.id.search).actionView as SearchView).apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        }
+        return true
+    }
 
 }

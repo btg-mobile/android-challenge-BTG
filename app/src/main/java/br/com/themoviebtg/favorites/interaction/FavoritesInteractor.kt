@@ -1,5 +1,6 @@
 package br.com.themoviebtg.favorites.interaction
 
+import br.com.themoviebtg.BuildConfig
 import br.com.themoviebtg.authentication.TokenModel
 import br.com.themoviebtg.endpoint.ApiClient
 import br.com.themoviebtg.movies.model.MovieModel
@@ -15,7 +16,7 @@ class FavoritesInteractor {
     }
 
     fun fetchFavorites(listener: FavoritesFetchListener) {
-        val apiKey = "1fa145a71f8cb2fd8f164fdd5b096df1"
+        val apiKey = BuildConfig.API_KEY
 
 
         generateNewToken(apiKey)

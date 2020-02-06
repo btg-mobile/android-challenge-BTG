@@ -10,4 +10,6 @@
     <string name="genre_item">Genre item</string>
     <string name="favorite_item_title">Favorite Item Title</string>
     <string name="release_year">(1995)</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Movies</string>
 </resources>

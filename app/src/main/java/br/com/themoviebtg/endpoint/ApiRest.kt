@@ -24,4 +24,9 @@ interface ApiRest {
     ): Call<ResponseBody>
 
 
+    @GET("search/movie")
+    fun searchMovie(@Query("api_key") apiKey: String,
+                    @Query("query") query: String): Call<MoviePaginationModel>
+
+
 }

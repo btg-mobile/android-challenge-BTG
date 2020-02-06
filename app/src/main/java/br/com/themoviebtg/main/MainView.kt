@@ -5,7 +5,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
 
 interface MainView {
-    fun setupToolBar()
     fun getTabContext(): Context
     fun getTabFragmentManager(): FragmentManager
 

@@ -1,5 +1,6 @@
 package br.com.themoviebtg.movies.behavior
 
+import br.com.themoviebtg.BuildConfig
 import br.com.themoviebtg.endpoint.ApiClient
 import br.com.themoviebtg.movies.model.MovieModel
 import br.com.themoviebtg.movies.model.MoviePaginationModel
@@ -14,7 +15,7 @@ class MoviesInteractor {
     }
 
     fun fetchPopularMovies(listener: FetchMoviesByGenreListener) {
-        val apiKey = "1fa145a71f8cb2fd8f164fdd5b096df1"
+        val apiKey = BuildConfig.API_KEY
 
 
         val getPopularMoviesCall = ApiClient.instance.getPopularMovies(apiKey)
@@ -29,8 +30,7 @@ class MoviesInteractor {
             ) {
                 when (response.code()) {
                     200 -> response.body()?.let { listener.onMovieByGenreFetchedSuccess(it.results) }
-                    404 -> listener.onMovieByGenreFetchedFail("Not found")
-                    else -> println("---------------->${response.code()}")
+                    else -> listener.onMovieByGenreFetchedFail("Error ${response.code()}")
                 }
 
 
