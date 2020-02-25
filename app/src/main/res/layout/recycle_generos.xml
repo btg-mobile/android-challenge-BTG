@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="generos"
+            type="br.eloibrito.com.movie_db.models.Generos" />
+    </data>
+
+    <TextView
+        android:id="@+id/txtGeneros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:fontFamily="sans-serif"
+        android:padding="7dp"
+        android:text="@{generos.name}"
+        android:textColor="@color/branco"
+        android:textSize="15sp"
+        android:textStyle="bold">
+
+    </TextView>
+
+</layout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="filmes"
+            type="br.eloibrito.com.movie_db.models.Movies" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/c_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:clipToPadding="false"
+        android:focusable="true"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
+
+        <ImageView
+            android:id="@+id/imagens"
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/movies"
+            android:text="@string/movies">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="#70000000"
+            android:padding="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:theme="@style/Theme.AppCompat"
+            android:layout_gravity="bottom"
+            android:text='@{filmes.title.length() > 15 ? filmes.title.substring(0, 15) + "..." : filmes.title}'
+            android:textColor="@color/branco"
+            android:fontFamily="sans-serif-black"
+            android:textSize="14sp"
+            android:gravity="left"/>
+
+        <ImageView
+            android:id="@+id/like"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"
+            android:src="@{filmes.like ? @drawable/ic_like : @drawable/ic_deslike}"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="8dp"
+
+            >
+
+        </ImageView>
+
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
