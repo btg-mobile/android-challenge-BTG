@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Filmes</string>
+
+    <!-- PERMISSOES -->
+    <string name="msg_permissao">Para que o aplicativo funcione corretamente você precisa conceder acesso:</string>
+    <string name="msg_permissao_alerta">Para prosseguir, é preciso permitir alguns permissões!</string>
+    <string name="permission_audio">AUDIO</string>
+    <string name="permission_sd_card_escrita">SD CARD ESCRITA</string>
+    <string name="permission_sd_card_leitura">SD CARD LEITURA</string>
+    <string name="permission_camera">CAMERA</string>
+    <string name="permission_localizacao">LOCALIZAÇÃO</string>
+    <string name="permission_telefone">TELEFONE</string>
+    <string name="permission_sync_read">SYNC READ</string>
+    <string name="permission_sync_write">SYNC WRITE</string>
+    <string name="permission_sync_stats">SYNC STATE</string>
+
+    <!--TOOLBAR-->
+    <string name="toolbar_sub_title">Total de filmes: _TOTAL</string>
+
+    <!-- MENU -->
+    <string name="menu_filtrar">Filtrar</string>
+
+    <!-- TXT NOT FOUND -->
+    <string name="txt_not_found">Nenhuma informação encontrada!!!</string>
+
+    <!-- RECYCLE -->
+    <string name="generos">generos</string>
+    <string name="movies">movies</string>
+
+    <!-- ERROS -->
+    <string name="erro_generos">Erro ao baixar os generos.</string>
+    <string name="erro_filmes">Erro ao baixar os filmes.</string>
+    <string name="erro_filmes_favoritos">Erro carregar os favoritos.</string>
+
+    <!--TELA DETALHES-->
+    <string name="detalhes_nota">Média de votos:</string>
+    <string name="detalhes_data">Data:</string>
+    <string name="detalhes_linguagem_original">Linguagem Original:</string>
+    <string name="detalhes_total_votos">Total de votos:</string>
+    <string name="detalhes_popularidade">Popularidade:</string>
+</resources>
